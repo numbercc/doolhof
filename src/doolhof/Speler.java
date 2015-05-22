@@ -4,6 +4,8 @@
  */
 package doolhof;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author Chie-cheung
@@ -11,8 +13,9 @@ package doolhof;
 public class Speler {
 
     private Tegel lokatie;
-
-    public Speler() {
+    JLabel score=new JLabel();
+    public Speler(JLabel score) {
+        this.score=score;
     }
 
     public Tegel getLokatie() {
@@ -24,25 +27,35 @@ public class Speler {
     }
 
     public void move(String richting) {
+        int som;
         if (richting.equals("w") && lokatie.getNorth().getIsGone()) {
             lokatie.setSpeler(null);
             lokatie.getNorthBuur().setSpeler(this);
             lokatie=lokatie.getNorthBuur();
+            som=Integer.parseInt(score.getText())+1;
+            score.setText(""+som);
         }
         if (richting.equals("a") && lokatie.getWest().getIsGone()) {
             lokatie.setSpeler(null);
             lokatie.getWestBuur().setSpeler(this);
             lokatie=lokatie.getWestBuur();
+            som=Integer.parseInt(score.getText())+1;
+            score.setText(""+som);
         }
         if (richting.equals("s") && lokatie.getSouthBuur().getNorth().getIsGone()) {
             lokatie.setSpeler(null);
             lokatie.getSouthBuur().setSpeler(this);
             lokatie=lokatie.getSouthBuur();
+            som=Integer.parseInt(score.getText())+1;
+            score.setText(""+som);
         }
         if (richting.equals("d") && lokatie.getEastBuur().getWest().getIsGone()) {
             lokatie.setSpeler(null);
             lokatie.getEastBuur().setSpeler(this);
             lokatie=lokatie.getEastBuur();
+            
+            som=Integer.parseInt(score.getText())+1;
+            score.setText(""+som);
         }
     }
 }

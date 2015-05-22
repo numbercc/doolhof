@@ -10,7 +10,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 /**
  *
@@ -23,13 +22,13 @@ public class Doolhof extends JComponent {
     private Tegel[][] tegels;// the maze can be seen as a matrix of squares so well use
     private ArrayList<Muur> muren; // List of muren
     private Random rand;// We are going to have to randomize the tegels chosen to unionize
-    private int hoogte = 20;// users desired height of matrix 
-    private int breedte = 20;// users desired breedte of matrix
+    private final int hoogte = 20;// users desired height of matrix 
+    private final int breedte = 20;// users desired breedte of matrix
     private int num;// we will have to increment a few times so lets just use num as an incrementor
     private int[] set;
     private int x_cord; // x-axis rep
     private int y_cord;// y-axis rep
-    private int kamerGrote = 20;
+    private final int kamerGrote = 20;
     private int randommuur;
     private Speler speler;
 
