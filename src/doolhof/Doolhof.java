@@ -26,8 +26,7 @@ public class Doolhof extends JComponent {
     private int hoogte = 20;// users desired height of matrix 
     private int breedte = 20;// users desired breedte of matrix
     private int num;// we will have to increment a few times so lets just use num as an incrementor
-    private Buren ds;// we are going to join tegels so well label the variable ds for disjoint set
-    // we are going to need variables for our panel 
+    private int[] set;
     private int x_cord; // x-axis rep
     private int y_cord;// y-axis rep
     private int kamerGrote = 20;
@@ -44,7 +43,8 @@ public class Doolhof extends JComponent {
 
     private void maakRandomDoolhof() {
         maakKamer();// see next method
-        ds = new Buren(breedte * hoogte);
+
+        initSet(breedte * hoogte);
         rand = new Random(); // here is the random room generator
         num = breedte * hoogte;
 
@@ -57,9 +57,9 @@ public class Doolhof extends JComponent {
             int roomB = temp.getNextRoom().getY() + temp.getNextRoom().getX() * breedte;
 
             // check roomA and roomB to see if they are already members 
-            if (ds.find(roomA) != ds.find(roomB)) {
+            if (find(roomA) != find(roomB)) {
                 muren.remove(randommuur);
-                ds.unionRooms(ds.find(roomA), ds.find(roomB));
+                unionRooms(find(roomA), find(roomB));
                 temp.setIsGone(true);
                 temp.getCurrentRoom().getBuren().add(temp.getNextRoom());
                 temp.getNextRoom().getBuren().add(temp.getCurrentRoom());
@@ -88,18 +88,18 @@ public class Doolhof extends JComponent {
                     tegels[i][j].setNorth(new Muur(tegels[i - 1][j], tegels[i][j]));
                     muren.add(tegels[i][j].getNorth());
                     tegels[i][j].setNorthBuur(tegels[i - 1][j]);
-                    tegels[i-1][j].setSouthBuur(tegels[i][j]);
+                    tegels[i - 1][j].setSouthBuur(tegels[i][j]);
                 }
                 if (i == hoogte - 1) {
-                    tegels[i][j].setSouth(new Muur(tegels[i][j]));                    
+                    tegels[i][j].setSouth(new Muur(tegels[i][j]));
                 }
                 if (j == 0) {
                     tegels[i][j].setWest(new Muur(tegels[i][j]));
                 } else {
                     tegels[i][j].setWest(new Muur(tegels[i][j - 1], tegels[i][j]));
                     muren.add(tegels[i][j].getWest());
-                    tegels[i][j].setWestBuur(tegels[i][j-1]);
-                    tegels[i][j-1].setEastBuur(tegels[i][j]);
+                    tegels[i][j].setWestBuur(tegels[i][j - 1]);
+                    tegels[i][j - 1].setEastBuur(tegels[i][j]);
                 }
                 if (j == breedte - 1) {
                     tegels[i][j].setEast(new Muur(tegels[i][j]));
@@ -120,7 +120,6 @@ public class Doolhof extends JComponent {
         y_cord = 50;
         // could have taken height as well as breedte
         // just need something to base the roomsize
-
 
         // temp variables used for painting
         int x = x_cord;
@@ -154,4 +153,29 @@ public class Doolhof extends JComponent {
             y += kamerGrote;
         }// end of outer for loop
     }
+
+    private int find(int r) {
+        if (set[r] < 0) {
+            return r;
+        } else {
+            return set[r] = find(set[r]);
+        }
+    }// end of find
+    private void initSet(int elem){
+        set = new int[elem];
+      // initialize every element in the set
+      for(int i = 0; i < set.length; i++){
+         set[i] = -1;
+      }
+    }
+    private void unionRooms(int roomA, int roomB) {
+        if (set[roomB] < set[roomA]) {
+            set[roomA] = roomB;
+        } else {
+            if (set[roomA] == set[roomB]) {
+                set[roomA]--;
+            }
+            set[roomB] = roomA;
+        }
+    }// end of union rooms
 }// END OF CLASS 
