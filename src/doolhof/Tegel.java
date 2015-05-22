@@ -16,7 +16,7 @@ public class Tegel {
     private int roomName; // for this the room will be a number
     private Speler speler;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
-
+    private boolean dijkstra=false;
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -24,6 +24,14 @@ public class Tegel {
 
     public List<Tegel> getBuren() {
         return buren;
+    }
+
+    public boolean isDijkstra() {
+        return dijkstra;
+    }
+
+    public void setDijkstra(boolean dijkstra) {
+        this.dijkstra = dijkstra;
     }
 
     public Tegel getEastBuur() {

@@ -177,4 +177,17 @@ public class Doolhof extends JComponent {
             set[roomB] = roomA;
         }
     }// end of union rooms
+
+    public ArrayList<Tegel> getLijstTegels() {
+        ArrayList<Tegel> lijst=new ArrayList<>();
+        for (int i = 0; i < hoogte-1; i++) {
+            for (int j = 0; j < breedte-1; j++) {
+               lijst.add(tegels[i][j]);
+                
+            }
+            
+        }
+        return lijst;
+    }
+    
 }// END OF CLASS 
