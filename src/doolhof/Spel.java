@@ -39,6 +39,8 @@ public class Spel {
         KeyListener lissener=new PressListener(doolhof, speler);
         frame.addKeyListener(lissener);
         doolhof.addKeyListener(lissener);
+        frame.validate();
+        frame.repaint();
             
 //            Tegel tegels=new Tegel(1, 2);
 //            Tegel tegels2=new Tegel(2, 2);

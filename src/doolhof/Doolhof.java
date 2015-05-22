@@ -31,6 +31,7 @@ public class Doolhof extends JComponent {
     private final int kamerGrote = 20;
     private int randommuur;
     private Speler speler;
+    private Valsspeler vsp;
 
     public Doolhof(Speler speler) {
         this.speler = speler;
@@ -67,6 +68,20 @@ public class Doolhof extends JComponent {
         }// end of while
         tegels[0][0].setSpeler(speler);
         speler.setLokatie(tegels[0][0]);
+        
+        Random r = new Random();
+        
+        for (int i = 0; i < 3; i++) {
+            
+            vsp = new Valsspeler();
+            
+            int xR = r.nextInt(breedte - 1);
+            int yR = r.nextInt(hoogte - 1);
+            
+            tegels[xR][yR].setValsspeler(vsp);
+            vsp.setLokatie(tegels[xR][yR]);
+            
+        }
     }
     // name the room to display
     private int roomNumber = 0;
@@ -142,10 +157,16 @@ public class Doolhof extends JComponent {
                             y + kamerGrote);
                 }// end of east if
                 if (tegels[i][j].getSpeler() != null) {
-                    g.setColor(Color.red);
+                    g.setColor(Color.blue);
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
                     g.setColor(Color.BLACK);
                 }//tekent speler
+                if (tegels[i][j].getValsspeler() != null) {
+                    g.setColor(Color.red);
+                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+                    g.setColor(Color.BLACK);
+                    
+                }
                 x += kamerGrote;// change the horizontal
             }// end of inner for loop
             x = x_cord;

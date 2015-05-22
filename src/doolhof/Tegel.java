@@ -15,6 +15,7 @@ public class Tegel {
     private List<Tegel> buren; // adjacency list using linked list
     private int roomName; // for this the room will be a number
     private Speler speler;
+    private Valsspeler vsp;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
     private boolean dijkstra=false;
     public void setRoomName(int roomName) {
@@ -132,6 +133,14 @@ public class Tegel {
 
     public void setSpeler(Speler speler) {
         this.speler = speler;
+    }
+    
+    public Valsspeler getValsspeler() {
+        return vsp;
+    }
+    
+    public void setValsspeler(Valsspeler vsp) {
+        this.vsp = vsp;
     }
 
     // now we code the constructer 
