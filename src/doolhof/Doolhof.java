@@ -60,9 +60,16 @@ public class Doolhof extends JComponent {
             if (find(roomA) != find(roomB)) {
                 muren.remove(randommuur);
                 unionRooms(find(roomA), find(roomB));
-                temp.setIsGone(true);
                 temp.getCurrentRoom().getBuren().add(temp.getNextRoom());
                 temp.getNextRoom().getBuren().add(temp.getCurrentRoom());
+                Tegel tegel=temp.getCurrentRoom();
+                if (temp!= null){
+                tegel.deleteMuur(temp);
+                }
+                Tegel tegel2=temp.getNextRoom();
+                if (temp!= null){
+                tegel2.deleteMuur(temp);
+                }
                 num--;
             }// end of if
         }// end of while
@@ -103,6 +110,7 @@ public class Doolhof extends JComponent {
                     muren.add(tegels[i][j].getNorth());
                     tegels[i][j].setNorthBuur(tegels[i - 1][j]);
                     tegels[i - 1][j].setSouthBuur(tegels[i][j]);
+                    tegels[i - 1][j].setSouth(tegels[i][j].getNorth());
                 }
                 if (i == hoogte - 1) {
                     tegels[i][j].setSouth(new Muur(tegels[i][j]));
@@ -114,6 +122,7 @@ public class Doolhof extends JComponent {
                     muren.add(tegels[i][j].getWest());
                     tegels[i][j].setWestBuur(tegels[i][j - 1]);
                     tegels[i][j - 1].setEastBuur(tegels[i][j]);
+                    tegels[i][j - 1].setEast(tegels[i][j].getWest());
                 }
                 if (j == breedte - 1) {
                     tegels[i][j].setEast(new Muur(tegels[i][j]));
@@ -141,18 +150,18 @@ public class Doolhof extends JComponent {
 
         for (int i = 0; i <= hoogte - 1; i++) {
             for (int j = 0; j <= breedte - 1; j++) {
-                if (!(tegels[i][j].getNorth().getIsGone())) {
+                if ((tegels[i][j].getNorth()!=null)) {
                     g.drawLine(x, y, x + kamerGrote, y);
                 }//end of north if
                 // west muur not there draw the line
-                if (tegels[i][j].getWest().getIsGone() == false) {
+                if (tegels[i][j].getWest()!=null) {
                     g.drawLine(x, y, x, y + kamerGrote);
                 }// end of west if
-                if ((i == hoogte - 1) && tegels[i][j].getSouth().getIsGone() == false) {
+                if ((i == hoogte - 1) && tegels[i][j].getSouth()!=null) {
                     g.drawLine(x, y + kamerGrote, x + kamerGrote,
                             y + kamerGrote);
                 }// end of south if
-                if ((j == breedte - 1) && tegels[i][j].getEast().getIsGone() == false) {
+                if ((j == breedte - 1) && tegels[i][j].getEast() !=null) {
                     g.drawLine(x + kamerGrote, y, x + kamerGrote,
                             y + kamerGrote);
                 }// end of east if

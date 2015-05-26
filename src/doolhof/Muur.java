@@ -11,7 +11,7 @@ package doolhof;
 public class Muur{
    
    private Tegel currentRoom, nextRoom;// room in now, next room 
-   private boolean isGone = false;// is the muur there
+   //private boolean isGone = false;// is the muur there
    
 
    // Two constructors will be created
@@ -39,13 +39,13 @@ public class Muur{
         this.currentRoom = currentRoom;
     }
 
-    public boolean getIsGone() {
-        return isGone;
-    }
-
-    public void setIsGone(boolean isGone) {
-        this.isGone = isGone;
-    }
+//    public boolean getIsGone() {
+//        return isGone;
+//    }
+//
+//    public void setIsGone(boolean isGone) {
+//        this.isGone = isGone;
+//    }
 
     public Tegel getNextRoom() {
         return nextRoom;

@@ -30,28 +30,28 @@ public class Speler {
 
     public void move(String richting) {
         int som;
-        if (richting.equals("w") && lokatie.getNorth().getIsGone() && lokatie.getNorthBuur().getValsspeler() == null) {
+        if (richting.equals("w") && lokatie.getNorth()==null && lokatie.getNorthBuur().getValsspeler() == null) {
             lokatie.setSpeler(null);
             lokatie.getNorthBuur().setSpeler(this);
             lokatie=lokatie.getNorthBuur();
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
-        if (richting.equals("a") && lokatie.getWest().getIsGone() && lokatie.getWestBuur().getValsspeler() == null) {
+        if (richting.equals("a") && lokatie.getWest()==null && lokatie.getWestBuur().getValsspeler() == null) {
             lokatie.setSpeler(null);
             lokatie.getWestBuur().setSpeler(this);
             lokatie=lokatie.getWestBuur();
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
-        if (richting.equals("s") && lokatie.getSouthBuur().getNorth().getIsGone() && lokatie.getSouthBuur().getValsspeler() == null) {
+        if (richting.equals("s") && lokatie.getSouthBuur().getNorth()==null && lokatie.getSouthBuur().getValsspeler() == null) {
             lokatie.setSpeler(null);
             lokatie.getSouthBuur().setSpeler(this);
             lokatie=lokatie.getSouthBuur();
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
-        if (richting.equals("d") && lokatie.getEastBuur().getWest().getIsGone() && lokatie.getEastBuur().getValsspeler() == null) {
+        if (richting.equals("d") && lokatie.getEastBuur().getWest()==null && lokatie.getEastBuur().getValsspeler() == null) {
             lokatie.setSpeler(null);
             lokatie.getEastBuur().setSpeler(this);
             lokatie=lokatie.getEastBuur();
@@ -61,7 +61,7 @@ public class Speler {
         }
         //Hieronder Valsspeler collision
         
-        if (richting.equals("w") && lokatie.getNorth().getIsGone() && lokatie.getNorthBuur().getValsspeler() != null) {
+        if (richting.equals("w") && lokatie.getNorth()==null && lokatie.getNorthBuur().getValsspeler() != null) {
             lokatie.setSpeler(null);
             vsp.zetSpelerTerug().setSpeler(speler);
             speler.setLokatie(vsp.zetSpelerTerug());
@@ -71,7 +71,7 @@ public class Speler {
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
-        if (richting.equals("a") && lokatie.getWest().getIsGone() && lokatie.getWestBuur().getValsspeler() != null) {
+        if (richting.equals("a") && lokatie.getWest()==null && lokatie.getWestBuur().getValsspeler() != null) {
             lokatie.setSpeler(null);
             vsp.zetSpelerTerug().setSpeler(speler);
             speler.setLokatie(vsp.zetSpelerTerug());
@@ -79,7 +79,7 @@ public class Speler {
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
-        if (richting.equals("s") && lokatie.getSouthBuur().getNorth().getIsGone() && lokatie.getSouthBuur().getValsspeler() != null) {
+        if (richting.equals("s") && lokatie.getSouthBuur().getNorth()==null && lokatie.getSouthBuur().getValsspeler() != null) {
             lokatie.setSpeler(null);
             vsp.zetSpelerTerug().setSpeler(speler);
             speler.setLokatie(vsp.zetSpelerTerug());
@@ -87,7 +87,7 @@ public class Speler {
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
-        if (richting.equals("d") && lokatie.getEastBuur().getWest().getIsGone() && lokatie.getEastBuur().getValsspeler() != null) {
+        if (richting.equals("d") && lokatie.getEastBuur().getWest()==null && lokatie.getEastBuur().getValsspeler() != null) {
             lokatie.setSpeler(null);
             vsp.zetSpelerTerug().setSpeler(speler);
             speler.setLokatie(vsp.zetSpelerTerug());

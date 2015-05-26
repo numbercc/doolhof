@@ -17,7 +17,8 @@ public class Tegel {
     private Speler speler;
     private Valsspeler vsp;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
-    private boolean dijkstra=false;
+    private boolean dijkstra = false;
+
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -127,6 +128,29 @@ public class Tegel {
         this.y = y;
     }
 
+    public void deleteMuur(Muur muur) {
+        if (north != null) {
+            if (north.equals(muur)) {
+                north = null;
+            }
+        }
+        if (south != null) {
+            if (south.equals(muur)) {
+                south = null;
+            }
+        }
+        if (east != null) {
+            if (east.equals(muur)) {
+                east = null;
+            }
+        }
+        if (west != null) {
+            if (west.equals(muur)) {
+                west = null;
+            }
+        }
+    }
+
     public Speler getSpeler() {
         return speler;
     }
@@ -134,11 +158,11 @@ public class Tegel {
     public void setSpeler(Speler speler) {
         this.speler = speler;
     }
-    
+
     public Valsspeler getValsspeler() {
         return vsp;
     }
-    
+
     public void setValsspeler(Valsspeler vsp) {
         this.vsp = vsp;
     }
