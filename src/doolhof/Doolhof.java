@@ -80,7 +80,7 @@ public class Doolhof extends JComponent {
         
         for (int i = 0; i < 3; i++) {
             
-            vsp = new Valsspeler();
+            vsp = new Valsspeler(tegels);
             
             int xR = r.nextInt(breedte - 1);
             int yR = r.nextInt(hoogte - 1);

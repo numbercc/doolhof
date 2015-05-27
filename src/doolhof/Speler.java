@@ -13,14 +13,12 @@ import javax.swing.JLabel;
 public class Speler {
 
     private Tegel lokatie;
-    private Valsspeler vsp;
-    private Speler speler;
     JLabel score=new JLabel();
     public Speler(JLabel score) {
         this.score=score;
     }
 
-    public Tegel getLokatie() {
+    public Tegel getLocatie() {
         return lokatie;
     }
 
@@ -62,39 +60,46 @@ public class Speler {
         //Hieronder Valsspeler collision
         
         if (richting.equals("w") && lokatie.getNorth()==null && lokatie.getNorthBuur().getValsspeler() != null) {
+            Valsspeler vsp=lokatie.getNorthBuur().getValsspeler() ;
             lokatie.setSpeler(null);
-            vsp.zetSpelerTerug().setSpeler(speler);
-            speler.setLokatie(vsp.zetSpelerTerug());
-            lokatie.setSpeler(speler);
-            
-            
+            getLocatie().setSpeler(null);
+            vsp.zetSpelerTerug(this);
+            lokatie.setSpeler(this);
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
         if (richting.equals("a") && lokatie.getWest()==null && lokatie.getWestBuur().getValsspeler() != null) {
-            lokatie.setSpeler(null);
-            vsp.zetSpelerTerug().setSpeler(speler);
-            speler.setLokatie(vsp.zetSpelerTerug());
-            lokatie.setSpeler(speler);
+            Valsspeler vsp=lokatie.getWestBuur().getValsspeler() ;
+            Tegel temp=lokatie;
+            getLocatie().setSpeler(null);
+            temp.setSpeler(null);
+            vsp.zetSpelerTerug(this);
+            lokatie.setSpeler(this);
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
         if (richting.equals("s") && lokatie.getSouthBuur().getNorth()==null && lokatie.getSouthBuur().getValsspeler() != null) {
-            lokatie.setSpeler(null);
-            vsp.zetSpelerTerug().setSpeler(speler);
-            speler.setLokatie(vsp.zetSpelerTerug());
-            lokatie.setSpeler(speler);
+            Valsspeler vsp=lokatie.getSouthBuur().getValsspeler() ;
+            Tegel temp=lokatie;
+            getLocatie().setSpeler(null);
+            temp.setSpeler(null);
+            vsp.zetSpelerTerug(this);
+            lokatie.setSpeler(this);
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
         if (richting.equals("d") && lokatie.getEastBuur().getWest()==null && lokatie.getEastBuur().getValsspeler() != null) {
-            lokatie.setSpeler(null);
-            vsp.zetSpelerTerug().setSpeler(speler);
-            speler.setLokatie(vsp.zetSpelerTerug());
-            lokatie.setSpeler(speler);
+            Valsspeler vsp=lokatie.getEastBuur().getValsspeler() ;
+            Tegel temp=lokatie;
+            getLocatie().setSpeler(null);
+            temp.setSpeler(null);
+            vsp.zetSpelerTerug(this);
+
+            lokatie.setSpeler(this);
             
             som=Integer.parseInt(score.getText())+1;
             score.setText(""+som);
         }
     }
+    
 }

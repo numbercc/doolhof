@@ -12,6 +12,10 @@ import java.util.Random;
  * @author Montoo
  */
 public class Valsspeler extends Persoon {
+
+    public Valsspeler(Tegel[][] tegel) {
+        this.tegel = tegel;
+    }
     
         private Tegel locatieSpeler;
         private Tegel[][] tegel;
@@ -26,21 +30,19 @@ public class Valsspeler extends Persoon {
         this.locatie = Lokatie;
     }
     
-    public Tegel zetSpelerTerug() {
+    public void zetSpelerTerug(Speler speler) {
         
-        int oudeLocatieX = locatieSpeler.getSpeler().getLokatie().getX();
-        int oudeLocatieY = locatieSpeler.getSpeler().getLokatie().getY();
-        
+        int oudeLocatieX = speler.getLocatie().getX();
+        int oudeLocatieY = speler.getLocatie().getY();
+        Tegel huidige=speler.getLocatie();
         Random r = new Random();
         int randomX = r.nextInt(5);
         int randomY = r.nextInt(5);
         
-        int nieuweLocatieX = oudeLocatieX - 5;
-        int nieuweLocatieY = oudeLocatieY - 5;
-        
-        locatieSpeler = tegel[nieuweLocatieX][nieuweLocatieY];
-        
-        return locatieSpeler;
+        //int nieuweLocatieX = oudeLocatieX - 5;
+       // int nieuweLocatieY = oudeLocatieY - 5;
+        speler.setLokatie(tegel[0][0]);
+        huidige.setSpeler(null);
         
     }
     
