@@ -13,37 +13,56 @@ import java.util.Random;
  */
 public class Valsspeler extends Persoon {
 
-    public Valsspeler(Tegel[][] tegel) {
+    private int waarde;
+
+    public Valsspeler(Tegel[][] tegel, int waarde) {
         this.tegel = tegel;
+        this.waarde = waarde;
     }
-    
-        private Tegel locatieSpeler;
-        private Tegel[][] tegel;
-        private Speler speler;
-    
-        public Tegel getLokatie() {
-            
+    private Tegel[][] tegel;
+    private Speler speler;
+
+    public Tegel getLokatie() {
+
         return locatie;
     }
 
     public void setLokatie(Tegel Lokatie) {
         this.locatie = Lokatie;
     }
-    
-    public void zetSpelerTerug(Speler speler) {
-        
+
+    public void zetSpelerTerug(Speler speler, Valsspeler vsp) {
+
         int oudeLocatieX = speler.getLocatie().getX();
         int oudeLocatieY = speler.getLocatie().getY();
-        Tegel huidige=speler.getLocatie();
-        Random r = new Random();
-        int randomX = r.nextInt(5);
-        int randomY = r.nextInt(5);
-        
-        //int nieuweLocatieX = oudeLocatieX - 5;
-       // int nieuweLocatieY = oudeLocatieY - 5;
-        speler.setLokatie(tegel[0][0]);
+        Tegel huidige = speler.getLocatie();
+
+
+        int nieuweLocatieX = oudeLocatieX - waarde;
+        int nieuweLocatieY = oudeLocatieY - waarde;
+
+        if (nieuweLocatieX < 0) {
+            nieuweLocatieX = 0;
+        }
+
+        if (nieuweLocatieY < 0) {
+            nieuweLocatieY = 0;
+        }
+
+        speler.setLokatie(tegel[nieuweLocatieX][nieuweLocatieY]);
         huidige.setSpeler(null);
         
+        if (huidige != speler.getLocatie()) {
+            verwijderValsspeler(vsp);
+        }
+            
+        
+
     }
-    
+
+    public void verwijderValsspeler(Valsspeler vsp) {
+        vsp.locatie.setValsspeler(null);
+        vsp.getLokatie().setValsspeler(null);
+
+    }
 }

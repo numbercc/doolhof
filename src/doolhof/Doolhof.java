@@ -80,10 +80,23 @@ public class Doolhof extends JComponent {
         
         for (int i = 0; i < 3; i++) {
             
-            vsp = new Valsspeler(tegels);
+            int waarde = r.nextInt(10);
             
-            int xR = r.nextInt(breedte - 1);
-            int yR = r.nextInt(hoogte - 1);
+            if(waarde == 0) {
+                waarde = 5;
+            }
+            
+            vsp = new Valsspeler(tegels, waarde);
+            
+            int xR = r.nextInt(breedte - 2);
+            int yR = r.nextInt(hoogte - 2);
+            
+            if(xR < 2) {
+                xR = 2;
+            }
+            if(yR < 2) {
+                yR = 2;
+            }
             
             tegels[xR][yR].setValsspeler(vsp);
             vsp.setLokatie(tegels[xR][yR]);
