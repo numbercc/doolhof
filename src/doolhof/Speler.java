@@ -13,7 +13,8 @@ import javax.swing.JLabel;
 public class Speler {
 
     private Tegel lokatie;
-    JLabel score=new JLabel();
+    JLabel score;
+    
     public Speler(JLabel score) {
         this.score=score;
     }
@@ -101,5 +102,5 @@ public class Speler {
             score.setText(""+som);
         }
     }
-    
+
 }

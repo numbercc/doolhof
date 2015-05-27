@@ -12,7 +12,7 @@ import java.util.Random;
  * @author Montoo
  */
 public class Valsspeler extends Persoon {
-
+    private Tegel locatie;
     public Valsspeler(Tegel[][] tegel) {
         this.tegel = tegel;
     }

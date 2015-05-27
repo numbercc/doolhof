@@ -21,12 +21,18 @@ public class Spel {
         
         // use JFrame to put the created panel on
         JLabel score=new JLabel();
+        JLabel ammo=new JLabel();
+        JLabel kogel=new JLabel();
+        kogel.setText("Ammo");
+        ammo.setText("1");
         score.setText("0");
-        Speler speler=new Speler(score);// dit goede lokatie gemaakt??????
-        JComponent doolhof=new Doolhof(speler);
+        
+        Speler speler=new Speler(score);
+        JComponent doolhof=new Doolhof(speler,ammo);
         JPanel panel=new JPanel();
         panel.add(score);
-        
+        panel.add(kogel);
+        panel.add(ammo);
         
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,9 +48,5 @@ public class Spel {
         frame.validate();
         frame.repaint();
             
-//            Tegel tegels=new Tegel(1, 2);
-//            Tegel tegels2=new Tegel(2, 2);
-//            if(tegels.equals(tegels2))
-//            System.out.println("zelfde");
     }// end of main
 }

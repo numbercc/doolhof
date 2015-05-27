@@ -18,7 +18,7 @@ public class Tegel {
     private Valsspeler vsp;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
     private boolean dijkstra = false;
-
+    private Wapen wapen;
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -30,6 +30,14 @@ public class Tegel {
 
     public boolean isDijkstra() {
         return dijkstra;
+    }
+
+    public Wapen getWapen() {
+        return wapen;
+    }
+
+    public void setWapen(Wapen wapen) {
+        this.wapen = wapen;
     }
 
     public void setDijkstra(boolean dijkstra) {

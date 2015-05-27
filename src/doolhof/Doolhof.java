@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 /**
  *
@@ -32,9 +33,11 @@ public class Doolhof extends JComponent {
     private int randommuur;
     private Speler speler;
     private Valsspeler vsp;
+    private JLabel bulletCount;
 
-    public Doolhof(Speler speler) {
+    public Doolhof(Speler speler,JLabel bulletCount) {
         this.speler = speler;
+        this.bulletCount=bulletCount;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
@@ -75,7 +78,7 @@ public class Doolhof extends JComponent {
         }// end of while
         tegels[0][0].setSpeler(speler);
         speler.setLokatie(tegels[0][0]);
-        
+        tegels[0][0].getBuren().get(0).setWapen(new Bazooka(bulletCount));
         Random r = new Random();
         
         for (int i = 0; i < 3; i++) {
@@ -173,9 +176,12 @@ public class Doolhof extends JComponent {
                 if (tegels[i][j].getValsspeler() != null) {
                     g.setColor(Color.red);
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
-                    g.setColor(Color.BLACK);
-                    
+                    g.setColor(Color.BLACK); 
                 }
+                if (tegels[i][j].getWapen()!= null) {
+                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+                }
+                
                 x += kamerGrote;// change the horizontal
             }// end of inner for loop
             x = x_cord;
