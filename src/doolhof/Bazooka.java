@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 public class Bazooka extends Wapen {
 private JLabel ammo;
     public Bazooka(JLabel ammo) {
-        super.setBullet(Integer.parseInt(ammo.getText()));
         this.ammo=ammo;
         
     }
@@ -25,6 +24,11 @@ private JLabel ammo;
             super.minderKogels();
             ammo.setText(""+super.getBullet());
         }
+    }
+
+    @Override
+    public void updateScore() {
+        ammo.setText(""+super.getBullet());
     }
 
 

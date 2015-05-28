@@ -10,8 +10,9 @@ package doolhof;
  * @author Chie-cheung
  */
 public abstract class Wapen {
-    private int bullet;
+    private int bullet=0;
     public abstract void  schieten();
+    public abstract void updateScore();
     public void minderKogels(){
         bullet=bullet-1;
     }
@@ -22,6 +23,7 @@ public abstract class Wapen {
 
     public void setBullet(int bullet) {
         this.bullet = bullet;
+        updateScore();
     }
     
 }

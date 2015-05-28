@@ -24,7 +24,7 @@ public class Spel {
         JLabel ammo=new JLabel();
         JLabel kogel=new JLabel();
         kogel.setText("Ammo");
-        ammo.setText("1");
+        ammo.setText("0");
         score.setText("0");
         
         Speler speler=new Speler(score);

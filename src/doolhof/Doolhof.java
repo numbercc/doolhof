@@ -4,9 +4,7 @@
  */
 package doolhof;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
@@ -35,9 +33,9 @@ public class Doolhof extends JComponent {
     private Valsspeler vsp;
     private JLabel bulletCount;
 
-    public Doolhof(Speler speler,JLabel bulletCount) {
+    public Doolhof(Speler speler, JLabel bulletCount) {
         this.speler = speler;
-        this.bulletCount=bulletCount;
+        this.bulletCount = bulletCount;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
@@ -65,13 +63,13 @@ public class Doolhof extends JComponent {
                 unionRooms(find(roomA), find(roomB));
                 temp.getCurrentRoom().getBuren().add(temp.getNextRoom());
                 temp.getNextRoom().getBuren().add(temp.getCurrentRoom());
-                Tegel tegel=temp.getCurrentRoom();
-                if (temp!= null){
-                tegel.deleteMuur(temp);
+                Tegel tegel = temp.getCurrentRoom();
+                if (temp != null) {
+                    tegel.deleteMuur(temp);
                 }
-                Tegel tegel2=temp.getNextRoom();
-                if (temp!= null){
-                tegel2.deleteMuur(temp);
+                Tegel tegel2 = temp.getNextRoom();
+                if (temp != null) {
+                    tegel2.deleteMuur(temp);
                 }
                 num--;
             }// end of if
@@ -80,30 +78,30 @@ public class Doolhof extends JComponent {
         speler.setLokatie(tegels[0][0]);
         tegels[0][0].getBuren().get(0).setWapen(new Bazooka(bulletCount));
         Random r = new Random();
-        
+
         for (int i = 0; i < 3; i++) {
-            
+
             int waarde = r.nextInt(10);
-            
-            if(waarde == 0) {
+
+            if (waarde == 0) {
                 waarde = 5;
             }
-            
+
             vsp = new Valsspeler(tegels, waarde);
-            
+
             int xR = r.nextInt(breedte - 2);
             int yR = r.nextInt(hoogte - 2);
-            
-            if(xR < 2) {
+
+            if (xR < 2) {
                 xR = 2;
             }
-            if(yR < 2) {
+            if (yR < 2) {
                 yR = 2;
             }
-            
+
             tegels[xR][yR].setValsspeler(vsp);
             vsp.setLokatie(tegels[xR][yR]);
-            
+
         }
     }
     // name the room to display
@@ -157,6 +155,7 @@ public class Doolhof extends JComponent {
     public void paintComponent(Graphics g) {
         x_cord = 50;
         y_cord = 50;
+        Graphics2D g2 = (Graphics2D) g;
         // could have taken height as well as breedte
         // just need something to base the roomsize
 
@@ -166,35 +165,50 @@ public class Doolhof extends JComponent {
 
         for (int i = 0; i <= hoogte - 1; i++) {
             for (int j = 0; j <= breedte - 1; j++) {
-                if ((tegels[i][j].getNorth()!=null)) {
+                if ((tegels[i][j].getNorth() != null)) {
                     g.drawLine(x, y, x + kamerGrote, y);
                 }//end of north if
                 // west muur not there draw the line
-                if (tegels[i][j].getWest()!=null) {
+                if (tegels[i][j].getWest() != null) {
                     g.drawLine(x, y, x, y + kamerGrote);
                 }// end of west if
-                if ((i == hoogte - 1) && tegels[i][j].getSouth()!=null) {
+                if ((i == hoogte - 1) && tegels[i][j].getSouth() != null) {
                     g.drawLine(x, y + kamerGrote, x + kamerGrote,
                             y + kamerGrote);
                 }// end of south if
-                if ((j == breedte - 1) && tegels[i][j].getEast() !=null) {
+                if ((j == breedte - 1) && tegels[i][j].getEast() != null) {
                     g.drawLine(x + kamerGrote, y, x + kamerGrote,
                             y + kamerGrote);
                 }// end of east if
                 if (tegels[i][j].getSpeler() != null) {
                     g.setColor(Color.blue);
-                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+                    g.fillOval(x - 2 + kamerGrote / 8, y - 2 + kamerGrote / 8, kamerGrote, kamerGrote);
+                    g.setColor(Color.WHITE);
+                    g2.setStroke(new BasicStroke(3));
+                    if (speler.getRichting() == Richting.left) {
+                        g.drawLine(x  + kamerGrote / 8, y + kamerGrote / 2, x + kamerGrote / 2, y + kamerGrote / 2);
+                    }
+                    else if (speler.getRichting() == Richting.right) {
+                        g.drawLine( x + kamerGrote / 2, y + kamerGrote /2 ,x - 2 + kamerGrote , y + kamerGrote/2 );
+                    }
+                    else if (speler.getRichting() == Richting.up) {
+                        g.drawLine( x + kamerGrote / 2, y + kamerGrote /2 ,x  + kamerGrote/2 , y +2 );
+                    }
+                    else if (speler.getRichting() == Richting.down) {
+                        g.drawLine( x + kamerGrote / 2, y + kamerGrote /2 ,x +kamerGrote/2  , y + kamerGrote );
+                    }
+                    g2.setStroke(new BasicStroke(1));
                     g.setColor(Color.BLACK);
                 }//tekent speler
                 if (tegels[i][j].getValsspeler() != null) {
                     g.setColor(Color.red);
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
-                    g.setColor(Color.BLACK); 
+                    g.setColor(Color.BLACK);
                 }
-                if (tegels[i][j].getWapen()!= null) {
+                if (tegels[i][j].getWapen() != null) {
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
                 }
-                
+
                 x += kamerGrote;// change the horizontal
             }// end of inner for loop
             x = x_cord;
@@ -209,13 +223,15 @@ public class Doolhof extends JComponent {
             return set[r] = find(set[r]);
         }
     }// end of find
-    private void initSet(int elem){
+
+    private void initSet(int elem) {
         set = new int[elem];
-      // initialize every element in the set
-      for(int i = 0; i < set.length; i++){
-         set[i] = -1;
-      }
+        // initialize every element in the set
+        for (int i = 0; i < set.length; i++) {
+            set[i] = -1;
+        }
     }
+
     private void unionRooms(int roomA, int roomB) {
         if (set[roomB] < set[roomA]) {
             set[roomA] = roomB;
@@ -228,15 +244,14 @@ public class Doolhof extends JComponent {
     }// end of union rooms
 
     public ArrayList<Tegel> getLijstTegels() {
-        ArrayList<Tegel> lijst=new ArrayList<>();
-        for (int i = 0; i < hoogte-1; i++) {
-            for (int j = 0; j < breedte-1; j++) {
-               lijst.add(tegels[i][j]);
-                
+        ArrayList<Tegel> lijst = new ArrayList<>();
+        for (int i = 0; i < hoogte - 1; i++) {
+            for (int j = 0; j < breedte - 1; j++) {
+                lijst.add(tegels[i][j]);
+
             }
-            
+
         }
         return lijst;
     }
-    
 }// END OF CLASS 

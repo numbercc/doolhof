@@ -31,18 +31,26 @@ public class PressListener implements KeyListener {
         int key = ke.getKeyCode();
         if (key == KeyEvent.VK_W) {
             speler.move("w");
+            speler.setRichting(Richting.up);
             comp.repaint();
         }
         if (key == KeyEvent.VK_S) {
             speler.move("s");
+            speler.setRichting(Richting.down);
             comp.repaint();
         }
         if (key == KeyEvent.VK_A) {
             speler.move("a");
+            speler.setRichting(Richting.left);
             comp.repaint();
         }
         if (key == KeyEvent.VK_D) {
             speler.move("d");
+            speler.setRichting(Richting.right);
+            comp.repaint();
+        }
+        if (key == KeyEvent.VK_SPACE) {
+            speler.getWapen().schieten();
             comp.repaint();
         }
 
