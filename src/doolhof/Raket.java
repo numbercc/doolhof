@@ -5,6 +5,10 @@
  */
 package doolhof;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+
 /**
  *
  * @author Chie-cheung
@@ -15,11 +19,23 @@ public class Raket {
     private int vluchtLeven;
     private int tegelVoortgang;
     private Richting richting;
+    private Timer timer;
 
     public Raket(Tegel locatie) {
         this.locatie = locatie;
         vluchtLeven = 100;
         tegelVoortgang = 0;
+        timer = new Timer(100, new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                // update x and y respectively 
+                vlieg();
+                Spel.comp.repaint();
+
+            }
+        });
+        timer.start();
     }
 
     public Tegel getLocatie() {
@@ -35,53 +51,76 @@ public class Raket {
     }
 
     public void vlieg() {
+        System.out.println("vlieg");
         if (vluchtLeven > 0) {
-            vluchtLeven=vluchtLeven-10;
+            vluchtLeven = vluchtLeven - 1;
             if (tegelVoortgang < 100) {
                 tegelVoortgang = tegelVoortgang + 10;
 
             } else {
                 tegelVoortgang = 0;
                 volgendeLocatie();
-  
+                System.out.println("volgende tegel");
             }
-            
-        }
-        else{
+
+        } else {
             locatie.setRaket(null);
+            timer.stop();
+            System.out.println("geen raketa");
         }
 
     }
 
     private void volgendeLocatie() {
         if (richting == richting.down) {
-            if(locatie.getSouth()!=null){
-            locatie = locatie.getSouthBuur();
-            }
-            else{
-                locatie.setSouth(null);
+            if (locatie.getSouth()== null) {
+                locatie.setRaket(null);
+                locatie = locatie.getSouthBuur();
+                locatie.setRaket(this);
+                
+            } else {
+                locatie.getSouthBuur().setNorth(null);
+                locatie.setRaket(null);
+                //Spel.comp.repaint();
+                timer.stop();
             }
         } else if (richting == richting.left) {
-            if(locatie.getWest()!=null){
-            locatie = locatie.getWestBuur();
-            }
-            else{
+            if (locatie.getWest() == null) {
+                locatie.setRaket(null);
+                locatie = locatie.getWestBuur();
+                locatie.setRaket(this);
+                
+            } else {
                 locatie.setWest(null);
+                locatie.setRaket(null);
+                //Spel.comp.repaint();
+                timer.stop();
             }
         } else if (richting == richting.right) {
-            if(locatie.getEast()!=null){
-            locatie = locatie.getEastBuur();
-            }
-            else{
-                locatie.setEast(null);
+            if (locatie.getEast()== null) {
+                locatie.setRaket(null);
+                locatie = locatie.getEastBuur();
+                locatie.setRaket(this);
+                
+            } else {
+                locatie.getEastBuur().setWest(null);
+                locatie.setRaket(null);
+                //Spel.comp.repaint();
+                timer.stop();
             }
         } else if (richting == richting.up) {
-            if(locatie.getNorth()!=null){
-            locatie = locatie.getNorthBuur();
-            }
-            else{
+            if (locatie.getNorth() == null) {
+                locatie.setRaket(null);
+                locatie = locatie.getNorthBuur();
+                locatie.setRaket(this);
+                
+            } else {
                 locatie.setNorth(null);
+                locatie.setRaket(null);
+                //Spel.comp.repaint();
+                timer.stop();
             }
+
         }
     }
 
