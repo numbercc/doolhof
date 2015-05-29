@@ -11,6 +11,7 @@ package doolhof;
  */
 public abstract class Wapen {
     private int bullet=0;
+    private Speler speler;
     public abstract void  schieten();
     public abstract void updateScore();
     public void minderKogels(){
@@ -24,6 +25,14 @@ public abstract class Wapen {
     public void setBullet(int bullet) {
         this.bullet = bullet;
         updateScore();
+    }
+
+    public Speler getSpeler() {
+        return speler;
+    }
+
+    public void setSpeler(Speler speler) {
+        this.speler = speler;
     }
     
 }

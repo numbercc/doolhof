@@ -19,6 +19,7 @@ public class Tegel {
     private Tegel northBuur, eastBuur, southBuur, westBuur;
     private boolean dijkstra = false;
     private Wapen wapen;
+    private Raket raket;
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -38,6 +39,14 @@ public class Tegel {
 
     public void setWapen(Wapen wapen) {
         this.wapen = wapen;
+    }
+
+    public Raket getRaket() {
+        return raket;
+    }
+
+    public void setRaket(Raket raket) {
+        this.raket = raket;
     }
 
     public void setDijkstra(boolean dijkstra) {

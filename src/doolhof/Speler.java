@@ -61,6 +61,7 @@ public class Speler {
             wapen.setBullet(wapen.getBullet()+1);
         }
         lokatie.setWapen(null);
+        wapen.setSpeler(this);
     }
     private void moveUp() {
         int som;

@@ -5,7 +5,10 @@
 package doolhof;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.GridLayout;
 import java.awt.event.KeyListener;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,27 +23,32 @@ public class Spel {
         // we will use the scanner for userInput
         
         // use JFrame to put the created panel on
+        JPanel spelerStat=new JPanel(new GridLayout(0, 2));
         JLabel score=new JLabel();
+        JLabel textScore=new JLabel();
         JLabel ammo=new JLabel();
-        JLabel kogel=new JLabel();
-        kogel.setText("Ammo");
+        JLabel textAmmoBazooka=new JLabel();
+        textAmmoBazooka.setText("Bazooka ammo: ");
+        textScore.setText("Aantal stappen: ");
         ammo.setText("0");
         score.setText("0");
         
         Speler speler=new Speler(score);
         JComponent doolhof=new Doolhof(speler,ammo);
-        JPanel panel=new JPanel();
-        panel.add(score);
-        panel.add(kogel);
-        panel.add(ammo);
+        spelerStat.add(textAmmoBazooka);
+        spelerStat.add(ammo);
+        spelerStat.add(textScore);
+        spelerStat.add(score);
+        
         
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 800);
-        frame.getContentPane().add(doolhof);
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        frame.add(doolhof, BorderLayout.CENTER);
+        frame.add(spelerStat,BorderLayout.PAGE_END);
         frame.pack();
         frame.setVisible(true);
-        frame.add(panel);
+        
         
         KeyListener lissener=new PressListener(doolhof, speler);
         frame.addKeyListener(lissener);

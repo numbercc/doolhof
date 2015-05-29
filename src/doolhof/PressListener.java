@@ -50,8 +50,10 @@ public class PressListener implements KeyListener {
             comp.repaint();
         }
         if (key == KeyEvent.VK_SPACE) {
+            if (speler.getWapen()!=null){
             speler.getWapen().schieten();
             comp.repaint();
+            }
         }
 
     }

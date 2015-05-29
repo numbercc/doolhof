@@ -13,6 +13,7 @@ import javax.swing.JLabel;
  */
 public class Bazooka extends Wapen {
 private JLabel ammo;
+
     public Bazooka(JLabel ammo) {
         this.ammo=ammo;
         
@@ -23,6 +24,10 @@ private JLabel ammo;
         if (super.getBullet() > 0) {
             super.minderKogels();
             ammo.setText(""+super.getBullet());
+            Raket raket=new Raket(super.getSpeler().getLocatie());
+            raket.setRichting(super.getSpeler().getRichting());
+            raket.setTegelVoortgang(60);
+            super.getSpeler().getLocatie().setRaket(raket);
         }
     }
 

@@ -39,7 +39,7 @@ public class Doolhof extends JComponent {
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
-        setPreferredSize(new Dimension(800, 700));
+        setPreferredSize(new Dimension(500, 500));
     }
 
     private void maakRandomDoolhof() {
@@ -180,6 +180,28 @@ public class Doolhof extends JComponent {
                     g.drawLine(x + kamerGrote, y, x + kamerGrote,
                             y + kamerGrote);
                 }// end of east if
+                if(tegels[i][j].getRaket()!=null){
+                    g.setColor(Color.ORANGE);
+                    g2.setStroke(new BasicStroke(2));
+                    double voortgang= (tegels[i][j].getRaket().getTegelVoortgang()/100)*kamerGrote;                  
+                    if (tegels[i][j].getRaket().getRichting() ==Richting.left) {
+                        g2.drawLine(x  + kamerGrote/2+(int)voortgang,y + kamerGrote/2, x  + kamerGrote/2+(int)voortgang-5,y+ kamerGrote/2);
+                    }
+                    else if (tegels[i][j].getRaket().getRichting() == Richting.right) {
+                        g2.drawLine(x  + kamerGrote/2+(int)voortgang,y + kamerGrote/2, x  + kamerGrote/2+(int)voortgang+5,y+ kamerGrote/2);
+                    }
+                    else if (tegels[i][j].getRaket().getRichting() == Richting.up) {
+                       g2.drawLine(x  + kamerGrote/2+(int)voortgang,y+kamerGrote/2 , x  + kamerGrote/2+(int)voortgang,y+kamerGrote/2-5); 
+                      
+                    }
+                    else if (tegels[i][j].getRaket().getRichting() == Richting.down) {
+                        g2.drawLine(x  + kamerGrote/2+(int)voortgang,y +kamerGrote/2, x  + kamerGrote/2+(int)voortgang,y+kamerGrote/2+5); 
+                    }
+                    
+                    
+                    g2.setStroke(new BasicStroke(1));
+                    g.setColor(Color.BLACK);
+                }
                 if (tegels[i][j].getSpeler() != null) {
                     g.setColor(Color.blue);
                     g.fillOval(x - 2 + kamerGrote / 8, y - 2 + kamerGrote / 8, kamerGrote, kamerGrote);
