@@ -50,20 +50,28 @@ public class Speler {
 
     public void move(KeyEvent ke) {
         
-        if (ke.getKeyCode()==KeyEvent.VK_W && lokatie.getNorth() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_W ) {
+            if(lokatie.getNorth() == null){
             moveUp();
+            }
             setRichting(Richting.up);
         }
-        if (ke.getKeyCode()==KeyEvent.VK_A && lokatie.getWest() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_A ) {
+            if(lokatie.getWest() == null){
             moveLeft();
+            }
             setRichting(Richting.left);
         }
-        if (ke.getKeyCode()==KeyEvent.VK_S && lokatie.getSouthBuur().getNorth() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_S ) {
+            if(lokatie.getSouth()== null){
             moveDown();
+            }
             setRichting(Richting.down);
         }
-        if (ke.getKeyCode()==KeyEvent.VK_D && lokatie.getEastBuur().getWest() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_D) {
+            if(lokatie.getEast()== null){
             moveRight();
+            }
             setRichting(Richting.right);
         } //Hieronder Valsspeler collision
         comp.repaint();

@@ -30,31 +30,58 @@ public class Pistool extends Wapen {
     @Override
     public void schieten() {
         pistoolSchieten(this.locatie);
+        super.minderKogels();
     }
 
     public void pistoolSchieten(Tegel locatie) {
         if(richting==Richting.up){
-          //  if(locatie.get()==null){
-                
-            //}
+            if(locatie.getPersoon()==null){
+                pistoolSchieten(locatie.getNorthBuur());
+            }
+            else{
+                locatie.setPersoon(null);
+            }
         }
-
+        else if(richting==Richting.left){
+            if(locatie.getPersoon()==null){
+                pistoolSchieten(locatie.getWestBuur());
+            }
+            else{
+                locatie.setPersoon(null);
+            }
+        }
+        else if(richting==Richting.right){
+            if(locatie.getPersoon()==null){
+                pistoolSchieten(locatie.getEastBuur());
+            }
+            else{
+                locatie.setPersoon(null);
+            }
+        }
+        else if(richting==Richting.down){
+            if(locatie.getPersoon()==null){
+                pistoolSchieten(locatie.getSouthBuur());
+            }
+            else{
+                locatie.setPersoon(null);
+            }
+        }
     }
 
-//    public Richting getRichting() {
-//        return richting;
-//    }
-//
-//    public void setRichting(Richting richting) {
-//        this.richting = richting;
-//    }
-//
-//    public Tegel getLocatie() {
-//        return locatie;
-//    }
-//
-//    public void setLocatie(Tegel locatie) {
-//        this.locatie = locatie;
-//    }
+    public Richting getRichting() {
+        return richting;
+    }
+
+    public void setRichting(Richting richting) {
+        this.richting = richting;
+    }
+
+    public Tegel getLocatie() {
+        return locatie;
+    }
+
+    public void setLocatie(Tegel locatie) {
+        this.locatie = locatie;
+    }
 
 }
