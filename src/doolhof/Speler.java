@@ -68,6 +68,14 @@ public class Speler {
         } //Hieronder Valsspeler collision
         comp.repaint();
     }
+    public void schieten(KeyEvent key){
+         if (key.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (getWapen()!=null){
+            getWapen().schieten();
+            comp.repaint();
+            }
+        }
+    }
     private void pickUpWaepon(){
         if(wapen==null){
         setWapen(lokatie.getWapen());

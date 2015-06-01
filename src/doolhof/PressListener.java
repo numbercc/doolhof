@@ -29,9 +29,8 @@ public class PressListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent ke) {
         speler.move(ke);
-
+        speler.schieten(ke);
     }
-
     @Override
     public void keyReleased(KeyEvent ke) {
     }
