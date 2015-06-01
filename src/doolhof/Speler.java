@@ -90,7 +90,7 @@ public class Speler {
     private void moveUp() {
         int som;
 
-        if (lokatie.getNorthBuur().getValsspeler() == null) {
+        if (lokatie.getNorthBuur().getPersoon()== null ) {
             lokatie.setSpeler(null);
             lokatie.getNorthBuur().setSpeler(this);
             lokatie = lokatie.getNorthBuur();
@@ -99,21 +99,19 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
-            else if(lokatie.getVriend() != null) {
+            else if(lokatie.getPersoon()!= null &&lokatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else {
-            Valsspeler vsp = lokatie.getNorthBuur().getValsspeler();
+        } else if (lokatie.getNorthBuur().getPersoon() instanceof Valsspeler) {
+            Valsspeler vsp = (Valsspeler)lokatie.getNorthBuur().getPersoon();
             valsspelerCollision(vsp);
-            som = Integer.parseInt(score.getText()) + 1;
-            score.setText("" + som);
         }
     }
     
     private void moveLeft() {
         int som;
 
-        if (lokatie.getWestBuur().getValsspeler() == null) {
+        if (lokatie.getWestBuur().getPersoon()== null ) {
             lokatie.setSpeler(null);
             lokatie.getWestBuur().setSpeler(this);
             lokatie = lokatie.getWestBuur();
@@ -122,11 +120,11 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
-            else if(lokatie.getVriend() != null) {
+            else if(lokatie.getPersoon()!= null &&lokatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else {
-            Valsspeler vsp = lokatie.getWestBuur().getValsspeler();
+        } else if (lokatie.getWestBuur().getPersoon() instanceof Valsspeler) {
+            Valsspeler vsp = (Valsspeler)lokatie.getWestBuur().getPersoon();
             valsspelerCollision(vsp);
         }
     }
@@ -134,7 +132,7 @@ public class Speler {
     private void moveDown() {
         int som;
 
-        if (lokatie.getSouthBuur().getValsspeler() == null) {
+        if (lokatie.getSouthBuur().getPersoon()== null) {
             lokatie.setSpeler(null);
             lokatie.getSouthBuur().setSpeler(this);
             lokatie = lokatie.getSouthBuur();
@@ -143,11 +141,11 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
-            else if(lokatie.getVriend() != null) {
+            else if(lokatie.getPersoon()!= null&&lokatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else {
-            Valsspeler vsp = lokatie.getSouthBuur().getValsspeler();
+        } else if(lokatie.getSouthBuur().getPersoon() instanceof Valsspeler) {
+            Valsspeler vsp = (Valsspeler)lokatie.getSouthBuur().getPersoon();
             valsspelerCollision(vsp);
         }
     }
@@ -155,7 +153,7 @@ public class Speler {
     private void moveRight() {
         int som;
 
-        if (lokatie.getEastBuur().getValsspeler() == null) {
+        if (lokatie.getEastBuur().getPersoon()== null) {
             lokatie.setSpeler(null);
             lokatie.getEastBuur().setSpeler(this);
             lokatie = lokatie.getEastBuur();
@@ -164,11 +162,11 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
-            else if(lokatie.getVriend() != null) {
+            else if(lokatie.getPersoon()!= null &&lokatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else {
-            Valsspeler vsp = lokatie.getValsspeler();
+        } else if(lokatie.getEastBuur().getPersoon() instanceof Valsspeler) {
+            Valsspeler vsp = (Valsspeler)lokatie.getEastBuur().getPersoon();
             valsspelerCollision(vsp);
         }
         

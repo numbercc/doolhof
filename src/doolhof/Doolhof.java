@@ -99,11 +99,11 @@ public class Doolhof extends JComponent {
             if (yR < 2) {
                 yR = 2;
             }
-            tegels[xR][yR].setValsspeler(vsp);
+            tegels[xR][yR].setPersoon(vsp);
             vsp.setLokatie(tegels[xR][yR]);
         }
         vriend = new Vriend(tegels);
-        tegels[19][19].setVriend(vriend);
+        tegels[19][19].setPersoon(vriend);
         vriend.setLokatie(tegels[19][19]);
     }
     // name the room to display
@@ -224,7 +224,7 @@ public class Doolhof extends JComponent {
                     g2.setStroke(new BasicStroke(1));
                     g.setColor(Color.BLACK);
                 }//tekent speler
-                if (tegels[i][j].getValsspeler() != null) {
+                if (tegels[i][j].getPersoon()!= null && tegels[i][j].getPersoon() instanceof Valsspeler) {
                     g.setColor(Color.red);
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
                     g.setColor(Color.BLACK);
@@ -232,7 +232,7 @@ public class Doolhof extends JComponent {
                 if (tegels[i][j].getWapen() != null) {
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
                 }
-                if(tegels[i][j].getVriend() != null) {
+                if(tegels[i][j].getPersoon()!= null && tegels[i][j].getPersoon() instanceof Vriend) {
                     g.setColor(Color.GREEN);
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote /2, kamerGrote /2);
                 }

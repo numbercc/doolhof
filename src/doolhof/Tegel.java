@@ -15,12 +15,11 @@ public class Tegel {
     private List<Tegel> buren; // adjacency list using linked list
     private int roomName; // for this the room will be a number
     private Speler speler;
-    private Valsspeler vsp;
+    private Persoon persoon;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
     private boolean dijkstra = false;
     private Wapen wapen;
     private Raket raket;
-    private Vriend vriend;
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -146,6 +145,14 @@ public class Tegel {
         this.y = y;
     }
 
+    public Persoon getPersoon() {
+        return persoon;
+    }
+
+    public void setPersoon(Persoon persoon) {
+        this.persoon = persoon;
+    }
+
     public void deleteMuur(Muur muur) {
         if (north != null) {
             if (north.equals(muur)) {
@@ -177,21 +184,9 @@ public class Tegel {
         this.speler = speler;
     }
 
-    public Valsspeler getValsspeler() {
-        return vsp;
-    }
 
-    public void setValsspeler(Valsspeler vsp) {
-        this.vsp = vsp;
-    }
     
-    public Vriend getVriend() {
-        return vriend;
-    }
-    
-    public void setVriend(Vriend vr) {
-        this.vriend = vr;
-    }
+
 
     // now we code the constructer 
     public Tegel(int x, int y) {

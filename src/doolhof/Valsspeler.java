@@ -61,8 +61,8 @@ public class Valsspeler extends Persoon {
     }
 
     public void verwijderValsspeler(Valsspeler vsp) {
-        vsp.locatie.setValsspeler(null);
-        vsp.getLokatie().setValsspeler(null);
+        vsp.locatie.setPersoon(null);
+        vsp.getLokatie().setPersoon(null);
 
     }
 }
