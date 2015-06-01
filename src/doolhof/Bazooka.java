@@ -26,7 +26,7 @@ private JLabel ammo;
             ammo.setText(""+super.getBullet());
             Raket raket=new Raket(super.getSpeler().getLocatie());
             raket.setRichting(super.getSpeler().getRichting());
-            raket.setTegelVoortgang(60);
+            raket.setTegelVoortgang(0);
             super.getSpeler().getLocatie().setRaket(raket);
         }
     }

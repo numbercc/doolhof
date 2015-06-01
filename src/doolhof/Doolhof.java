@@ -183,20 +183,19 @@ public class Doolhof extends JComponent {
                 if(tegels[i][j].getRaket()!=null){
                     g.setColor(Color.ORANGE);
                     g2.setStroke(new BasicStroke(2));
-                    double voortgang= (tegels[i][j].getRaket().getTegelVoortgang()/100)*kamerGrote;   
+                    double voortgang=(((double)tegels[i][j].getRaket().getTegelVoortgang())/100)*(double)kamerGrote;   
                     if (tegels[i][j].getRaket().getRichting() ==Richting.left) {
-                        g2.drawLine(x  + kamerGrote/2+(int)voortgang,y + kamerGrote/2, x  + kamerGrote/2+(int)voortgang-2,y+ kamerGrote/2);
+                        g2.drawLine(x  -(int)voortgang,y + kamerGrote/2, x  -(int)voortgang-2,y+ kamerGrote/2);
                     }
                     else if (tegels[i][j].getRaket().getRichting() == Richting.right) {
-                        g2.drawLine(x  + kamerGrote/2-(int)voortgang,y + kamerGrote/2, x  + kamerGrote/2-(int)voortgang+2,y+ kamerGrote/2);
-                        System.out.println(voortgang);
+                        g2.drawLine(x  +(int)voortgang,y + kamerGrote/2, x  +(int)voortgang+2,y+ kamerGrote/2);
                     }
                     else if (tegels[i][j].getRaket().getRichting() == Richting.up) {
-                       g2.drawLine(x  + kamerGrote/2,y+kamerGrote/2 -(int)voortgang , x  + kamerGrote/2+(int)voortgang,y+kamerGrote/2-(int)voortgang-2); 
+                       g2.drawLine(x  + kamerGrote/2,y -(int)voortgang , x  + kamerGrote/2,y-(int)voortgang-2); 
                       
                     }
                     else if (tegels[i][j].getRaket().getRichting() == Richting.down) {
-                        g2.drawLine(x  + kamerGrote/2,y +kamerGrote/2+(int)voortgang, x  + kamerGrote/2+(int)voortgang,y+kamerGrote/2+2+(int)voortgang); 
+                        g2.drawLine(x  + kamerGrote/2,y +(int)voortgang, x  + kamerGrote/2,y+2+(int)voortgang); 
                     }
                     
                     

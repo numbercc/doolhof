@@ -23,9 +23,9 @@ public class Raket {
 
     public Raket(Tegel locatie) {
         this.locatie = locatie;
-        vluchtLeven = 100;
+        vluchtLeven = 5;
         tegelVoortgang = 0;
-        timer = new Timer(100, new ActionListener() {
+        timer = new Timer(10, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -53,20 +53,17 @@ public class Raket {
     public void vlieg() {
         System.out.println("vlieg");
         if (vluchtLeven > 0) {
-            vluchtLeven = vluchtLeven - 1;
-            if (tegelVoortgang < 100) {
+            if (tegelVoortgang < 90) {
                 tegelVoortgang = tegelVoortgang + 10;
 
             } else {
                 tegelVoortgang = 0;
                 volgendeLocatie();
-                System.out.println("volgende tegel");
             }
 
         } else {
             locatie.setRaket(null);
             timer.stop();
-            System.out.println("geen raketa");
         }
 
     }
@@ -77,6 +74,7 @@ public class Raket {
                 locatie.setRaket(null);
                 locatie = locatie.getSouthBuur();
                 locatie.setRaket(this);
+                vluchtLeven=vluchtLeven-1;
                 
             } else {
                 locatie.getSouthBuur().setNorth(null);
@@ -89,6 +87,7 @@ public class Raket {
                 locatie.setRaket(null);
                 locatie = locatie.getWestBuur();
                 locatie.setRaket(this);
+                vluchtLeven=vluchtLeven-1;
                 
             } else {
                 locatie.setWest(null);
@@ -101,6 +100,7 @@ public class Raket {
                 locatie.setRaket(null);
                 locatie = locatie.getEastBuur();
                 locatie.setRaket(this);
+                vluchtLeven=vluchtLeven-1;
                 
             } else {
                 locatie.getEastBuur().setWest(null);
@@ -113,6 +113,7 @@ public class Raket {
                 locatie.setRaket(null);
                 locatie = locatie.getNorthBuur();
                 locatie.setRaket(this);
+                vluchtLeven=vluchtLeven-1;
                 
             } else {
                 locatie.setNorth(null);
