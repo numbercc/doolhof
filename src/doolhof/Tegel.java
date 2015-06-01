@@ -20,6 +20,7 @@ public class Tegel {
     private boolean dijkstra = false;
     private Wapen wapen;
     private Raket raket;
+    private Vriend vriend;
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -182,6 +183,14 @@ public class Tegel {
 
     public void setValsspeler(Valsspeler vsp) {
         this.vsp = vsp;
+    }
+    
+    public Vriend getVriend() {
+        return vriend;
+    }
+    
+    public void setVriend(Vriend vr) {
+        this.vriend = vr;
     }
 
     // now we code the constructer 
