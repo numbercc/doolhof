@@ -99,6 +99,9 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
+            else if(lokatie.getVriend() != null) {
+                System.out.println("Test!");
+            }
         } else {
             Valsspeler vsp = lokatie.getNorthBuur().getValsspeler();
             valsspelerCollision(vsp);
@@ -119,6 +122,9 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
+            else if(lokatie.getVriend() != null) {
+                System.out.println("Test!");
+            }
         } else {
             Valsspeler vsp = lokatie.getWestBuur().getValsspeler();
             valsspelerCollision(vsp);
@@ -136,6 +142,9 @@ public class Speler {
             score.setText("" + som);
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
+            }
+            else if(lokatie.getVriend() != null) {
+                System.out.println("Test!");
             }
         } else {
             Valsspeler vsp = lokatie.getSouthBuur().getValsspeler();
@@ -155,8 +164,11 @@ public class Speler {
             if(lokatie.getWapen()!=null){
                 pickUpWaepon();
             }
+            else if(lokatie.getVriend() != null) {
+                System.out.println("Test!");
+            }
         } else {
-            Valsspeler vsp = lokatie.getEastBuur().getValsspeler();
+            Valsspeler vsp = lokatie.getValsspeler();
             valsspelerCollision(vsp);
         }
         

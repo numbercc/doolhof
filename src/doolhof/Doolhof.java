@@ -31,6 +31,7 @@ public class Doolhof extends JComponent {
     private int randommuur;
     private Speler speler;
     private Valsspeler vsp;
+    private Vriend vriend;
     private JLabel bulletCount;
 
     public Doolhof(Speler speler, JLabel bulletCount) {
@@ -98,11 +99,12 @@ public class Doolhof extends JComponent {
             if (yR < 2) {
                 yR = 2;
             }
-
             tegels[xR][yR].setValsspeler(vsp);
             vsp.setLokatie(tegels[xR][yR]);
-
         }
+        vriend = new Vriend(tegels);
+        tegels[19][19].setVriend(vriend);
+        vriend.setLokatie(tegels[19][19]);
     }
     // name the room to display
     private int roomNumber = 0;
@@ -230,6 +232,10 @@ public class Doolhof extends JComponent {
                 }
                 if (tegels[i][j].getWapen() != null) {
                     g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+                }
+                if(tegels[i][j].getVriend() != null) {
+                    g.setColor(Color.GREEN);
+                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote /2, kamerGrote /2);
                 }
 
                 x += kamerGrote;// change the horizontal
