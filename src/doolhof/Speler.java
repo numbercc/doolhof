@@ -4,6 +4,8 @@
  */
 package doolhof;
 
+import java.awt.event.KeyEvent;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 /**
@@ -16,6 +18,7 @@ public class Speler {
     JLabel score;
     private Wapen wapen;
     private Richting richting;
+    private static JComponent comp;
     public Speler(JLabel score) {
         this.score = score;
         richting= Richting.left;
@@ -25,6 +28,14 @@ public class Speler {
         return lokatie;
     }
 
+    public static JComponent getComp() {
+        return comp;
+    }
+
+    public static void setComp(JComponent comp) {
+        Speler.comp = comp;
+    }
+    
     public Wapen getWapen() {
         return wapen;
     }
@@ -37,20 +48,25 @@ public class Speler {
         this.lokatie = Lokatie;
     }
 
-    public void move(String richting) {
+    public void move(KeyEvent ke) {
         
-        if (richting.equals("w") && lokatie.getNorth() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_W && lokatie.getNorth() == null) {
             moveUp();
+            setRichting(Richting.up);
         }
-        if (richting.equals("a") && lokatie.getWest() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_A && lokatie.getWest() == null) {
             moveLeft();
+            setRichting(Richting.left);
         }
-        if (richting.equals("s") && lokatie.getSouthBuur().getNorth() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_S && lokatie.getSouthBuur().getNorth() == null) {
             moveDown();
+            setRichting(Richting.down);
         }
-        if (richting.equals("d") && lokatie.getEastBuur().getWest() == null) {
+        if (ke.getKeyCode()==KeyEvent.VK_D && lokatie.getEastBuur().getWest() == null) {
             moveRight();
+            setRichting(Richting.right);
         } //Hieronder Valsspeler collision
+        comp.repaint();
     }
     private void pickUpWaepon(){
         if(wapen==null){

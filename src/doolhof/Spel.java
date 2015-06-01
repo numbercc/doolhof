@@ -37,6 +37,7 @@ public class Spel {
         Speler speler = new Speler(score);
         JComponent doolhof = new Doolhof(speler, ammo);
         comp = doolhof;
+        speler.setComp(comp);
         spelerStat.add(textAmmoBazooka);
         spelerStat.add(ammo);
         spelerStat.add(textScore);
