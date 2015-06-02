@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 public class Speler {
 
     private Tegel lokatie;
-    int score=0;
+    int score = 0;
     private Wapen wapen;
     private Richting richting;
     private static JComponent comp;
@@ -107,9 +107,10 @@ public class Speler {
             score = score + 1;
             if (lokatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
             }
+        } else if (lokatie.getNorthBuur().getPersoon() instanceof Vriend) {
+            Vriend vr = (Vriend) lokatie.getNorthBuur().getPersoon();
+            vr.spelBeeindigen(lokatie);
         } else if (lokatie.getNorthBuur().getPersoon() instanceof Valsspeler) {
             Valsspeler vsp = (Valsspeler) lokatie.getNorthBuur().getPersoon();
             valsspelerCollision(vsp);
@@ -126,9 +127,10 @@ public class Speler {
             score = score + 1;
             if (lokatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
             }
+        } else if (lokatie.getWestBuur().getPersoon() instanceof Vriend) {
+            Vriend vr = (Vriend) lokatie.getWestBuur().getPersoon();
+            vr.spelBeeindigen(lokatie);
         } else if (lokatie.getWestBuur().getPersoon() instanceof Valsspeler) {
             Valsspeler vsp = (Valsspeler) lokatie.getWestBuur().getPersoon();
             valsspelerCollision(vsp);
@@ -145,9 +147,10 @@ public class Speler {
             score = score + 1;
             if (lokatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
             }
+        } else if (lokatie.getSouthBuur().getPersoon() instanceof Vriend) {
+            Vriend vr = (Vriend) lokatie.getSouthBuur().getPersoon();
+            vr.spelBeeindigen(lokatie);
         } else if (lokatie.getSouthBuur().getPersoon() instanceof Valsspeler) {
             Valsspeler vsp = (Valsspeler) lokatie.getSouthBuur().getPersoon();
             valsspelerCollision(vsp);
@@ -164,9 +167,11 @@ public class Speler {
             score = score + 1;
             if (lokatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
             }
+
+        } else if (lokatie.getEastBuur().getPersoon() instanceof Vriend) {
+            Vriend vr = (Vriend) lokatie.getEastBuur().getPersoon();
+            vr.spelBeeindigen(lokatie);
         } else if (lokatie.getEastBuur().getPersoon() instanceof Valsspeler) {
             Valsspeler vsp = (Valsspeler) lokatie.getEastBuur().getPersoon();
             valsspelerCollision(vsp);

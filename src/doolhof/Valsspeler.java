@@ -20,7 +20,6 @@ public class Valsspeler extends Persoon {
         this.waarde = waarde;
     }
     private Tegel[][] tegel;
-    private Speler speler;
 
     public Tegel getLokatie() {
 
