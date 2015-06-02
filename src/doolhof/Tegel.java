@@ -35,9 +35,7 @@ public class Tegel {
     }
     public void teken() {
         Graphics2D g2 = (Graphics2D) g;
-        g.setColor(Color.GRAY);
-        g.fillRect(x, y, kamerGrote, kamerGrote);
-        g.setColor(Color.BLACK);
+
         if (getNorth() != null) {
             g2.drawLine(x, y, x + kamerGrote, y);
         }//end of north if
@@ -65,7 +63,7 @@ public class Tegel {
         else if (getWapen() != null) {
             getWapen().teken(kamerGrote, x, y, g);
         }
-        comp.repaint();
+        comp.repaint(x, x, kamerGrote, kamerGrote);
     }
 
     public JComponent getComp() {

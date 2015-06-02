@@ -159,6 +159,7 @@ public class Doolhof extends JComponent {
 
         for (int i = 0; i <= hoogte - 1; i++) {
             for (int j = 0; j <= breedte - 1; j++) {
+              
                 tegels[i][j].setComp(this);
                 tegels[i][j].setX(x);
                 tegels[i][j].setY(y);

@@ -55,7 +55,6 @@ public class Spel {
         doolhof.addKeyListener(lissener);
         frame.validate();
         frame.repaint();
-
     }// end of main
 
 }
