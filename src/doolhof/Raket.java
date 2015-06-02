@@ -51,7 +51,6 @@ public class Raket {
     }
 
     public void vlieg() {
-        System.out.println("vlieg");
         if (vluchtLeven > 0) {
             if (tegelVoortgang < 90) {
                 tegelVoortgang = tegelVoortgang + 10;
