@@ -5,6 +5,10 @@
  */
 package doolhof;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -20,6 +24,7 @@ public class Raket {
     private int tegelVoortgang;
     private Richting richting;
     private Timer timer;
+    private int damage=100;
 
     public Raket(Tegel locatie) {
         this.locatie = locatie;
@@ -67,61 +72,96 @@ public class Raket {
 
     }
 
+    private void veranderLocatie(Tegel buur) {
+        locatie.setRaket(null);
+        locatie.teken();
+        locatie = buur;
+        locatie.setRaket(this);
+        locatie.teken();
+    }
+
     private void volgendeLocatie() {
         if (richting == richting.down) {
-            if (locatie.getSouth()== null) {
-                locatie.setRaket(null);
-                locatie = locatie.getSouthBuur();
-                locatie.setRaket(this);
-                vluchtLeven=vluchtLeven-1;
-                
+            if (locatie.getSouth() == null) {
+                veranderLocatie(locatie.getSouthBuur());
+
             } else {
-                locatie.getSouthBuur().setNorth(null);
+
+                locatie.getSouth().wordGeraakt(damage);
                 locatie.setRaket(null);
-                //Spel.comp.repaint();
+                if (locatie.getSouth().getLeven() == 0) {
+                    locatie.setSouth(null);
+                    locatie.getSouthBuur().setNorth(null);
+                    locatie.teken();
+                }
                 timer.stop();
             }
         } else if (richting == richting.left) {
             if (locatie.getWest() == null) {
-                locatie.setRaket(null);
-                locatie = locatie.getWestBuur();
-                locatie.setRaket(this);
-                vluchtLeven=vluchtLeven-1;
-                
+                veranderLocatie(locatie.getWestBuur());
+
+
             } else {
-                locatie.setWest(null);
+                locatie.getWest().wordGeraakt(damage);
                 locatie.setRaket(null);
-                //Spel.comp.repaint();
+                if (locatie.getWest().getLeven() == 0) {
+                    locatie.setWest(null);
+                    locatie.getWestBuur().setEast(null);
+                    locatie.teken();
+                }
                 timer.stop();
             }
         } else if (richting == richting.right) {
-            if (locatie.getEast()== null) {
-                locatie.setRaket(null);
-                locatie = locatie.getEastBuur();
-                locatie.setRaket(this);
-                vluchtLeven=vluchtLeven-1;
-                
+            if (locatie.getEast() == null) {
+                veranderLocatie(locatie.getEastBuur());
+
+
             } else {
-                locatie.getEastBuur().setWest(null);
+                locatie.getEast().wordGeraakt(damage);
                 locatie.setRaket(null);
-                //Spel.comp.repaint();
+                if (locatie.getEast().getLeven() == 0) {
+                    locatie.setEast(null);
+                    locatie.getEastBuur().setWest(null);
+                    locatie.teken();
+                }
                 timer.stop();
             }
         } else if (richting == richting.up) {
             if (locatie.getNorth() == null) {
-                locatie.setRaket(null);
-                locatie = locatie.getNorthBuur();
-                locatie.setRaket(this);
-                vluchtLeven=vluchtLeven-1;
-                
+                veranderLocatie(locatie.getNorthBuur());
+
+
             } else {
-                locatie.setNorth(null);
+                locatie.getNorth().wordGeraakt(damage);
                 locatie.setRaket(null);
-                //Spel.comp.repaint();
+                if (locatie.getNorth().getLeven() == 0) {
+                    locatie.setNorth(null);
+                    locatie.getNorthBuur().setSouth(null);
+                    locatie.teken();
+                }
                 timer.stop();
             }
 
         }
+    }
+
+    public void teken(int kamerGrote, int x, int y, Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.ORANGE);
+        g2.setStroke(new BasicStroke(2));
+        double voortgang = (((double) getTegelVoortgang()) / 100) * (double) kamerGrote;
+        if (getRichting() == Richting.left) {
+            g2.drawLine(x+ kamerGrote - (int) voortgang, y + kamerGrote / 2, x+ kamerGrote - (int) voortgang - 2, y + kamerGrote / 2);
+        } else if (getRichting() == Richting.right) {
+            g2.drawLine(x + (int) voortgang, y + kamerGrote / 2, x + (int) voortgang + 2, y + kamerGrote / 2);
+        } else if (getRichting() == Richting.up) {
+            g2.drawLine(x + kamerGrote / 2, y + kamerGrote- (int) voortgang, x + kamerGrote / 2, y + kamerGrote- (int) voortgang - 2);
+
+        } else if (getRichting() == Richting.down) {
+            g2.drawLine(x + kamerGrote / 2, y + (int) voortgang, x + kamerGrote / 2, y + 2 + (int) voortgang);
+        }
+        g2.setStroke(new BasicStroke(1));
+        g.setColor(Color.BLACK);
     }
 
     public void setLocatie(Tegel locatie) {
@@ -143,5 +183,4 @@ public class Raket {
     public void setTegelVoortgang(int tegelVoortgang) {
         this.tegelVoortgang = tegelVoortgang;
     }
-
 }

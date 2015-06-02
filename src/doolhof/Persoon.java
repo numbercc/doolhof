@@ -5,12 +5,29 @@
  */
 package doolhof;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Montoo
  */
-public class Persoon {
+public abstract class Persoon {
     
-    protected Tegel locatie;
+    private Tegel locatie;
+
+    public abstract void teken(int kamerGrote, int x, int y, Graphics g);
+
+    public abstract void wordGeraakt(Speler speler);
+
+    public void verwijderpersoon() {
+        locatie.setPersoon(null);
+    }
+
+    public Tegel getLocatie() {
+        return locatie;
+    }
     
+    public void setLocatie(Tegel locatie) {
+        this.locatie = locatie;
+    }
 }

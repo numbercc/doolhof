@@ -5,6 +5,8 @@
  */
 package doolhof;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Chie-cheung
@@ -13,7 +15,7 @@ public abstract class Wapen {
     private int bullet=0;
     private Speler speler;
     public abstract void  schieten();
-    public abstract void updateScore();
+    public abstract void teken(int kamerGrote, int x, int y, Graphics g);
     public void minderKogels(){
         bullet=bullet-1;
     }
@@ -24,7 +26,6 @@ public abstract class Wapen {
 
     public void setBullet(int bullet) {
         this.bullet = bullet;
-        updateScore();
     }
 
     public Speler getSpeler() {

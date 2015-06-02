@@ -5,6 +5,8 @@
  */
 package doolhof;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Random;
 
 /**
@@ -22,19 +24,10 @@ public class Valsspeler extends Persoon {
     private Tegel[][] tegel;
     private Speler speler;
 
-    public Tegel getLokatie() {
-
-        return locatie;
-    }
-
-    public void setLokatie(Tegel Lokatie) {
-        this.locatie = Lokatie;
-    }
-
     public void zetSpelerTerug(Speler speler, Valsspeler vsp) {
 
-        int oudeLocatieX = speler.getLocatie().getX();
-        int oudeLocatieY = speler.getLocatie().getY();
+        int oudeLocatieX = speler.getLocatie().getPositieX();
+        int oudeLocatieY = speler.getLocatie().getPositieY();
         Tegel huidige = speler.getLocatie();
 
 
@@ -49,20 +42,24 @@ public class Valsspeler extends Persoon {
             nieuweLocatieY = 0;
         }
 
-        speler.setLokatie(tegel[nieuweLocatieX][nieuweLocatieY]);
+        speler.setLocatie(tegel[nieuweLocatieX][nieuweLocatieY]);
         huidige.setSpeler(null);
-        
         if (huidige != speler.getLocatie()) {
-            verwijderValsspeler(vsp);
+            super.verwijderpersoon();
         }
             
         
 
     }
 
-    public void verwijderValsspeler(Valsspeler vsp) {
-        vsp.locatie.setPersoon(null);
-        vsp.getLokatie().setPersoon(null);
+    @Override
+    public void teken(int kamerGrote, int x, int y, Graphics g) {
+        g.setColor(Color.RED);
+            g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+    }
 
+    @Override
+    public void wordGeraakt(Speler speler) {
+        zetSpelerTerug(speler, this);
     }
 }

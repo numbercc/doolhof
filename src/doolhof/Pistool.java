@@ -5,6 +5,7 @@
  */
 package doolhof;
 
+import java.awt.Graphics;
 import javax.swing.JLabel;
 
 /**
@@ -13,18 +14,11 @@ import javax.swing.JLabel;
  */
 public class Pistool extends Wapen {
 
-    private JLabel ammo;
     private Richting richting;
     private Tegel locatie;
 
-    public Pistool(JLabel ammo) {
-        this.ammo = ammo;
+    public Pistool() {
 
-    }
-
-    @Override
-    public void updateScore() {
-        ammo.setText("" + super.getBullet());
     }
 
     @Override
@@ -82,6 +76,11 @@ public class Pistool extends Wapen {
 
     public void setLocatie(Tegel locatie) {
         this.locatie = locatie;
+    }
+
+    @Override
+    public void teken(int kamerGrote, int x, int y, Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

@@ -4,8 +4,11 @@
  */
 package doolhof;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 /**
@@ -14,27 +17,19 @@ import javax.swing.JLabel;
  */
 public class Speler {
 
-    private Tegel lokatie;
-    int score=0;
+    private Tegel locatie;
+    int score = 0;
     private Wapen wapen;
     private Richting richting;
-    private static JComponent comp;
 
     public Speler(JLabel score) {
         richting = Richting.left;
     }
 
     public Tegel getLocatie() {
-        return lokatie;
+        return locatie;
     }
 
-    public static JComponent getComp() {
-        return comp;
-    }
-
-    public static void setComp(JComponent comp) {
-        Speler.comp = comp;
-    }
 
     public Wapen getWapen() {
         return wapen;
@@ -44,143 +39,159 @@ public class Speler {
         this.wapen = wapen;
     }
 
-    public void setLokatie(Tegel Lokatie) {
-        this.lokatie = Lokatie;
+    public void setLocatie(Tegel Locatie) {
+        this.locatie = Locatie;
     }
 
     public void move(KeyEvent ke) {
 
         if (ke.getKeyCode() == KeyEvent.VK_W) {
-            if (lokatie.getNorth() == null) {
+            if (locatie.getNorth() == null) {
                 moveUp();
             }
             setRichting(Richting.up);
         }
-        if (ke.getKeyCode() == KeyEvent.VK_A) {
-            if (lokatie.getWest() == null) {
+        else if (ke.getKeyCode() == KeyEvent.VK_A) {
+            if (locatie.getWest() == null) {
                 moveLeft();
             }
             setRichting(Richting.left);
         }
-        if (ke.getKeyCode() == KeyEvent.VK_S) {
-            if (lokatie.getSouth() == null) {
+        else if (ke.getKeyCode() == KeyEvent.VK_S) {
+            if (locatie.getSouth() == null) {
                 moveDown();
             }
             setRichting(Richting.down);
         }
-        if (ke.getKeyCode() == KeyEvent.VK_D) {
-            if (lokatie.getEast() == null) {
+        else if (ke.getKeyCode() == KeyEvent.VK_D) {
+            if (locatie.getEast() == null) {
                 moveRight();
             }
             setRichting(Richting.right);
         } //Hieronder Valsspeler collision
-        comp.repaint();
+       getLocatie().teken();
+    }
+
+    public void teken(int kamerGrote, int x, int y, Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.blue);
+        g.fillOval(x - 2 + kamerGrote / 8, y - 2 + kamerGrote / 8, kamerGrote, kamerGrote);
+        g.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(3));
+        if (getRichting() == Richting.left) {
+            g.drawLine(x + kamerGrote / 8, y + kamerGrote / 2, x + kamerGrote / 2, y + kamerGrote / 2);
+        } else if (getRichting() == Richting.right) {
+            g.drawLine(x + kamerGrote / 2, y + kamerGrote / 2, x - 2 + kamerGrote, y + kamerGrote / 2);
+        } else if (getRichting() == Richting.up) {
+            g.drawLine(x + kamerGrote / 2, y + kamerGrote / 2, x + kamerGrote / 2, y + 2);
+        } else if (getRichting() == Richting.down) {
+            g.drawLine(x + kamerGrote / 2, y + kamerGrote / 2, x + kamerGrote / 2, y + kamerGrote);
+        }
+        g2.setStroke(new BasicStroke(1));
+        g.setColor(Color.BLACK);
     }
 
     public void schieten(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_SPACE) {
             if (getWapen() != null) {
                 getWapen().schieten();
-                comp.repaint();
+                getLocatie().teken();
             }
         }
     }
 
     private void pickUpWaepon() {
         if (wapen == null) {
-            setWapen(lokatie.getWapen());
+            setWapen(locatie.getWapen());
             wapen.setBullet(1);
         } else {
             wapen.setBullet(wapen.getBullet() + 1);
         }
-        lokatie.setWapen(null);
+        locatie.setWapen(null);
         wapen.setSpeler(this);
     }
 
     private void moveUp() {
         int som;
 
-        if (lokatie.getNorthBuur().getPersoon() == null) {
-            lokatie.setSpeler(null);
-            lokatie.getNorthBuur().setSpeler(this);
-            lokatie = lokatie.getNorthBuur();
+        if (locatie.getNorthBuur().getPersoon() == null) {
+            locatie.setSpeler(null);
+            locatie.teken();
+            locatie.getNorthBuur().setSpeler(this);
+            locatie = locatie.getNorthBuur();
+            locatie.teken();
             score = score + 1;
-            if (lokatie.getWapen() != null) {
+            if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
+            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else if (lokatie.getNorthBuur().getPersoon() instanceof Valsspeler) {
-            Valsspeler vsp = (Valsspeler) lokatie.getNorthBuur().getPersoon();
-            valsspelerCollision(vsp);
+        } else{
+            locatie.getNorthBuur().getPersoon().wordGeraakt(this);
         }
     }
 
     private void moveLeft() {
         int som;
 
-        if (lokatie.getWestBuur().getPersoon() == null) {
-            lokatie.setSpeler(null);
-            lokatie.getWestBuur().setSpeler(this);
-            lokatie = lokatie.getWestBuur();
+        if (locatie.getWestBuur().getPersoon() == null) {
+            locatie.setSpeler(null);
+            locatie.teken();
+            locatie.getWestBuur().setSpeler(this);
+            locatie = locatie.getWestBuur();
+            locatie.teken();
             score = score + 1;
-            if (lokatie.getWapen() != null) {
+            if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
+            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else if (lokatie.getWestBuur().getPersoon() instanceof Valsspeler) {
-            Valsspeler vsp = (Valsspeler) lokatie.getWestBuur().getPersoon();
-            valsspelerCollision(vsp);
+        } else{
+            locatie.getWestBuur().getPersoon().wordGeraakt(this);
         }
     }
 
     private void moveDown() {
         int som;
 
-        if (lokatie.getSouthBuur().getPersoon() == null) {
-            lokatie.setSpeler(null);
-            lokatie.getSouthBuur().setSpeler(this);
-            lokatie = lokatie.getSouthBuur();
+        if (locatie.getSouthBuur().getPersoon() == null) {
+            locatie.setSpeler(null);
+            locatie.teken();
+            locatie.getSouthBuur().setSpeler(this);
+            locatie = locatie.getSouthBuur();
+            locatie.teken();
             score = score + 1;
-            if (lokatie.getWapen() != null) {
+            if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
+            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else if (lokatie.getSouthBuur().getPersoon() instanceof Valsspeler) {
-            Valsspeler vsp = (Valsspeler) lokatie.getSouthBuur().getPersoon();
-            valsspelerCollision(vsp);
+        } else{
+            locatie.getSouthBuur().getPersoon().wordGeraakt(this);
         }
     }
 
     private void moveRight() {
         int som;
 
-        if (lokatie.getEastBuur().getPersoon() == null) {
-            lokatie.setSpeler(null);
-            lokatie.getEastBuur().setSpeler(this);
-            lokatie = lokatie.getEastBuur();
+        if (locatie.getEastBuur().getPersoon() == null) {
+            locatie.setSpeler(null);
+            locatie.teken();
+            locatie.getEastBuur().setSpeler(this);
+            locatie = locatie.getEastBuur();
+            locatie.teken();
             score = score + 1;
-            if (lokatie.getWapen() != null) {
+            if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (lokatie.getPersoon() != null && lokatie.getPersoon() instanceof Vriend) {
+            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
                 System.out.println("Test!");
             }
-        } else if (lokatie.getEastBuur().getPersoon() instanceof Valsspeler) {
-            Valsspeler vsp = (Valsspeler) lokatie.getEastBuur().getPersoon();
-            valsspelerCollision(vsp);
+        } else{
+            locatie.getEastBuur().getPersoon().wordGeraakt(this);
         }
 
     }
 
-    private void valsspelerCollision(Valsspeler vsp) {
-        Tegel temp = lokatie;
-        getLocatie().setSpeler(null);
-        temp.setSpeler(null);
-        vsp.zetSpelerTerug(this, vsp);
-        lokatie.setSpeler(this);
-    }
 
     public Richting getRichting() {
         return richting;

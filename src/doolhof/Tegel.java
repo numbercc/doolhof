@@ -4,22 +4,102 @@
  */
 package doolhof;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JComponent;
 
 public class Tegel {
-    // represent four muurs
+    // represent four Buitenmuurs
 
-    private Muur north, east, south, west; // the muur class will be created next
-    private int x, y; // represent the row and column of the maze
+    private Muur north, east, south, west; // the Muur class will be created next
+    private int x, y;
+    private int positieX,positieY;
     private List<Tegel> buren; // adjacency list using linked list
     private int roomName; // for this the room will be a number
+    private int kamerGrote;
     private Speler speler;
     private Persoon persoon;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
     private boolean dijkstra = false;
     private Wapen wapen;
     private Raket raket;
+    private JComponent comp;
+    private Graphics g;
+
+    public void setG(Graphics g) {
+        this.g = g;
+    }
+    public void teken() {
+        Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y, kamerGrote, kamerGrote);
+        g.setColor(Color.BLACK);
+        if (getNorth() != null) {
+            g2.drawLine(x, y, x + kamerGrote, y);
+        }//end of north if
+        // west Muur not there draw the line
+        if (getWest() != null) {
+            g2.drawLine(x, y, x, y + kamerGrote);
+        }// end of west if
+        if (getSouth() != null) {
+            g2.drawLine(x, y + kamerGrote, x + kamerGrote,
+                    y + kamerGrote);
+        }// end of south if
+        if (getEast() != null) {
+            g2.drawLine(x + kamerGrote, y, x + kamerGrote,
+                    y + kamerGrote);
+        }// end of east if
+        if (getRaket() != null) {
+            getRaket().teken(kamerGrote, x, y, g);
+        }
+        if (getSpeler() != null) {
+            getSpeler().teken(kamerGrote, x, y, g);
+        }//tekent speler
+        else if (getPersoon() != null) {
+            getPersoon().teken(kamerGrote, x, y, g);
+        }
+        else if (getWapen() != null) {
+            getWapen().teken(kamerGrote, x, y, g);
+        }
+        comp.repaint();
+    }
+
+    public JComponent getComp() {
+        return comp;
+    }
+
+    public int getPositieX() {
+        return positieX;
+    }
+
+    public int getPositieY() {
+        return positieY;
+    }
+
+    public void setPositieY(int positieY) {
+        this.positieY = positieY;
+    }
+
+    public void setPositieX(int positieX) {
+        this.positieX = positieX;
+    }
+
+    public void setComp(JComponent comp) {
+        this.comp = comp;
+    }
+
+    public int getKamerGrote() {
+        return kamerGrote;
+    }
+
+    public void setKamerGrote(int kamerGrote) {
+        this.kamerGrote = kamerGrote;
+    }
+
     public void setRoomName(int roomName) {
         this.roomName = roomName;
     }
@@ -74,6 +154,7 @@ public class Tegel {
     }
 
     public void setSouthBuur(Tegel southBuur) {
+
         this.southBuur = southBuur;
     }
 
@@ -118,6 +199,7 @@ public class Tegel {
     }
 
     public void setSouth(Muur south) {
+
         this.south = south;
     }
 
@@ -184,10 +266,6 @@ public class Tegel {
         this.speler = speler;
     }
 
-
-    
-
-
     // now we code the constructer 
     public Tegel(int x, int y) {
         this.x = x;// row
@@ -201,4 +279,6 @@ public class Tegel {
     public int getRoomName() {
         return roomName++;
     }// end of getRoomName()
+
+    
 }

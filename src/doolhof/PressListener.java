@@ -17,9 +17,11 @@ public class PressListener implements KeyListener {
 
     private JComponent comp;
     private Speler speler;
+    //private Spel spel;
     public PressListener(JComponent comp, Speler speler) {
         this.comp = comp;
         this.speler=speler;
+        //this.speler=spel
     }
 
     @Override
@@ -30,6 +32,7 @@ public class PressListener implements KeyListener {
     public void keyPressed(KeyEvent ke) {
         speler.move(ke);
         speler.schieten(ke);
+        //spell.updateScore();
     }
     @Override
     public void keyReleased(KeyEvent ke) {

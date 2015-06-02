@@ -8,28 +8,12 @@ package doolhof;
  *
  * @author Chie-cheung
  */
-public class Muur{
-   
-   private Tegel currentRoom, nextRoom;// room in now, next room 
-   //private boolean isGone = false;// is the muur there
-   
-
-   // Two constructors will be created
-   // which will account for muurs with or 
-   // without neighbors
-
-   // with a neighbor 
-   public Muur(Tegel huidige, Tegel buur){
-      currentRoom = huidige;
-      nextRoom = buur;
-   }
-
-   // without a neighbor
-   public Muur(Tegel r){
-      currentRoom = r;
-      nextRoom = null;
-   }
-
+public abstract class Muur {
+    private Tegel currentRoom;
+    private int leven=100;
+    public Muur(Tegel currentRoom) {
+        this.currentRoom = currentRoom;
+    }
 
     public Tegel getCurrentRoom() {
         return currentRoom;
@@ -38,20 +22,15 @@ public class Muur{
     public void setCurrentRoom(Tegel currentRoom) {
         this.currentRoom = currentRoom;
     }
+    public abstract void wordGeraakt(int damage);
 
-//    public boolean getIsGone() {
-//        return isGone;
-//    }
-//
-//    public void setIsGone(boolean isGone) {
-//        this.isGone = isGone;
-//    }
-
-    public Tegel getNextRoom() {
-        return nextRoom;
+    public int getLeven() {
+        return leven;
     }
 
-    public void setNextRoom(Tegel nextRoom) {
-        this.nextRoom = nextRoom;
+    public void setLeven(int leven) {
+        this.leven = leven;
     }
+
+    
 }

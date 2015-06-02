@@ -25,18 +25,13 @@ public class Doolhof extends JComponent {
     private final int breedte = 20;// users desired breedte of matrix
     private int num;// we will have to increment a few times so lets just use num as an incrementor
     private int[] set;
-    private int x_cord; // x-axis rep
-    private int y_cord;// y-axis rep
-    private final int kamerGrote = 20;
     private int randommuur;
     private Speler speler;
     private Valsspeler vsp;
     private Vriend vriend;
-    private JLabel bulletCount;
 
     public Doolhof(Speler speler, JLabel bulletCount) {
         this.speler = speler;
-        this.bulletCount = bulletCount;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
@@ -53,7 +48,7 @@ public class Doolhof extends JComponent {
         while (num > 1) {
             // when we pick a random muur we want to avoid the borders getting eliminated
             randommuur = rand.nextInt(muren.size());
-            Muur temp = muren.get(randommuur);
+            BinnenMuur temp =(BinnenMuur) muren.get(randommuur);
             // we will pick two tegels randomly 
             int roomA = temp.getCurrentRoom().getY() + temp.getCurrentRoom().getX() * breedte;
             int roomB = temp.getNextRoom().getY() + temp.getNextRoom().getX() * breedte;
@@ -65,28 +60,26 @@ public class Doolhof extends JComponent {
                 temp.getCurrentRoom().getBuren().add(temp.getNextRoom());
                 temp.getNextRoom().getBuren().add(temp.getCurrentRoom());
                 Tegel tegel = temp.getCurrentRoom();
+                Muur muur = (Muur)temp;
                 if (temp != null) {
-                    tegel.deleteMuur(temp);
+                    tegel.deleteMuur(muur);
                 }
                 Tegel tegel2 = temp.getNextRoom();
                 if (temp != null) {
-                    tegel2.deleteMuur(temp);
+                    tegel2.deleteMuur(muur);
                 }
                 num--;
             }// end of if
         }// end of while
         tegels[0][0].setSpeler(speler);
-        speler.setLokatie(tegels[0][0]);
-        tegels[0][0].getBuren().get(0).setWapen(new Bazooka(bulletCount));
+        speler.setLocatie(tegels[0][0]);
+        tegels[0][0].getBuren().get(0).setWapen(new Bazooka());
         Random r = new Random();
 
         for (int i = 0; i < 3; i++) {
 
-            int waarde = r.nextInt(10);
+            int waarde = r.nextInt(10)+3;
 
-            if (waarde == 0) {
-                waarde = 5;
-            }
 
             vsp = new Valsspeler(tegels, waarde);
 
@@ -100,11 +93,11 @@ public class Doolhof extends JComponent {
                 yR = 2;
             }
             tegels[xR][yR].setPersoon(vsp);
-            vsp.setLokatie(tegels[xR][yR]);
+            vsp.setLocatie(tegels[xR][yR]);
         }
-        vriend = new Vriend(tegels);
+        vriend = new Vriend();
         tegels[19][19].setPersoon(vriend);
-        vriend.setLokatie(tegels[19][19]);
+        vriend.setLocatie(tegels[19][19]);
     }
     // name the room to display
     private int roomNumber = 0;
@@ -120,28 +113,28 @@ public class Doolhof extends JComponent {
                 // create north muren
                 tegels[i][j] = new Tegel(i, j);
                 if (i == 0) {
-                    tegels[i][j].setNorth(new Muur(tegels[i][j]));
+                    tegels[i][j].setNorth(new Buitenmuur(tegels[i][j]));
                 } else {
-                    tegels[i][j].setNorth(new Muur(tegels[i - 1][j], tegels[i][j]));
+                    tegels[i][j].setNorth((Muur)new BinnenMuur(tegels[i - 1][j], tegels[i][j]));
                     muren.add(tegels[i][j].getNorth());
                     tegels[i][j].setNorthBuur(tegels[i - 1][j]);
                     tegels[i - 1][j].setSouthBuur(tegels[i][j]);
                     tegels[i - 1][j].setSouth(tegels[i][j].getNorth());
                 }
                 if (i == hoogte - 1) {
-                    tegels[i][j].setSouth(new Muur(tegels[i][j]));
+                    tegels[i][j].setSouth(new Buitenmuur(tegels[i][j]));
                 }
                 if (j == 0) {
-                    tegels[i][j].setWest(new Muur(tegels[i][j]));
+                    tegels[i][j].setWest(new Buitenmuur(tegels[i][j]));
                 } else {
-                    tegels[i][j].setWest(new Muur(tegels[i][j - 1], tegels[i][j]));
+                    tegels[i][j].setWest((Muur)new BinnenMuur(tegels[i][j - 1], tegels[i][j]));
                     muren.add(tegels[i][j].getWest());
                     tegels[i][j].setWestBuur(tegels[i][j - 1]);
                     tegels[i][j - 1].setEastBuur(tegels[i][j]);
                     tegels[i][j - 1].setEast(tegels[i][j].getWest());
                 }
                 if (j == breedte - 1) {
-                    tegels[i][j].setEast(new Muur(tegels[i][j]));
+                    tegels[i][j].setEast(new Buitenmuur(tegels[i][j]));
                 }
                 tegels[i][j].setRoomName(roomNumber++);// we will name the tegels
             }
@@ -155,88 +148,26 @@ public class Doolhof extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
+        int x_cord; // x-axis rep
+        int y_cord;// y-axis rep
+        int kamerGrote = 20;
         x_cord = 50;
         y_cord = 50;
-        Graphics2D g2 = (Graphics2D) g;
-        // could have taken height as well as breedte
-        // just need something to base the roomsize
-
-        // temp variables used for painting
+        
         int x = x_cord;
         int y = y_cord;
 
         for (int i = 0; i <= hoogte - 1; i++) {
             for (int j = 0; j <= breedte - 1; j++) {
-                if ((tegels[i][j].getNorth() != null)) {
-                    g.drawLine(x, y, x + kamerGrote, y);
-                }//end of north if
-                // west muur not there draw the line
-                if (tegels[i][j].getWest() != null) {
-                    g.drawLine(x, y, x, y + kamerGrote);
-                }// end of west if
-                if ((i == hoogte - 1) && tegels[i][j].getSouth() != null) {
-                    g.drawLine(x, y + kamerGrote, x + kamerGrote,
-                            y + kamerGrote);
-                }// end of south if
-                if ((j == breedte - 1) && tegels[i][j].getEast() != null) {
-                    g.drawLine(x + kamerGrote, y, x + kamerGrote,
-                            y + kamerGrote);
-                }// end of east if
-                if(tegels[i][j].getRaket()!=null){
-                    g.setColor(Color.ORANGE);
-                    g2.setStroke(new BasicStroke(2));
-                    double voortgang=(((double)tegels[i][j].getRaket().getTegelVoortgang())/100)*(double)kamerGrote;   
-                    if (tegels[i][j].getRaket().getRichting() ==Richting.left) {
-                        g2.drawLine(x  -(int)voortgang,y + kamerGrote/2, x  -(int)voortgang-2,y+ kamerGrote/2);
-                    }
-                    else if (tegels[i][j].getRaket().getRichting() == Richting.right) {
-                        g2.drawLine(x  +(int)voortgang,y + kamerGrote/2, x  +(int)voortgang+2,y+ kamerGrote/2);
-                    }
-                    else if (tegels[i][j].getRaket().getRichting() == Richting.up) {
-                       g2.drawLine(x  + kamerGrote/2,y -(int)voortgang , x  + kamerGrote/2,y-(int)voortgang-2); 
-                      
-                    }
-                    else if (tegels[i][j].getRaket().getRichting() == Richting.down) {
-                        g2.drawLine(x  + kamerGrote/2,y +(int)voortgang, x  + kamerGrote/2,y+2+(int)voortgang); 
-                    }
-                    
-                    
-                    g2.setStroke(new BasicStroke(1));
-                    g.setColor(Color.BLACK);
-                }
-                if (tegels[i][j].getSpeler() != null) {
-                    g.setColor(Color.blue);
-                    g.fillOval(x - 2 + kamerGrote / 8, y - 2 + kamerGrote / 8, kamerGrote, kamerGrote);
-                    g.setColor(Color.WHITE);
-                    g2.setStroke(new BasicStroke(3));
-                    if (speler.getRichting() == Richting.left) {
-                        g.drawLine(x  + kamerGrote / 8, y + kamerGrote / 2, x + kamerGrote / 2, y + kamerGrote / 2);
-                    }
-                    else if (speler.getRichting() == Richting.right) {
-                        g.drawLine( x + kamerGrote / 2, y + kamerGrote /2 ,x - 2 + kamerGrote , y + kamerGrote/2 );
-                    }
-                    else if (speler.getRichting() == Richting.up) {
-                        g.drawLine( x + kamerGrote / 2, y + kamerGrote /2 ,x  + kamerGrote/2 , y +2 );
-                    }
-                    else if (speler.getRichting() == Richting.down) {
-                        g.drawLine( x + kamerGrote / 2, y + kamerGrote /2 ,x +kamerGrote/2  , y + kamerGrote );
-                    }
-                    g2.setStroke(new BasicStroke(1));
-                    g.setColor(Color.BLACK);
-                }//tekent speler
-                if (tegels[i][j].getPersoon()!= null && tegels[i][j].getPersoon() instanceof Valsspeler) {
-                    g.setColor(Color.red);
-                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
-                    g.setColor(Color.BLACK);
-                }
-                if (tegels[i][j].getWapen() != null) {
-                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
-                }
-                if(tegels[i][j].getPersoon()!= null && tegels[i][j].getPersoon() instanceof Vriend) {
-                    g.setColor(Color.GREEN);
-                    g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote /2, kamerGrote /2);
-                }
-
+                tegels[i][j].setComp(this);
+                tegels[i][j].setX(x);
+                tegels[i][j].setY(y);
+                tegels[i][j].setKamerGrote(kamerGrote);
+                tegels[i][j].setG(g);
+                tegels[i][j].setPositieX(i);
+                tegels[i][j].setPositieY(j);
+                tegels[i][j].teken();
+                
                 x += kamerGrote;// change the horizontal
             }// end of inner for loop
             x = x_cord;
