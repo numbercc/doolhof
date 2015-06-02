@@ -74,10 +74,9 @@ public class Raket {
 
     private void veranderLocatie(Tegel buur) {
         locatie.setRaket(null);
-        locatie.teken();
         locatie = buur;
         locatie.setRaket(this);
-        locatie.teken();
+
     }
 
     private void volgendeLocatie() {
@@ -92,7 +91,7 @@ public class Raket {
                 if (locatie.getSouth().getLeven() == 0) {
                     locatie.setSouth(null);
                     locatie.getSouthBuur().setNorth(null);
-                    locatie.teken();
+     
                 }
                 timer.stop();
             }
@@ -107,7 +106,6 @@ public class Raket {
                 if (locatie.getWest().getLeven() == 0) {
                     locatie.setWest(null);
                     locatie.getWestBuur().setEast(null);
-                    locatie.teken();
                 }
                 timer.stop();
             }
@@ -122,7 +120,6 @@ public class Raket {
                 if (locatie.getEast().getLeven() == 0) {
                     locatie.setEast(null);
                     locatie.getEastBuur().setWest(null);
-                    locatie.teken();
                 }
                 timer.stop();
             }
@@ -137,7 +134,6 @@ public class Raket {
                 if (locatie.getNorth().getLeven() == 0) {
                     locatie.setNorth(null);
                     locatie.getNorthBuur().setSouth(null);
-                    locatie.teken();
                 }
                 timer.stop();
             }

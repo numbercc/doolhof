@@ -69,7 +69,6 @@ public class Speler {
             }
             setRichting(Richting.right);
         } //Hieronder Valsspeler collision
-       getLocatie().teken();
     }
 
     public void teken(int kamerGrote, int x, int y, Graphics g) {
@@ -95,7 +94,6 @@ public class Speler {
         if (key.getKeyCode() == KeyEvent.VK_SPACE) {
             if (getWapen() != null) {
                 getWapen().schieten();
-                getLocatie().teken();
             }
         }
     }
@@ -116,10 +114,8 @@ public class Speler {
 
         if (locatie.getNorthBuur().getPersoon() == null) {
             locatie.setSpeler(null);
-            locatie.teken();
             locatie.getNorthBuur().setSpeler(this);
             locatie = locatie.getNorthBuur();
-            locatie.teken();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
@@ -136,10 +132,8 @@ public class Speler {
 
         if (locatie.getWestBuur().getPersoon() == null) {
             locatie.setSpeler(null);
-            locatie.teken();
             locatie.getWestBuur().setSpeler(this);
             locatie = locatie.getWestBuur();
-            locatie.teken();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
@@ -156,10 +150,8 @@ public class Speler {
 
         if (locatie.getSouthBuur().getPersoon() == null) {
             locatie.setSpeler(null);
-            locatie.teken();
             locatie.getSouthBuur().setSpeler(this);
             locatie = locatie.getSouthBuur();
-            locatie.teken();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
@@ -176,10 +168,8 @@ public class Speler {
 
         if (locatie.getEastBuur().getPersoon() == null) {
             locatie.setSpeler(null);
-            locatie.teken();
             locatie.getEastBuur().setSpeler(this);
             locatie = locatie.getEastBuur();
-            locatie.teken();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();

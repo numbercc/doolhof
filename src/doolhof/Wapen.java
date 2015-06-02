@@ -19,7 +19,6 @@ public abstract class Wapen {
     public void minderKogels(){
         bullet=bullet-1;
     }
-
     public int getBullet() {
         return bullet;
     }
