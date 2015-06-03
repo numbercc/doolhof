@@ -6,7 +6,6 @@
 package doolhof;
 
 import java.awt.Graphics;
-import javax.swing.JLabel;
 
 /**
  *
