@@ -43,6 +43,8 @@ public class Valsspeler extends Persoon {
         }
 
         speler.setLocatie(tegel[nieuweLocatieX][nieuweLocatieY]);
+        speler.getLocatie().setSpeler(speler);
+        speler.getLocatie().teken();
         huidige.setSpeler(null);
         if (huidige != speler.getLocatie()) {
             super.verwijderpersoon();

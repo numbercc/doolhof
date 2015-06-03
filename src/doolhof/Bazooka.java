@@ -33,6 +33,14 @@ public class Bazooka extends Wapen {
         g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
     }
 
+    @Override
+    public void wordOpgepakt(Speler speler) {
+        speler.getBazooka().setBullet(speler.getBazooka().getBullet()+1);
+        if(speler.getWapen()==null){
+            speler.setWapen(speler.getBazooka());
+        }
+    }
+
 
 
 

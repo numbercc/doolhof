@@ -18,43 +18,88 @@ import javax.swing.JPanel;
  */
 public class Spel {
 
-    public static JComponent comp;
-
+    private static JComponent comp;
+    private static JLabel ammoBazooka;
+    private static JLabel pistoolAmmo;
+    private static JLabel stappen;
+    private static JFrame frame;
+    private static Speler speler;
     public static void main(String[] args) {
         // we will use the scanner for userInput
 
         // use JFrame to put the created panel on
+        frame=new JFrame();
+        Spel spel = new Spel();
+        
         JPanel spelerStat = new JPanel(new GridLayout(0, 2));
-        JLabel score = new JLabel();
-        JLabel textScore = new JLabel();
-        JLabel ammo = new JLabel();
-        JLabel textAmmoBazooka = new JLabel();
-        textAmmoBazooka.setText("Bazooka ammo: ");
-        textScore.setText("Aantal stappen: ");
-        ammo.setText("0");
-        score.setText("0");
-
-        Speler speler = new Speler(score);
-        JComponent doolhof = new Doolhof(speler, ammo);
-        comp = doolhof;
-        spelerStat.add(textAmmoBazooka);
-        spelerStat.add(ammo);
-        spelerStat.add(textScore);
-        spelerStat.add(score);
-
-        JFrame frame = new JFrame();
+        stappen=new JLabel("0");
+        JLabel textStappen = new JLabel("Aantal stappen: ");
+        ammoBazooka = new JLabel("0");
+        pistoolAmmo=new JLabel("0");
+        JLabel textAmmoBazooka = new JLabel("Bazooka ammo: ");
+        JLabel textAmmoPistool = new JLabel("Pistool ammo: ");
+        
+        
         frame.setLayout(new BorderLayout());
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(doolhof, BorderLayout.CENTER);
+
+        spelerStat.add(textAmmoBazooka);
+        spelerStat.add(ammoBazooka);
+        spelerStat.add(textAmmoPistool);
+        spelerStat.add(pistoolAmmo);
+        spelerStat.add(textStappen);
+        spelerStat.add(stappen);
+        
         frame.add(spelerStat, BorderLayout.PAGE_END);
+        speler = new Speler();
+        spel.maakLevel();
+        KeyListener lissener = new PressListener(spel.comp, speler);
+        frame.addKeyListener(lissener);
+        spel.comp.addKeyListener(lissener);
+        
         frame.pack();
         frame.setVisible(true);
+    }// end of ammoPistool
 
-        KeyListener lissener = new PressListener(doolhof, speler);
-        frame.addKeyListener(lissener);
-        doolhof.addKeyListener(lissener);
+    public static void updateScore() {
+        ammoBazooka.setText(""+speler.getBazooka().getBullet());
+        pistoolAmmo.setText(""+speler.getPistool().getBullet());
+        stappen.setText(""+speler.getStappen());
+        if(speler.getWapen() instanceof Bazooka){
+            ammoBazooka.setText(speler.getBazooka().getBullet()+" selected");
+        }
+        else if(speler.getWapen() instanceof Pistool){
+            pistoolAmmo.setText(speler.getPistool().getBullet()+" selected");
+        }
+    }
+
+    public void removeDoolhof() {
+        frame.remove(comp);
+    }
+
+
+    public void maakLevel() {
+        comp = null;
+        comp = new Doolhof(speler);
+        frame.add(comp, BorderLayout.CENTER);
+
         frame.validate();
         frame.repaint();
-    }// end of main
+    }
+
+    public static void setAmmoBazooka(JLabel AmmoBazooka) {
+        Spel.ammoBazooka = AmmoBazooka;
+    }
+
+    public static void setPistoolAmmo(JLabel pistoolAmmo) {
+        Spel.pistoolAmmo = pistoolAmmo;
+    }
+
+    public static void setStappen(JLabel stappen) {
+        Spel.stappen = stappen;
+    }
+
+
 
 }

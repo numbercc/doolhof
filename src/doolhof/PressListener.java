@@ -32,7 +32,8 @@ public class PressListener implements KeyListener {
     public void keyPressed(KeyEvent ke) {
         speler.move(ke);
         speler.schieten(ke);
-        //spell.updateScore();
+        speler.switchWaepon(ke);
+        Spel.updateScore();
     }
     @Override
     public void keyReleased(KeyEvent ke) {

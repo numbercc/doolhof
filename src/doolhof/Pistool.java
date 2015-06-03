@@ -23,8 +23,11 @@ public class Pistool extends Wapen {
 
     @Override
     public void schieten() {
-        pistoolSchieten(this.locatie);
+        if(super.getBullet()>0){
+        richting=super.getSpeler().getRichting();
+        pistoolSchieten(super.getSpeler().getLocatie());
         super.minderKogels();
+        }
     }
 
     public void pistoolSchieten(Tegel locatie) {
@@ -80,7 +83,15 @@ public class Pistool extends Wapen {
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+    }
+
+    @Override
+    public void wordOpgepakt(Speler speler) {
+        speler.getPistool().setBullet(speler.getPistool().getBullet()+1);
+        if(speler.getWapen()==null){
+            speler.setWapen(speler.getPistool());
+        }
     }
 
 }

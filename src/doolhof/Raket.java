@@ -36,7 +36,7 @@ public class Raket {
             public void actionPerformed(ActionEvent evt) {
                 // update x and y respectively 
                 vlieg();
-                Spel.comp.repaint();
+                getLocatie().teken();
 
             }
         });

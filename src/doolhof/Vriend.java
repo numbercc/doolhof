@@ -25,10 +25,13 @@ public class Vriend extends Persoon{
     public void teken(int kamerGrote, int x, int y, Graphics g) {
         g.setColor(Color.GREEN);
             g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+            g.setColor(Color.BLACK);
     }
 
     @Override
     public void wordGeraakt(Speler speler) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Spel spel=new Spel();
+        spel.removeDoolhof();
+        spel.maakLevel();
     }
 }

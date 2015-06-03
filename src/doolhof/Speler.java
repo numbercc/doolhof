@@ -18,12 +18,19 @@ import javax.swing.JLabel;
 public class Speler {
 
     private Tegel locatie;
-    int score = 0;
+    private int score = 0;
+    private int stappen=0;
     private Wapen wapen;
+    private Bazooka bazooka;
+    private Pistool pistool;
     private Richting richting;
 
-    public Speler(JLabel score) {
+    public Speler() {
         richting = Richting.left;
+        bazooka=new Bazooka();
+        bazooka.setSpeler(this);
+        pistool=new Pistool();
+        pistool.setSpeler(this);
     }
 
     public Tegel getLocatie() {
@@ -97,22 +104,28 @@ public class Speler {
             }
         }
     }
+    public void switchWaepon(KeyEvent key) {
+        if (key.getKeyCode() == KeyEvent.VK_E) {
+            if (getWapen() != bazooka) {
+                setWapen(bazooka);
+            }
+            else{
+                setWapen(pistool);
+            }
+        }
+    }
 
     private void pickUpWaepon() {
-        if (wapen == null) {
-            setWapen(locatie.getWapen());
-            wapen.setBullet(1);
-        } else {
-            wapen.setBullet(wapen.getBullet() + 1);
-        }
+        locatie.getWapen().wordOpgepakt(this);
         locatie.setWapen(null);
-        wapen.setSpeler(this);
+        Spel.updateScore();
     }
 
     private void moveUp() {
         int som;
 
         if (locatie.getNorthBuur().getPersoon() == null) {
+            stappen++;
             locatie.setSpeler(null);
             locatie.getNorthBuur().setSpeler(this);
             locatie = locatie.getNorthBuur();
@@ -131,15 +144,14 @@ public class Speler {
         int som;
 
         if (locatie.getWestBuur().getPersoon() == null) {
+            stappen++;
             locatie.setSpeler(null);
             locatie.getWestBuur().setSpeler(this);
             locatie = locatie.getWestBuur();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
-            }
+            } 
         } else{
             locatie.getWestBuur().getPersoon().wordGeraakt(this);
         }
@@ -149,14 +161,13 @@ public class Speler {
         int som;
 
         if (locatie.getSouthBuur().getPersoon() == null) {
+            stappen++;
             locatie.setSpeler(null);
             locatie.getSouthBuur().setSpeler(this);
             locatie = locatie.getSouthBuur();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
             }
         } else{
             locatie.getSouthBuur().getPersoon().wordGeraakt(this);
@@ -167,19 +178,22 @@ public class Speler {
         int som;
 
         if (locatie.getEastBuur().getPersoon() == null) {
+            stappen++;
             locatie.setSpeler(null);
             locatie.getEastBuur().setSpeler(this);
             locatie = locatie.getEastBuur();
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
-            }
+            } 
         } else{
             locatie.getEastBuur().getPersoon().wordGeraakt(this);
         }
 
+    }
+
+    public int getStappen() {
+        return stappen;
     }
 
 
@@ -189,5 +203,21 @@ public class Speler {
 
     public void setRichting(Richting richting) {
         this.richting = richting;
+    }
+
+    public Bazooka getBazooka() {
+        return bazooka;
+    }
+
+    public void setBazooka(Bazooka bazooka) {
+        this.bazooka = bazooka;
+    }
+
+    public Pistool getPistool() {
+        return pistool;
+    }
+
+    public void setPistool(Pistool pistool) {
+        this.pistool = pistool;
     }
 }

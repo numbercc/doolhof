@@ -30,7 +30,7 @@ public class Doolhof extends JComponent {
     private Valsspeler vsp;
     private Vriend vriend;
 
-    public Doolhof(Speler speler, JLabel bulletCount) {
+    public Doolhof(Speler speler) {
         this.speler = speler;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
@@ -73,9 +73,21 @@ public class Doolhof extends JComponent {
         }// end of while
         tegels[0][0].setSpeler(speler);
         speler.setLocatie(tegels[0][0]);
-        tegels[0][0].getBuren().get(0).setWapen(new Bazooka());
+        
         Random r = new Random();
-
+        for (int i = 0; i < 3; i++) {
+            int x= r.nextInt(18)+1;
+            int y= r.nextInt(18)+1;
+            if(tegels[x][y].getPersoon()==null && tegels[x][y].getWapen()==null){
+                tegels[x][y].setWapen(new Pistool());
+            }
+            x= r.nextInt(18)+1;
+            y= r.nextInt(18)+1;
+            if(tegels[x][y].getPersoon()==null && tegels[x][y].getWapen()==null){
+                tegels[x][y].setWapen(new Bazooka());
+            }
+            
+        }
         for (int i = 0; i < 3; i++) {
 
             int waarde = r.nextInt(10)+3;
