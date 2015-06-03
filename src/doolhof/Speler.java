@@ -132,8 +132,6 @@ public class Speler {
             score = score + 1;
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
-            } else if (locatie.getPersoon() != null && locatie.getPersoon() instanceof Vriend) {
-                System.out.println("Test!");
             }
         } else{
             locatie.getNorthBuur().getPersoon().wordGeraakt(this);
