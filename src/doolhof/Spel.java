@@ -24,6 +24,7 @@ public class Spel {
     private static JLabel ammoBazooka;
     private static JLabel pistoolAmmo;
     private static JLabel mountLabel;
+    private static JLabel mountWaardeLabel;
     private static JLabel stappen;
     private static JFrame frame;
     private static Speler speler;
@@ -43,9 +44,9 @@ public class Spel {
         JLabel textStappen = new JLabel("Aantal stappen: ");
         ammoBazooka = new JLabel("0");
         pistoolAmmo = new JLabel("0");
-        mountLabel = new JLabel();
-        mountLabel.setVisible(true);
-        levelInt = 2;
+        mountLabel = new JLabel("Geen Mount");
+        mountWaardeLabel = new JLabel();
+        levelInt = 0;
         String levelS = String.valueOf(levelInt);
         level = new JLabel(levelS);
         JLabel textAmmoBazooka = new JLabel("Bazooka ammo: ");
@@ -66,6 +67,7 @@ public class Spel {
         spelerStat.add(textStappen);
         spelerStat.add(stappen);
         spelerStat.add(mountLabel);
+        spelerStat.add(mountWaardeLabel);
 
         frame.add(spelerStat, BorderLayout.PAGE_END);
         speler = new Speler();
@@ -94,9 +96,13 @@ public class Spel {
             int mountWaarde = (int) speler.getMount().getWaarde();
             mountLabel.setText("Mount actief met waarde " + mountWaarde);
             mountLabel.setVisible(true);
+            String waardeString = String.valueOf(speler.getMount().getStapWaarde());
+            mountWaardeLabel.setVisible(true);
+            mountWaardeLabel.setText(waardeString);
         }
         else if(speler.getMount() == null) {
-            mountLabel.setVisible(false);
+            mountLabel.setText("Geen Mount");
+            mountWaardeLabel.setVisible(false);
         }
     }
 

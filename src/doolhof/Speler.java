@@ -25,6 +25,7 @@ public class Speler {
     private Pistool pistool;
     private Richting richting;
     private Mount mount;
+    private Upgrade upgrade;
 
     public Speler() {
         richting = Richting.left;
@@ -142,11 +143,8 @@ public class Speler {
             locatie.setSpeler(null);
             locatie.getNorthBuur().setSpeler(this);
             locatie = locatie.getNorthBuur();
-            if(getMount() != null) {
-                score = score + 10;     
-                stappen = stappen + (1 / getMount().getWaarde());
-                System.out.println(1 / getMount().getWaarde());
-                getMount().vermoeideMount(this);
+            if(getMount() != null) {   
+                getMount().wordOpgepakt(this);
             }
             else {
                 score = score + 1;
@@ -172,9 +170,7 @@ public class Speler {
             locatie.getWestBuur().setSpeler(this);
             locatie = locatie.getWestBuur();
             if(getMount() != null) {
-                score = score + 10;     
-                stappen = stappen + (1 / getMount().getWaarde());
-                getMount().vermoeideMount(this);
+                getMount().wordOpgepakt(this);
             }
             else {
                 score = score + 1;
@@ -199,9 +195,8 @@ public class Speler {
             locatie.getSouthBuur().setSpeler(this);
             locatie = locatie.getSouthBuur();
             if(getMount() != null) {
-                score = score + 10;     
-                stappen = stappen + (1 / getMount().getWaarde());
-                getMount().vermoeideMount(this);
+                getMount().wordOpgepakt(this);
+
             }
             else {
                 score = score + 1;
@@ -227,9 +222,8 @@ public class Speler {
             locatie.getEastBuur().setSpeler(this);
             locatie = locatie.getEastBuur();
             if(getMount() != null) {
-                score = score + 10;     
-                stappen = stappen + (1 / getMount().getWaarde());
-                getMount().vermoeideMount(this);
+                getMount().wordOpgepakt(this);
+
             }
             else {
                 score = score + 1;
@@ -274,6 +268,16 @@ public class Speler {
 
     public void setPistool(Pistool pistool) {
         this.pistool = pistool;
+    }
+    
+    public void setStappen(double s) {
+        this.stappen = s;
+    }
+    public Upgrade getUpgrade() {
+        return upgrade;
+    }
+    public void setUpgrade(Upgrade up) {
+        this.upgrade = up;
     }
 
 }
