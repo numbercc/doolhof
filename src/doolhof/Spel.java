@@ -23,6 +23,7 @@ public class Spel {
     private static JComponent comp;
     private static JLabel ammoBazooka;
     private static JLabel pistoolAmmo;
+    private static JLabel mountLabel;
     private static JLabel stappen;
     private static JFrame frame;
     private static Speler speler;
@@ -42,6 +43,8 @@ public class Spel {
         JLabel textStappen = new JLabel("Aantal stappen: ");
         ammoBazooka = new JLabel("0");
         pistoolAmmo = new JLabel("0");
+        mountLabel = new JLabel();
+        mountLabel.setVisible(true);
         levelInt = 2;
         String levelS = String.valueOf(levelInt);
         level = new JLabel(levelS);
@@ -53,6 +56,7 @@ public class Spel {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        
         spelerStat.add(textLevel);
         spelerStat.add(level);
         spelerStat.add(textAmmoBazooka);
@@ -61,6 +65,7 @@ public class Spel {
         spelerStat.add(pistoolAmmo);
         spelerStat.add(textStappen);
         spelerStat.add(stappen);
+        spelerStat.add(mountLabel);
 
         frame.add(spelerStat, BorderLayout.PAGE_END);
         speler = new Speler();
@@ -76,11 +81,22 @@ public class Spel {
     public static void updateScore() {
         ammoBazooka.setText("" + speler.getBazooka().getBullet());
         pistoolAmmo.setText("" + speler.getPistool().getBullet());
-        stappen.setText("" + speler.getStappen());
+        double stap = speler.getStappen();
+        int stapInt = (int) stap;
+        String stapString = String.valueOf(stapInt);
+        stappen.setText("" + stapString);
         if (speler.getWapen() instanceof Bazooka) {
             ammoBazooka.setText(speler.getBazooka().getBullet() + " selected");
         } else if (speler.getWapen() instanceof Pistool) {
             pistoolAmmo.setText(speler.getPistool().getBullet() + " selected");
+        }
+        if (speler.getMount() != null) {
+            int mountWaarde = (int) speler.getMount().getWaarde();
+            mountLabel.setText("Mount actief met waarde " + mountWaarde);
+            mountLabel.setVisible(true);
+        }
+        else if(speler.getMount() == null) {
+            mountLabel.setVisible(false);
         }
     }
 

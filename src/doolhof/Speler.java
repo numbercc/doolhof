@@ -19,11 +19,12 @@ public class Speler {
 
     private Tegel locatie;
     private int score = 0;
-    private int stappen=0;
+    private double stappen=0;
     private Wapen wapen;
     private Bazooka bazooka;
     private Pistool pistool;
     private Richting richting;
+    private Mount mount;
 
     public Speler() {
         richting = Richting.left;
@@ -41,9 +42,17 @@ public class Speler {
     public Wapen getWapen() {
         return wapen;
     }
+    
+    public Mount getMount() {
+        return mount;
+    }
 
     public void setWapen(Wapen wapen) {
         this.wapen = wapen;
+    }
+    
+    public void setMount(Mount mount) {
+        this.mount = mount;
     }
 
     public void setLocatie(Tegel Locatie) {
@@ -114,24 +123,41 @@ public class Speler {
             }
         }
     }
-
+    //Aanpassingen 3-6-2015 17:32   wapen --> upgrade
     private void pickUpWaepon() {
         locatie.getWapen().wordOpgepakt(this);
         locatie.setWapen(null);
         Spel.updateScore();
+    }
+    
+    private void pickUpMount() {
+        locatie.getMount().wordOpgepakt(this);
+        locatie.setMount(null);
     }
 
     private void moveUp() {
         int som;
 
         if (locatie.getNorthBuur().getPersoon() == null) {
-            stappen++;
             locatie.setSpeler(null);
             locatie.getNorthBuur().setSpeler(this);
             locatie = locatie.getNorthBuur();
-            score = score + 1;
+            if(getMount() != null) {
+                score = score + 10;     
+                stappen = stappen + (1 / getMount().getWaarde());
+                System.out.println(1 / getMount().getWaarde());
+                getMount().vermoeideMount(this);
+            }
+            else {
+                score = score + 1;
+                stappen = stappen + 1;
+            }
+            
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
+            }
+            else if(locatie.getMount() != null) {
+                pickUpMount();
             }
         } else{
             locatie.getNorthBuur().getPersoon().wordGeraakt(this);
@@ -142,14 +168,24 @@ public class Speler {
         int som;
 
         if (locatie.getWestBuur().getPersoon() == null) {
-            stappen++;
             locatie.setSpeler(null);
             locatie.getWestBuur().setSpeler(this);
             locatie = locatie.getWestBuur();
-            score = score + 1;
+            if(getMount() != null) {
+                score = score + 10;     
+                stappen = stappen + (1 / getMount().getWaarde());
+                getMount().vermoeideMount(this);
+            }
+            else {
+                score = score + 1;
+                stappen++;
+            }
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
             } 
+            else if(locatie.getMount() != null) {
+                pickUpMount();
+            }
         } else{
             locatie.getWestBuur().getPersoon().wordGeraakt(this);
         }
@@ -159,13 +195,23 @@ public class Speler {
         int som;
 
         if (locatie.getSouthBuur().getPersoon() == null) {
-            stappen++;
             locatie.setSpeler(null);
             locatie.getSouthBuur().setSpeler(this);
             locatie = locatie.getSouthBuur();
-            score = score + 1;
+            if(getMount() != null) {
+                score = score + 10;     
+                stappen = stappen + (1 / getMount().getWaarde());
+                getMount().vermoeideMount(this);
+            }
+            else {
+                score = score + 1;
+                stappen++;
+            }
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
+            }
+            else if(locatie.getMount() != null) {
+                pickUpMount();
             }
         } else{
             locatie.getSouthBuur().getPersoon().wordGeraakt(this);
@@ -176,21 +222,32 @@ public class Speler {
         int som;
 
         if (locatie.getEastBuur().getPersoon() == null) {
-            stappen++;
+            
             locatie.setSpeler(null);
             locatie.getEastBuur().setSpeler(this);
             locatie = locatie.getEastBuur();
-            score = score + 1;
+            if(getMount() != null) {
+                score = score + 10;     
+                stappen = stappen + (1 / getMount().getWaarde());
+                getMount().vermoeideMount(this);
+            }
+            else {
+                score = score + 1;
+                stappen++;
+            }
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
             } 
+            else if(locatie.getMount() != null) {
+                pickUpMount();
+            }
         } else{
             locatie.getEastBuur().getPersoon().wordGeraakt(this);
         }
 
     }
 
-    public int getStappen() {
+    public double getStappen() {
         return stappen;
     }
 
@@ -218,4 +275,5 @@ public class Speler {
     public void setPistool(Pistool pistool) {
         this.pistool = pistool;
     }
+
 }
