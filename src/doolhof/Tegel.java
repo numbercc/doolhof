@@ -29,7 +29,7 @@ public class Tegel {
     private Raket raket;
     private JComponent comp;
     private Graphics g;
-    private Mount mount;
+    private Upgrade upgrade;
 
     public void setG(Graphics g) {
         this.g = g;
@@ -64,8 +64,8 @@ public class Tegel {
         else if (getWapen() != null) {
             getWapen().teken(kamerGrote, x, y, g);
         }
-        else if (getMount() != null) {
-            getMount().teken(kamerGrote, x, y, g);
+        else if (getUpgrade() != null) {
+            getUpgrade().teken(kamerGrote, x, y, g);
         }
         comp.repaint(x, x, kamerGrote, kamerGrote);
     }
@@ -131,12 +131,12 @@ public class Tegel {
         this.raket = raket;
     }
     
-    public void setMount(Mount up) {
-        this.mount = up;
+    public void setUpgrade(Upgrade up) {
+        this.upgrade= up;
     }
-
-    public Mount getMount() {
-        return mount;
+    
+    public Upgrade getUpgrade() {
+        return upgrade;
     }
     public void setDijkstra(boolean dijkstra) {
         this.dijkstra = dijkstra;

@@ -131,9 +131,9 @@ public class Speler {
         Spel.updateScore();
     }
     
-    private void pickUpMount() {
-        locatie.getMount().wordOpgepakt(this);
-        locatie.setMount(null);
+    private void pickUpUpgrade() {
+        locatie.getUpgrade().wordOpgepakt(this);
+        locatie.setUpgrade(null);
     }
 
     private void moveUp() {
@@ -154,8 +154,8 @@ public class Speler {
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
             }
-            else if(locatie.getMount() != null) {
-                pickUpMount();
+            else if(locatie.getUpgrade() != null) {
+                pickUpUpgrade();
             }
         } else{
             locatie.getNorthBuur().getPersoon().wordGeraakt(this);
@@ -179,8 +179,8 @@ public class Speler {
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
             } 
-            else if(locatie.getMount() != null) {
-                pickUpMount();
+            else if(locatie.getUpgrade() != null) {
+                pickUpUpgrade();
             }
         } else{
             locatie.getWestBuur().getPersoon().wordGeraakt(this);
@@ -205,8 +205,8 @@ public class Speler {
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
             }
-            else if(locatie.getMount() != null) {
-                pickUpMount();
+            else if(locatie.getUpgrade() != null) {
+                pickUpUpgrade();
             }
         } else{
             locatie.getSouthBuur().getPersoon().wordGeraakt(this);
@@ -232,8 +232,8 @@ public class Speler {
             if (locatie.getWapen() != null) {
                 pickUpWaepon();
             } 
-            else if(locatie.getMount() != null) {
-                pickUpMount();
+            else if(locatie.getUpgrade() != null) {
+                pickUpUpgrade();
             }
         } else{
             locatie.getEastBuur().getPersoon().wordGeraakt(this);
