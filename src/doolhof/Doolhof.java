@@ -29,6 +29,7 @@ public class Doolhof extends JComponent {
     private Speler speler;
     private Valsspeler vsp;
     private Vriend vriend;
+    private Mount m;
 
     public Doolhof(Speler speler) {
         this.speler = speler;
@@ -86,10 +87,6 @@ public class Doolhof extends JComponent {
             if(tegels[x][y].getPersoon()==null && tegels[x][y].getWapen()==null){
                 tegels[x][y].setWapen(new Bazooka());
             }
-            
-        }
-        for (int i = 0; i < 3; i++) {
-
             int waarde = r.nextInt(10)+3;
 
 
@@ -106,6 +103,17 @@ public class Doolhof extends JComponent {
             }
             tegels[xR][yR].setPersoon(vsp);
             vsp.setLocatie(tegels[xR][yR]);
+            
+        }
+        
+        for (int j = 0; j < 2; j++) {
+            int x= r.nextInt(18)+1;
+            int y= r.nextInt(18)+1;
+            if(tegels[x][y].getPersoon() == null && tegels[x][y].getWapen() == null && tegels[x][y].getMount() == null) {
+                 m = new Mount(2, 10);
+                 tegels[x][y].setMount(m);
+                 m.setLocatie(tegels[x][y]);
+            }
         }
         vriend = new Vriend();
         tegels[19][19].setPersoon(vriend);
