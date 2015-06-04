@@ -79,13 +79,13 @@ public class Doolhof extends JComponent {
         for (int i = 0; i < 3; i++) {
             int x= r.nextInt(18)+1;
             int y= r.nextInt(18)+1;
-            if(tegels[x][y].getPersoon()==null && tegels[x][y].getWapen()==null){
-                tegels[x][y].setWapen(new Pistool());
+            if(tegels[x][y].getPersoon()==null && tegels[x][y].getUpgrade()==null){
+                tegels[x][y].setUpgrade(new Pistool());
             }
             x= r.nextInt(18)+1;
             y= r.nextInt(18)+1;
-            if(tegels[x][y].getPersoon()==null && tegels[x][y].getWapen()==null){
-                tegels[x][y].setWapen(new Bazooka());
+            if(tegels[x][y].getPersoon()==null && tegels[x][y].getUpgrade()==null){
+                tegels[x][y].setUpgrade(new Bazooka());
             }
             int waarde = r.nextInt(10)+3;
 
@@ -109,7 +109,7 @@ public class Doolhof extends JComponent {
         for (int j = 0; j < 2; j++) {
             int x= r.nextInt(18)+1;
             int y= r.nextInt(18)+1;
-            if(tegels[x][y].getPersoon() == null && tegels[x][y].getWapen() == null && tegels[x][y].getUpgrade() == null) {
+            if(tegels[x][y].getPersoon() == null && tegels[x][y].getUpgrade() == null) {
                  m = new Mount(2, 10);
                  tegels[x][y].setUpgrade(m);
                  m.setLocatie(tegels[x][y]);

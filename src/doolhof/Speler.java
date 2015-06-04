@@ -125,15 +125,10 @@ public class Speler {
         }
     }
     //Aanpassingen 3-6-2015 17:32   wapen --> upgrade
-    private void pickUpWaepon() {
-        locatie.getWapen().wordOpgepakt(this);
-        locatie.setWapen(null);
-        Spel.updateScore();
-    }
-    
-    private void pickUpUpgrade() {
+    private void PickUpUpgrade() {
         locatie.getUpgrade().wordOpgepakt(this);
         locatie.setUpgrade(null);
+        Spel.updateScore();
     }
 
     private void moveUp() {
@@ -151,11 +146,8 @@ public class Speler {
                 stappen = stappen + 1;
             }
             
-            if (locatie.getWapen() != null) {
-                pickUpWaepon();
-            }
-            else if(locatie.getUpgrade() != null) {
-                pickUpUpgrade();
+            if (locatie.getUpgrade() != null) {
+                PickUpUpgrade();
             }
         } else{
             locatie.getNorthBuur().getPersoon().wordGeraakt(this);
@@ -176,12 +168,9 @@ public class Speler {
                 score = score + 1;
                 stappen++;
             }
-            if (locatie.getWapen() != null) {
-                pickUpWaepon();
+            if (locatie.getUpgrade() != null) {
+                PickUpUpgrade();
             } 
-            else if(locatie.getUpgrade() != null) {
-                pickUpUpgrade();
-            }
         } else{
             locatie.getWestBuur().getPersoon().wordGeraakt(this);
         }
@@ -202,11 +191,8 @@ public class Speler {
                 score = score + 1;
                 stappen++;
             }
-            if (locatie.getWapen() != null) {
-                pickUpWaepon();
-            }
-            else if(locatie.getUpgrade() != null) {
-                pickUpUpgrade();
+            if (locatie.getUpgrade() != null) {
+                PickUpUpgrade();
             }
         } else{
             locatie.getSouthBuur().getPersoon().wordGeraakt(this);
@@ -229,12 +215,9 @@ public class Speler {
                 score = score + 1;
                 stappen++;
             }
-            if (locatie.getWapen() != null) {
-                pickUpWaepon();
+            if (locatie.getUpgrade() != null) {
+                PickUpUpgrade();
             } 
-            else if(locatie.getUpgrade() != null) {
-                pickUpUpgrade();
-            }
         } else{
             locatie.getEastBuur().getPersoon().wordGeraakt(this);
         }

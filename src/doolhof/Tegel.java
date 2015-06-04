@@ -25,7 +25,6 @@ public class Tegel {
     private Persoon persoon;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
     private boolean dijkstra = false;
-    private Wapen wapen;
     private Raket raket;
     private JComponent comp;
     private Graphics g;
@@ -60,9 +59,6 @@ public class Tegel {
         }//tekent speler
         else if (getPersoon() != null) {
             getPersoon().teken(kamerGrote, x, y, g);
-        }
-        else if (getWapen() != null) {
-            getWapen().teken(kamerGrote, x, y, g);
         }
         else if (getUpgrade() != null) {
             getUpgrade().teken(kamerGrote, x, y, g);
@@ -113,14 +109,6 @@ public class Tegel {
 
     public boolean isDijkstra() {
         return dijkstra;
-    }
-
-    public Wapen getWapen() {
-        return wapen;
-    }
-
-    public void setWapen(Wapen wapen) {
-        this.wapen = wapen;
     }
 
     public Raket getRaket() {
