@@ -5,6 +5,8 @@
  */
 package doolhof;
 
+import java.awt.Graphics;
+
 /**
  *
  * @author Montoo
@@ -14,6 +16,7 @@ public abstract class Upgrade {
     private Tegel locatie;
     
     public abstract void wordOpgepakt(Speler speler);
+    public abstract void teken(int kamerGrote, int x, int y, Graphics g);
     
     public Tegel getLocatie() {
         return locatie;

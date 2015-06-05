@@ -15,9 +15,6 @@ public abstract class Wapen extends Upgrade {
     private int bullet=0;
     private Speler speler;
     public abstract void  schieten();
-    @Override
-    public abstract void wordOpgepakt(Speler speler);
-    public abstract void teken(int kamerGrote, int x, int y, Graphics g);
     public void minderKogels(){
         bullet=bullet-1;
     }
