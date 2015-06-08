@@ -32,14 +32,14 @@ public class Pistool extends Wapen {
 
     public void pistoolSchieten(Tegel locatie) {
         if(richting==Richting.up){
-            if(locatie.getPersoon()==null){
+            if(locatie.getPersoon()==null&&locatie.getNorth()==null){
                 pistoolSchieten(locatie.getNorthBuur());
             }
             else{
                 locatie.setPersoon(null);
             }
         }
-        else if(richting==Richting.left){
+        else if(richting==Richting.left&&locatie.getWest()==null){
             if(locatie.getPersoon()==null){
                 pistoolSchieten(locatie.getWestBuur());
             }
@@ -47,7 +47,7 @@ public class Pistool extends Wapen {
                 locatie.setPersoon(null);
             }
         }
-        else if(richting==Richting.right){
+        else if(richting==Richting.right&&locatie.getEast()==null){
             if(locatie.getPersoon()==null){
                 pistoolSchieten(locatie.getEastBuur());
             }
@@ -56,7 +56,7 @@ public class Pistool extends Wapen {
             }
         }
         else if(richting==Richting.down){
-            if(locatie.getPersoon()==null){
+            if(locatie.getPersoon()==null&&locatie.getSouth()==null){
                 pistoolSchieten(locatie.getSouthBuur());
             }
             else{
