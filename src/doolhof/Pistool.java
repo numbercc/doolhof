@@ -6,7 +6,6 @@
 package doolhof;
 
 import java.awt.Graphics;
-import javax.swing.JLabel;
 
 /**
  *
@@ -73,13 +72,6 @@ public class Pistool extends Wapen {
         this.richting = richting;
     }
 
-    public Tegel getLocatie() {
-        return locatie;
-    }
-
-    public void setLocatie(Tegel locatie) {
-        this.locatie = locatie;
-    }
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
