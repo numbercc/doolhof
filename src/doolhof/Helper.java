@@ -93,20 +93,19 @@ public class Helper extends Persoon {
 //        }
 //    }
     public void kortsteRoute() {
-        ArrayList<Tegel> route = new ArrayList<>();
-        Map<Tegel, Integer> dist = new HashMap<>();
-        Map<Tegel, Tegel> prev = new HashMap<>();
+        ArrayList<Tegel> route;
+        Map<Tegel, Integer> afstand = new HashMap<>();
+        Map<Tegel, Tegel> vorige = new HashMap<>();
         ArrayList<Tegel> nietBezocht = new ArrayList<>();
-        Tegel source = super.getLocatie();
-        Tegel target = eind;
-        dist.put(source, 0);
-        prev.put(source, null);
+        Tegel locatie = super.getLocatie();
+        afstand.put(locatie, 0);
+        vorige.put(locatie, null);
         for (int i = 0; i < doolhof.length; i++) {
             for (int j = 0; j < doolhof.length; j++) {
                 Tegel v = doolhof[i][j];
-                if (v != source) {
-                    dist.put(v, Integer.MAX_VALUE);
-                    prev.put(v, null);
+                if (v != locatie) {
+                    afstand.put(v, Integer.MAX_VALUE);
+                    vorige.put(v, null);
                 }
                 nietBezocht.add(v);
             }
@@ -114,32 +113,32 @@ public class Helper extends Persoon {
         while (nietBezocht.size() > 0) {
             Tegel u = null;
             for (Tegel tegel : nietBezocht) {
-                if (u == null || dist.get(tegel) < dist.get(u)) {
+                if (u == null || afstand.get(tegel) < afstand.get(u)) {
                     u = tegel;
                 }
 
             }
-            if (u == target) {
+            if (u == eind) {
                 break;
             }
             nietBezocht.remove(u);
             for (Tegel tegel : u.getloopbaarBuren()) {
-                int alt = dist.get(u) + u.afstandNaar(tegel);
-                if (alt < dist.get(tegel)) {
-                    dist.put(tegel, alt);
-                    prev.put(tegel, u);
+                int alt = afstand.get(u) + u.afstandNaar(tegel);
+                if (alt < afstand.get(tegel)) {
+                    afstand.put(tegel, alt);
+                    vorige.put(tegel, u);
                 }
             }
 
         }
-        if (prev.get(target) == null) {
+        if (vorige.get(eind) == null) {
             return;
         }
         route=new ArrayList<>();
-        Tegel huidige=target;
+        Tegel huidige=eind;
         while(huidige!=null){
             route.add(huidige);
-            huidige=prev.get(huidige);
+            huidige=vorige.get(huidige);
         }
         routeKleuren(route);
 
