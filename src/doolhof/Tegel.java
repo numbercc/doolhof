@@ -8,8 +8,10 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JComponent;
 
 public class Tegel {
@@ -17,7 +19,7 @@ public class Tegel {
 
     private Muur north, east, south, west; // the Muur class will be created next
     private int x, y;
-    private int positieX,positieY;
+    private int positieX, positieY;
     private List<Tegel> buren; // adjacency list using linked list
     private int roomName; // for this the room will be a number
     private int kamerGrote;
@@ -29,13 +31,17 @@ public class Tegel {
     private JComponent comp;
     private Graphics g;
     private Upgrade upgrade;
+    private Color tegelKleur = Color.LIGHT_GRAY;
 
     public void setG(Graphics g) {
         this.g = g;
     }
+
     public void teken() {
         Graphics2D g2 = (Graphics2D) g;
-
+        g2.setColor(tegelKleur);
+        g2.fillRect(x, y, kamerGrote, kamerGrote);
+        g2.setColor(Color.BLACK);
         if (getNorth() != null) {
             g2.drawLine(x, y, x + kamerGrote, y);
         }//end of north if
@@ -59,11 +65,14 @@ public class Tegel {
         }//tekent speler
         else if (getPersoon() != null) {
             getPersoon().teken(kamerGrote, x, y, g);
-        }
-        else if (getUpgrade() != null) {
+        } else if (getUpgrade() != null) {
             getUpgrade().teken(kamerGrote, x, y, g);
         }
         comp.repaint(x, x, kamerGrote, kamerGrote);
+    }
+
+    public void setTegelKleur(Color tegelKleur) {
+        this.tegelKleur = tegelKleur;
     }
 
     public JComponent getComp() {
@@ -118,14 +127,15 @@ public class Tegel {
     public void setRaket(Raket raket) {
         this.raket = raket;
     }
-    
+
     public void setUpgrade(Upgrade up) {
-        this.upgrade= up;
+        this.upgrade = up;
     }
-    
+
     public Upgrade getUpgrade() {
         return upgrade;
     }
+
     public void setDijkstra(boolean dijkstra) {
         this.dijkstra = dijkstra;
     }
@@ -259,6 +269,27 @@ public class Tegel {
         return speler;
     }
 
+    public int afstandNaar(Tegel tegel) {
+        return (int) Math.sqrt(Math.pow(tegel.getX() - getX(), 2) + Math.pow(tegel.getY() - getY(), 2));
+    }
+
+    public ArrayList<Tegel> getloopbaarBuren() {
+        ArrayList<Tegel> loopbaarBuren = new ArrayList<>();
+        if (getNorth() == null) {
+            loopbaarBuren.add(getNorthBuur());
+        }
+        if (getWest() == null) {
+            loopbaarBuren.add(getWestBuur());
+        }
+        if (getSouth() == null) {
+            loopbaarBuren.add(getSouthBuur());
+        }
+        if (getEast() == null) {
+            loopbaarBuren.add(getEastBuur());
+        }
+        return loopbaarBuren;
+    }
+
     public void setSpeler(Speler speler) {
         this.speler = speler;
     }
@@ -276,6 +307,4 @@ public class Tegel {
     public int getRoomName() {
         return roomName++;
     }// end of getRoomName()
-
-    
 }

@@ -74,7 +74,7 @@ public class Doolhof extends JComponent {
         }// end of while
         tegels[0][0].setSpeler(speler);
         speler.setLocatie(tegels[0][0]);
-        
+         
         Random r = new Random();
         for (int i = 0; i < 3; i++) {
             int x= r.nextInt(18)+1;
@@ -118,6 +118,10 @@ public class Doolhof extends JComponent {
         vriend = new Vriend();
         tegels[19][19].setPersoon(vriend);
         vriend.setLocatie(tegels[19][19]);
+        Helper helper=new Helper(tegels, vriend.getLocatie());
+        helper.setLocatie(tegels[0][0].getBuren().get(0));
+        tegels[0][0].getBuren().get(0).setPersoon(helper);
+        
     }
     // name the room to display
     private int roomNumber = 0;
