@@ -119,8 +119,8 @@ public class Doolhof extends JComponent {
         tegels[19][19].setPersoon(vriend);
         vriend.setLocatie(tegels[19][19]);
         Helper helper=new Helper(tegels, vriend.getLocatie());
-        helper.setLocatie(tegels[0][0].getBuren().get(0));
-        tegels[0][0].getBuren().get(0).setPersoon(helper);
+        helper.setLocatie(tegels[r.nextInt(15)+1][r.nextInt(15)+1]);
+        helper.getLocatie().setPersoon(helper);
         
     }
     // name the room to display

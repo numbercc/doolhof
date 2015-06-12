@@ -19,7 +19,7 @@ public class Speler {
 
     private Tegel locatie;
     private int score = 0;
-    private double stappen=0;
+    private double stappen = 0;
     private Wapen wapen;
     private Bazooka bazooka;
     private Pistool pistool;
@@ -29,9 +29,9 @@ public class Speler {
 
     public Speler() {
         richting = Richting.left;
-        bazooka=new Bazooka();
+        bazooka = new Bazooka();
         bazooka.setSpeler(this);
-        pistool=new Pistool();
+        pistool = new Pistool();
         pistool.setSpeler(this);
     }
 
@@ -39,11 +39,10 @@ public class Speler {
         return locatie;
     }
 
-
     public Wapen getWapen() {
         return wapen;
     }
-    
+
     public Mount getMount() {
         return mount;
     }
@@ -51,7 +50,7 @@ public class Speler {
     public void setWapen(Wapen wapen) {
         this.wapen = wapen;
     }
-    
+
     public void setMount(Mount mount) {
         this.mount = mount;
     }
@@ -61,30 +60,21 @@ public class Speler {
     }
 
     public void move(KeyEvent ke) {
-
         if (ke.getKeyCode() == KeyEvent.VK_W) {
-            if (locatie.getNorth() == null) {
-                moveUp();
-            }
-            setRichting(Richting.up);
-        }
-        else if (ke.getKeyCode() == KeyEvent.VK_A) {
-            if (locatie.getWest() == null) {
-                moveLeft();
-            }
-            setRichting(Richting.left);
-        }
-        else if (ke.getKeyCode() == KeyEvent.VK_S) {
-            if (locatie.getSouth() == null) {
-                moveDown();
-            }
-            setRichting(Richting.down);
-        }
-        else if (ke.getKeyCode() == KeyEvent.VK_D) {
-            if (locatie.getEast() == null) {
-                moveRight();
-            }
-            setRichting(Richting.right);
+            moveUp();
+
+        } else if (ke.getKeyCode() == KeyEvent.VK_A) {
+
+            moveLeft();
+
+        } else if (ke.getKeyCode() == KeyEvent.VK_S) {
+
+            moveDown();
+
+        } else if (ke.getKeyCode() == KeyEvent.VK_D) {
+
+            moveRight();
+            ;
         } //Hieronder Valsspeler collision
     }
 
@@ -114,120 +104,124 @@ public class Speler {
             }
         }
     }
+
     public void switchWaepon(KeyEvent key) {
         if (key.getKeyCode() == KeyEvent.VK_E) {
             if (getWapen() != bazooka) {
                 setWapen(bazooka);
-            }
-            else{
+            } else {
                 setWapen(pistool);
             }
         }
     }
     //Aanpassingen 3-6-2015 17:32   wapen --> upgrade
+
     private void PickUpUpgrade() {
         locatie.getUpgrade().wordOpgepakt(this);
         locatie.setUpgrade(null);
         Spel.updateScore();
     }
 
-    private void moveUp() {
+    public void moveUp() {
         int som;
+        if (locatie.getNorth() == null) {
+            if (locatie.getNorthBuur().getPersoon() == null) {
+                locatie.setSpeler(null);
+                locatie.getNorthBuur().setSpeler(this);
+                locatie = locatie.getNorthBuur();
+                if (getMount() != null) {
+                    getMount().wordOpgepakt(this);
+                } else {
+                    score = score + 1;
+                    stappen = stappen + 1;
+                }
 
-        if (locatie.getNorthBuur().getPersoon() == null) {
-            locatie.setSpeler(null);
-            locatie.getNorthBuur().setSpeler(this);
-            locatie = locatie.getNorthBuur();
-            if(getMount() != null) {   
-                getMount().wordOpgepakt(this);
+                if (locatie.getUpgrade() != null) {
+                    PickUpUpgrade();
+                }
+            } else {
+                locatie.getNorthBuur().getPersoon().wordGeraakt(this);
             }
-            else {
-                score = score + 1;
-                stappen = stappen + 1;
-            }
-            
-            if (locatie.getUpgrade() != null) {
-                PickUpUpgrade();
-            }
-        } else{
-            locatie.getNorthBuur().getPersoon().wordGeraakt(this);
         }
+        setRichting(Richting.up);
     }
 
-    private void moveLeft() {
+    public void moveLeft() {
         int som;
-
-        if (locatie.getWestBuur().getPersoon() == null) {
-            locatie.setSpeler(null);
-            locatie.getWestBuur().setSpeler(this);
-            locatie = locatie.getWestBuur();
-            if(getMount() != null) {
-                getMount().wordOpgepakt(this);
+        if (locatie.getWest() == null) {
+            if (locatie.getWestBuur().getPersoon() == null) {
+                locatie.setSpeler(null);
+                locatie.getWestBuur().setSpeler(this);
+                locatie = locatie.getWestBuur();
+                if (getMount() != null) {
+                    getMount().wordOpgepakt(this);
+                } else {
+                    score = score + 1;
+                    stappen++;
+                }
+                if (locatie.getUpgrade() != null) {
+                    PickUpUpgrade();
+                }
+            } else {
+                locatie.getWestBuur().getPersoon().wordGeraakt(this);
             }
-            else {
-                score = score + 1;
-                stappen++;
-            }
-            if (locatie.getUpgrade() != null) {
-                PickUpUpgrade();
-            } 
-        } else{
-            locatie.getWestBuur().getPersoon().wordGeraakt(this);
         }
+        setRichting(Richting.left);
     }
 
-    private void moveDown() {
+    public void moveDown() {
         int som;
+        if (locatie.getSouth() == null) {
+            if (locatie.getSouthBuur().getPersoon() == null) {
+                locatie.setSpeler(null);
+                locatie.getSouthBuur().setSpeler(this);
+                locatie = locatie.getSouthBuur();
+                if (getMount() != null) {
+                    getMount().wordOpgepakt(this);
 
-        if (locatie.getSouthBuur().getPersoon() == null) {
-            locatie.setSpeler(null);
-            locatie.getSouthBuur().setSpeler(this);
-            locatie = locatie.getSouthBuur();
-            if(getMount() != null) {
-                getMount().wordOpgepakt(this);
-
+                } else {
+                    score = score + 1;
+                    stappen++;
+                }
+                if (locatie.getUpgrade() != null) {
+                    PickUpUpgrade();
+                }
+            } else {
+                locatie.getSouthBuur().getPersoon().wordGeraakt(this);
             }
-            else {
-                score = score + 1;
-                stappen++;
-            }
-            if (locatie.getUpgrade() != null) {
-                PickUpUpgrade();
-            }
-        } else{
-            locatie.getSouthBuur().getPersoon().wordGeraakt(this);
         }
+        setRichting(Richting.down);
     }
 
-    private void moveRight() {
+    public void moveRight() {
         int som;
+        if (locatie.getEast() == null) {
+            if (locatie.getEastBuur().getPersoon() == null) {
 
-        if (locatie.getEastBuur().getPersoon() == null) {
-            
-            locatie.setSpeler(null);
-            locatie.getEastBuur().setSpeler(this);
-            locatie = locatie.getEastBuur();
-            if(getMount() != null) {
-                getMount().wordOpgepakt(this);
+                locatie.setSpeler(null);
+                locatie.getEastBuur().setSpeler(this);
+                locatie = locatie.getEastBuur();
+                if (getMount() != null) {
+                    getMount().wordOpgepakt(this);
 
+                } else {
+                    score = score + 1;
+                    stappen++;
+                }
+                if (locatie.getUpgrade() != null) {
+                    PickUpUpgrade();
+                }
+            } else {
+                locatie.getEastBuur().getPersoon().wordGeraakt(this);
             }
-            else {
-                score = score + 1;
-                stappen++;
-            }
-            if (locatie.getUpgrade() != null) {
-                PickUpUpgrade();
-            } 
-        } else{
-            locatie.getEastBuur().getPersoon().wordGeraakt(this);
         }
+        setRichting(Richting.right);
 
     }
 
     public double getStappen() {
         return stappen;
     }
-
 
     public Richting getRichting() {
         return richting;
@@ -252,15 +246,16 @@ public class Speler {
     public void setPistool(Pistool pistool) {
         this.pistool = pistool;
     }
-    
+
     public void setStappen(double s) {
         this.stappen = s;
     }
+
     public Upgrade getUpgrade() {
         return upgrade;
     }
+
     public void setUpgrade(Upgrade up) {
         this.upgrade = up;
     }
-
 }
