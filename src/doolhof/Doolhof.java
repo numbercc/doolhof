@@ -27,9 +27,6 @@ public class Doolhof extends JComponent {
     private int[] set;
     private int randommuur;
     private Speler speler;
-    private Valsspeler vsp;
-    private Vriend vriend;
-    private Mount m;
 
     public Doolhof(Speler speler) {
         this.speler = speler;
@@ -90,7 +87,7 @@ public class Doolhof extends JComponent {
             int waarde = r.nextInt(10)+3;
 
 
-            vsp = new Valsspeler(tegels, waarde);
+            Valsspeler vsp = new Valsspeler(tegels, waarde);
 
             int xR = r.nextInt(breedte - 2);
             int yR = r.nextInt(hoogte - 2);
@@ -110,12 +107,12 @@ public class Doolhof extends JComponent {
             int x= r.nextInt(18)+1;
             int y= r.nextInt(18)+1;
             if(tegels[x][y].getPersoon() == null && tegels[x][y].getUpgrade() == null) {
-                 m = new Mount(2, 10);
+                 Mount m = new Mount(2, 10);
                  tegels[x][y].setUpgrade(m);
                  m.setLocatie(tegels[x][y]);
             }
         }
-        vriend = new Vriend();
+        Vriend vriend = new Vriend();
         tegels[19][19].setPersoon(vriend);
         vriend.setLocatie(tegels[19][19]);
         Helper helper=new Helper(tegels, vriend.getLocatie());
