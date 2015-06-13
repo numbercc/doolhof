@@ -31,7 +31,7 @@ public class Tegel {
     private JComponent comp;
     private Graphics g;
     private Upgrade upgrade;
-    private Color tegelKleur = Color.LIGHT_GRAY;
+    private Color tegelKleur = Color.BLACK;
 
     public void setG(Graphics g) {
         this.g = g;

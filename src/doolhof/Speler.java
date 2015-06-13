@@ -94,7 +94,7 @@ public class Speler {
             g.drawLine(x + kamerGrote / 2, y + kamerGrote / 2, x + kamerGrote / 2, y + kamerGrote);
         }
         g2.setStroke(new BasicStroke(1));
-        g.setColor(Color.BLACK);
+        g.setColor(Color.LIGHT_GRAY);
     }
 
     public void schieten(KeyEvent key) {
@@ -124,6 +124,8 @@ public class Speler {
 
     public void moveUp() {
         int som;
+        setRichting(Richting.up);
+        showVision();
         if (locatie.getNorth() == null) {
             if (locatie.getNorthBuur().getPersoon() == null) {
                 locatie.setSpeler(null);
@@ -143,11 +145,13 @@ public class Speler {
                 locatie.getNorthBuur().getPersoon().wordGeraakt(this);
             }
         }
-        setRichting(Richting.up);
+        
     }
 
     public void moveLeft() {
         int som;
+        setRichting(Richting.left);
+        showVision();
         if (locatie.getWest() == null) {
             if (locatie.getWestBuur().getPersoon() == null) {
                 locatie.setSpeler(null);
@@ -166,11 +170,13 @@ public class Speler {
                 locatie.getWestBuur().getPersoon().wordGeraakt(this);
             }
         }
-        setRichting(Richting.left);
+        
     }
 
     public void moveDown() {
         int som;
+        setRichting(Richting.down);
+        showVision();
         if (locatie.getSouth() == null) {
             if (locatie.getSouthBuur().getPersoon() == null) {
                 locatie.setSpeler(null);
@@ -190,11 +196,13 @@ public class Speler {
                 locatie.getSouthBuur().getPersoon().wordGeraakt(this);
             }
         }
-        setRichting(Richting.down);
+        
     }
 
     public void moveRight() {
         int som;
+        setRichting(Richting.right);
+        showVision();
         if (locatie.getEast() == null) {
             if (locatie.getEastBuur().getPersoon() == null) {
 
@@ -215,7 +223,19 @@ public class Speler {
                 locatie.getEastBuur().getPersoon().wordGeraakt(this);
             }
         }
-        setRichting(Richting.right);
+
+    }
+
+    public void showVision() {
+        if (getRichting() == Richting.right && locatie.getEast() == null) {
+            locatie.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+        } else if (getRichting() == Richting.left && locatie.getWest() == null) {
+            locatie.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+        } else if (getRichting() == Richting.down && locatie.getSouth() == null) {
+            locatie.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+        } else if (getRichting() == Richting.up && locatie.getNorth() == null) {
+            locatie.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+        }
 
     }
 
