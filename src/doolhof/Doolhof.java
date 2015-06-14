@@ -4,17 +4,17 @@
  */
 package doolhof;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 /**
  *
  * @author Chie-cheung
  */
-public class Doolhof extends JComponent {
+public class Doolhof extends JComponent implements Cloneable {
     // the maze can be seen as a matrix of squares so well use a multidimensional array of the room 
     // class
 
@@ -36,6 +36,12 @@ public class Doolhof extends JComponent {
         setPreferredSize(new Dimension(500, 500));
     }
 
+    @Override
+    public Object clone()
+            throws CloneNotSupportedException {
+        return (Doolhof)super.clone();
+    }
+
     private void maakRandomDoolhof() {
         maakKamer();// see next method
 
@@ -46,7 +52,7 @@ public class Doolhof extends JComponent {
         while (num > 1) {
             // when we pick a random muur we want to avoid the borders getting eliminated
             randommuur = rand.nextInt(muren.size());
-            BinnenMuur temp =(BinnenMuur) muren.get(randommuur);
+            BinnenMuur temp = (BinnenMuur) muren.get(randommuur);
             // we will pick two tegels randomly 
             int roomA = temp.getCurrentRoom().getY() + temp.getCurrentRoom().getX() * breedte;
             int roomB = temp.getNextRoom().getY() + temp.getNextRoom().getX() * breedte;
@@ -58,7 +64,7 @@ public class Doolhof extends JComponent {
                 temp.getCurrentRoom().getBuren().add(temp.getNextRoom());
                 temp.getNextRoom().getBuren().add(temp.getCurrentRoom());
                 Tegel tegel = temp.getCurrentRoom();
-                Muur muur = (Muur)temp;
+                Muur muur = (Muur) temp;
                 if (temp != null) {
                     tegel.deleteMuur(muur);
                 }
@@ -71,20 +77,20 @@ public class Doolhof extends JComponent {
         }// end of while
         tegels[0][0].setSpeler(speler);
         speler.setLocatie(tegels[0][0]);
-         
+
         Random r = new Random();
         for (int i = 0; i < 3; i++) {
-            int x= r.nextInt(18)+1;
-            int y= r.nextInt(18)+1;
-            if(tegels[x][y].getPersoon()==null && tegels[x][y].getUpgrade()==null){
+            int x = r.nextInt(18) + 1;
+            int y = r.nextInt(18) + 1;
+            if (tegels[x][y].getPersoon() == null && tegels[x][y].getUpgrade() == null) {
                 tegels[x][y].setUpgrade(new Pistool());
             }
-            x= r.nextInt(18)+1;
-            y= r.nextInt(18)+1;
-            if(tegels[x][y].getPersoon()==null && tegels[x][y].getUpgrade()==null){
+            x = r.nextInt(18) + 1;
+            y = r.nextInt(18) + 1;
+            if (tegels[x][y].getPersoon() == null && tegels[x][y].getUpgrade() == null) {
                 tegels[x][y].setUpgrade(new Bazooka());
             }
-            int waarde = r.nextInt(10)+3;
+            int waarde = r.nextInt(10) + 3;
 
 
             Valsspeler vsp = new Valsspeler(tegels, waarde);
@@ -100,25 +106,25 @@ public class Doolhof extends JComponent {
             }
             tegels[xR][yR].setPersoon(vsp);
             vsp.setLocatie(tegels[xR][yR]);
-            
+
         }
-        
+
         for (int j = 0; j < 2; j++) {
-            int x= r.nextInt(18)+1;
-            int y= r.nextInt(18)+1;
-            if(tegels[x][y].getPersoon() == null && tegels[x][y].getUpgrade() == null) {
-                 Mount m = new Mount(2, 10);
-                 tegels[x][y].setUpgrade(m);
-                 m.setLocatie(tegels[x][y]);
+            int x = r.nextInt(18) + 1;
+            int y = r.nextInt(18) + 1;
+            if (tegels[x][y].getPersoon() == null && tegels[x][y].getUpgrade() == null) {
+                Mount m = new Mount(2, 10);
+                tegels[x][y].setUpgrade(m);
+                m.setLocatie(tegels[x][y]);
             }
         }
         Vriend vriend = new Vriend();
         tegels[19][19].setPersoon(vriend);
         vriend.setLocatie(tegels[19][19]);
-        Helper helper=new Helper(tegels, vriend.getLocatie());
-        helper.setLocatie(tegels[r.nextInt(15)+1][r.nextInt(15)+1]);
+        Helper helper = new Helper(tegels, vriend.getLocatie());
+        helper.setLocatie(tegels[r.nextInt(15) + 1][r.nextInt(15) + 1]);
         helper.getLocatie().setPersoon(helper);
-        
+
     }
     // name the room to display
     private int roomNumber = 0;
@@ -136,7 +142,7 @@ public class Doolhof extends JComponent {
                 if (i == 0) {
                     tegels[i][j].setNorth(new Buitenmuur(tegels[i][j]));
                 } else {
-                    tegels[i][j].setNorth((Muur)new BinnenMuur(tegels[i - 1][j], tegels[i][j]));
+                    tegels[i][j].setNorth((Muur) new BinnenMuur(tegels[i - 1][j], tegels[i][j]));
                     muren.add(tegels[i][j].getNorth());
                     tegels[i][j].setNorthBuur(tegels[i - 1][j]);
                     tegels[i - 1][j].setSouthBuur(tegels[i][j]);
@@ -148,7 +154,7 @@ public class Doolhof extends JComponent {
                 if (j == 0) {
                     tegels[i][j].setWest(new Buitenmuur(tegels[i][j]));
                 } else {
-                    tegels[i][j].setWest((Muur)new BinnenMuur(tegels[i][j - 1], tegels[i][j]));
+                    tegels[i][j].setWest((Muur) new BinnenMuur(tegels[i][j - 1], tegels[i][j]));
                     muren.add(tegels[i][j].getWest());
                     tegels[i][j].setWestBuur(tegels[i][j - 1]);
                     tegels[i][j - 1].setEastBuur(tegels[i][j]);
@@ -174,13 +180,13 @@ public class Doolhof extends JComponent {
         int kamerGrote = 20;
         x_cord = 50;
         y_cord = 50;
-        
+
         int x = x_cord;
         int y = y_cord;
 
         for (int i = 0; i <= hoogte - 1; i++) {
             for (int j = 0; j <= breedte - 1; j++) {
-              
+
                 tegels[i][j].setComp(this);
                 tegels[i][j].setX(x);
                 tegels[i][j].setY(y);
@@ -189,7 +195,7 @@ public class Doolhof extends JComponent {
                 tegels[i][j].setPositieX(i);
                 tegels[i][j].setPositieY(j);
                 tegels[i][j].teken();
-                
+
                 x += kamerGrote;// change the horizontal
             }// end of inner for loop
             x = x_cord;
@@ -234,5 +240,9 @@ public class Doolhof extends JComponent {
 
         }
         return lijst;
+    }
+    public Doolhof maakKopie(){
+        Doolhof kopie=new Doolhof(speler.maakKopie(speler));
+        return kopie;
     }
 }// END OF CLASS 

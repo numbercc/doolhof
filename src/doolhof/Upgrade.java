@@ -17,7 +17,7 @@ public abstract class Upgrade {
     
     public abstract void wordOpgepakt(Speler speler);
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
-    
+    public abstract Upgrade maakKopie(Upgrade upgrade);
     public Tegel getLocatie() {
         return locatie;
     }

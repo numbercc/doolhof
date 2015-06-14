@@ -14,7 +14,9 @@ import java.awt.Graphics;
 public abstract class Wapen extends Upgrade {
     private int bullet=0;
     private Speler speler;
+    
     public abstract void  schieten();
+    
     public void minderKogels(){
         bullet=bullet-1;
     }

@@ -16,13 +16,12 @@ import java.util.*;
 public class Helper extends Persoon {
 
     private Tegel eind;
+    private Tegel[][] doolhof;
 
     public Helper(Tegel[][] tegel, Tegel vriendLocatie) {
         this.doolhof = tegel;
         eind = vriendLocatie;
     }
-    private Tegel[][] doolhof;
-    private Speler speler;
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
@@ -37,61 +36,6 @@ public class Helper extends Persoon {
         super.verwijderpersoon();
     }
 
-//    public void kortsteRoute() {
-//        LinkedList<Tegel> route = new LinkedList<>();
-//        LinkedList<Tegel> knooppunt = new LinkedList<>();
-//        LinkedList<Integer> richting = new LinkedList<>();
-//
-//        ArrayList<Tegel> nietBezocht = new ArrayList<>();
-//        for (int i = 0; i < doolhof.length; i++) {
-//            for (int j = 0; j < doolhof.length; j++) {
-//                nietBezocht.add(doolhof[i][j]);
-//            }
-//        }
-//
-//        route.add(super.getLocatie());
-//        super.getLocatie().setTegelKleur(Color.yellow);
-//        while (nietBezocht.size() > 0) {
-//            if (route.getLast().getloopbaarBuren().size() == 1) {
-//                //verwijder alle tegels tot de laaste knooppunt
-//                int i = route.indexOf(knooppunt.getLast());
-//                while (i < route.size()) {
-//                    route.remove(i + 1);
-//                }
-//                //voeg een andere tegel toe aan route 
-//                boolean andereRoute = false;
-//                while (route.size() > 0 || !andereRoute) {
-//                    if (richting.getLast() < route.getLast().getloopbaarBuren().size()) {
-//                        richting.set(richting.size() - 1, richting.getLast() + 1);
-//                        route.add(knooppunt.getLast().getloopbaarBuren().get(richting.getLast()));
-//                        andereRoute = true;
-//                    } //laatste knooppunt heeft geen andere mogelijkheid dus gebruiken we de knooppunt nog eerder
-//                    else {
-//                        if (knooppunt.size() > 1) {
-//                            knooppunt.removeLast();
-//                            richting.removeLast();
-//                            i = route.indexOf(knooppunt.getLast());
-//                            while (i < route.size()) {
-//                                route.remove(i + 1);
-//                            }
-//                            richting.set(richting.size() - 1, richting.getLast() + 1);
-//                            route.add(knooppunt.getLast().getloopbaarBuren().get(richting.getLast()));
-//                            andereRoute = true;
-//                        } else {
-//                            return;
-//                        }
-//
-//                    }
-//                }
-//
-//
-//            }
-//            else if(route.getLast().getloopbaarBuren().size() >1){
-//                
-//                
-//            }
-//        }
-//    }
     public void kortsteRoute() {
         ArrayList<Tegel> route;
         Map<Tegel, Integer> afstand = new HashMap<>();
@@ -134,11 +78,11 @@ public class Helper extends Persoon {
         if (vorige.get(eind) == null) {
             return;
         }
-        route=new ArrayList<>();
-        Tegel huidige=eind;
-        while(huidige!=null){
+        route = new ArrayList<>();
+        Tegel huidige = eind;
+        while (huidige != null) {
             route.add(huidige);
-            huidige=vorige.get(huidige);
+            huidige = vorige.get(huidige);
         }
         routeKleuren(route);
 
@@ -149,5 +93,13 @@ public class Helper extends Persoon {
         for (Tegel tegel : route) {
             tegel.setTegelKleur(Color.yellow);
         }
+    }
+
+    @Override
+    public Persoon maakKopie(Persoon persoon) {
+        Helper orginele = (Helper) persoon;
+        Helper kopie = new Helper(null, null);
+        kopie.setLocatie(orginele.getLocatie());
+        return kopie;
     }
 }

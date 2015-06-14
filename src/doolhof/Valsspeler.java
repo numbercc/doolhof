@@ -65,4 +65,12 @@ public class Valsspeler extends Persoon {
     public void wordGeraakt(Speler speler) {
         zetSpelerTerug(speler, this);
     }
+
+    @Override
+    public Persoon maakKopie(Persoon persoon) {
+        Valsspeler orginele = (Valsspeler) persoon;
+        Valsspeler kopie = new Valsspeler(null, orginele.waarde);
+        kopie.setLocatie(orginele.getLocatie());
+        return kopie;
+    }
 }

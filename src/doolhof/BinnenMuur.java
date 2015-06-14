@@ -39,4 +39,10 @@ public class BinnenMuur extends Muur {
     public void setNextRoom(Tegel nextRoom) {
         this.nextRoom = nextRoom;
     }
+
+    @Override
+    public Muur maakKopie(Muur muur) {
+        return new BinnenMuur(null, null);
+    }
+
 }

@@ -18,5 +18,10 @@ public class Buitenmuur extends Muur{
     public void wordGeraakt(int damage) {
         super.setLeven(super.getLeven()-0);
     }
+
+    @Override
+    public Muur maakKopie(Muur muur) {
+        return new Buitenmuur(null);
+    }
     
 }

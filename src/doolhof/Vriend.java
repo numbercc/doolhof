@@ -13,7 +13,6 @@ import java.awt.Graphics;
  */
 public class Vriend extends Persoon{
     
-    private Tegel[][] tegel;
     
   
 
@@ -33,5 +32,13 @@ public class Vriend extends Persoon{
         Spel spel=new Spel();
         spel.removeDoolhof();
         spel.maakLevel();
+    }
+
+    @Override
+    public Persoon maakKopie(Persoon persoon) {
+        Vriend orginele = (Vriend) persoon;
+        Vriend kopie = new Vriend();
+        kopie.setLocatie(orginele.getLocatie());
+        return kopie;
     }
 }

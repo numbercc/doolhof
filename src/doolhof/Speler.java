@@ -278,4 +278,33 @@ public class Speler {
     public void setUpgrade(Upgrade up) {
         this.upgrade = up;
     }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+    
+    public Speler maakKopie(Speler orginele){
+        Speler kopie=new Speler();
+        
+        kopie.setBazooka((Bazooka)orginele.getBazooka().maakKopie(orginele.getBazooka()));
+        kopie.setPistool((Pistool)orginele.getPistool().maakKopie(orginele.getPistool()));
+        kopie.setLocatie(orginele.getLocatie().maakKopie(orginele.getLocatie()));
+        kopie.setMount((Mount)orginele.getMount().maakKopie(orginele.getMount()));
+        kopie.setRichting(orginele.getRichting());
+        kopie.setStappen(orginele.getStappen());
+        kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
+        kopie.setScore(orginele.getScore());
+        if(orginele.getWapen() instanceof Bazooka){
+            kopie.setWapen(kopie.getBazooka());
+        }
+        else if (orginele.getWapen() instanceof Pistool){
+             kopie.setWapen(kopie.getPistool());
+        }
+        return kopie;
+        
+    }
 }

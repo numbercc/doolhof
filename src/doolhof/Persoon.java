@@ -18,6 +18,7 @@ public abstract class Persoon {
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
 
     public abstract void wordGeraakt(Speler speler);
+    public abstract Persoon maakKopie(Persoon persoon);
 
     public void verwijderpersoon() {
         locatie.setPersoon(null);

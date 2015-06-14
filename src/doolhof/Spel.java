@@ -6,12 +6,15 @@ package doolhof;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -31,14 +34,21 @@ public class Spel {
     private static JLabel level;
     private static int levelInt;
     private static KeyListener lissener;
-
+    private static Doolhof copy;
     public static void main(String[] args) {
         // we will use the scanner for userInput
 
         // use JFrame to put the created panel on
         frame = new JFrame();
         Spel spel = new Spel();
+        JButton reset=new JButton("reset level");
+       reset.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetLevel();
+            }
+        });
         JPanel spelerStat = new JPanel(new GridLayout(0, 2));
         stappen = new JLabel("0");
         JLabel textStappen = new JLabel("Aantal stappen: ");
@@ -74,8 +84,9 @@ public class Spel {
         spel.maakLevel();
         lissener = new PressListener(spel.comp, speler);
         frame.addKeyListener(lissener);
+        reset.addKeyListener(lissener);
         spel.comp.addKeyListener(lissener);
-
+        frame.add(reset,BorderLayout.NORTH);
         frame.pack();
         frame.setVisible(true);
     }// end of ammoPistool
@@ -105,6 +116,13 @@ public class Spel {
             mountWaardeLabel.setVisible(false);
         }
     }
+    private static void resetLevel(){
+        frame.remove(comp);
+        comp = copy;
+        frame.add(comp, BorderLayout.CENTER);
+        frame.validate();
+        frame.repaint();
+    }
 
     public void removeDoolhof() {
         frame.remove(comp);
@@ -113,6 +131,12 @@ public class Spel {
     public void maakLevel() {
         comp = null;
         comp = new Doolhof(speler);
+        Doolhof doolhof= (Doolhof) comp;
+        try {
+            copy=(Doolhof)doolhof.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Spel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         frame.add(comp, BorderLayout.CENTER);
         frame.validate();
         frame.repaint();

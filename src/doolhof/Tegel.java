@@ -307,4 +307,12 @@ public class Tegel {
     public int getRoomName() {
         return roomName++;
     }// end of getRoomName()
+    public Tegel maakKopie(Tegel orginele){
+        Tegel kopie=new Tegel(orginele.getX(), orginele.getY());
+        kopie.setDijkstra(orginele.isDijkstra());
+        kopie.setKamerGrote(orginele.kamerGrote);
+        kopie.setPersoon(orginele.getPersoon().maakKopie(orginele.getPersoon()));
+        kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
+        return kopie;     
+    }
 }

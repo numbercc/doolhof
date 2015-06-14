@@ -6,22 +6,21 @@
 package doolhof;
 
 import java.awt.Graphics;
-import javax.swing.JLabel;
 
 /**
  *
  * @author Chie-cheung
  */
 public class Bazooka extends Wapen {
+
     public Bazooka() {
-        
     }
 
     @Override
     public void schieten() {
         if (super.getBullet() > 0) {
             super.minderKogels();
-            Raket raket=new Raket(super.getSpeler().getLocatie());
+            Raket raket = new Raket(super.getSpeler().getLocatie());
             raket.setRichting(super.getSpeler().getRichting());
             raket.setTegelVoortgang(0);
             super.getSpeler().getLocatie().setRaket(raket);
@@ -35,14 +34,18 @@ public class Bazooka extends Wapen {
 
     @Override
     public void wordOpgepakt(Speler speler) {
-        speler.getBazooka().setBullet(speler.getBazooka().getBullet()+1);
-        if(speler.getWapen()==null){
+        speler.getBazooka().setBullet(speler.getBazooka().getBullet() + 1);
+        if (speler.getWapen() == null) {
             speler.setWapen(speler.getBazooka());
         }
     }
 
-
-
-
-
+    @Override
+    public Upgrade maakKopie(Upgrade upgrade) {
+        Wapen orginele = (Bazooka) upgrade;
+        Wapen kopie = new Bazooka();
+        kopie.setBullet(orginele.getBullet());
+        kopie.setLocatie(orginele.getLocatie());
+        return kopie;
+    }
 }

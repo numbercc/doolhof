@@ -58,4 +58,11 @@ public class Mount extends Upgrade {
         g.setColor(Color.BLACK);
     }
 
+    @Override
+    public Upgrade maakKopie(Upgrade upgrade) {
+        Mount orginele=(Mount)upgrade;
+        Mount kopie=new Mount((int)orginele.getWaarde(),orginele.getStapWaarde());
+        return kopie;
+    }
+
 }
