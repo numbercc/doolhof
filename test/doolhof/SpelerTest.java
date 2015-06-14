@@ -116,22 +116,21 @@ public class SpelerTest {
         }
     }
     
-//    @Test
-//    public void testSpelerRaaktValsspeler() {
-//        System.out.println("test Move against a valsspeler");
-//        Tegel[][] tegels = maakTestOmgeving();
-//        Speler speler = new Speler();
-//        Valsspeler vsp = new Valsspeler(tegels, 2);
-//        tegels[2][2].setSpeler(speler);
-//        tegels[3][2].setPersoon(vsp);
-//        Boolean verwacht = false;
-//        if(speler.getLocatie() == vsp.getLocatie()) {
-//            verwacht = true;
-//        }
-//        if (verwacht) {
-//            fail("test speler loopt door vsp");
-//        }
-//    }
+    @Test
+    public void testSpelerRaaktValsspeler() {
+        System.out.println("test Move against a valsspeler");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Valsspeler vsp = new Valsspeler(tegels, 2);
+        tegels[2][2].setSpeler(speler);
+        tegels[2][3].setPersoon(vsp);
+        if(speler.getLocatie() != vsp.getLocatie()) {
+            fail("test speler loopt door vsp");
+        }
+            
+    }
+    
+    
 
     private Tegel[][] maakTestOmgeving() {
         Tegel[][] tegels = new Tegel[5][5];

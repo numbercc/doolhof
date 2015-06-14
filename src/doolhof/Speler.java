@@ -145,7 +145,7 @@ public class Speler {
                 locatie.getNorthBuur().getPersoon().wordGeraakt(this);
             }
         }
-        
+
     }
 
     public void moveLeft() {
@@ -170,7 +170,7 @@ public class Speler {
                 locatie.getWestBuur().getPersoon().wordGeraakt(this);
             }
         }
-        
+
     }
 
     public void moveDown() {
@@ -196,7 +196,7 @@ public class Speler {
                 locatie.getSouthBuur().getPersoon().wordGeraakt(this);
             }
         }
-        
+
     }
 
     public void moveRight() {
@@ -227,14 +227,52 @@ public class Speler {
     }
 
     public void showVision() {
+
+        Tegel secondTile = null;
+        Tegel thirdTile = null;
+
         if (getRichting() == Richting.right && locatie.getEast() == null) {
+            secondTile = locatie.getEastBuur();
+            thirdTile = secondTile.getEastBuur();
             locatie.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (secondTile.getEast() == null) {
+                secondTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+                if (thirdTile.getEast() == null) {
+                    thirdTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+                }
+            }
         } else if (getRichting() == Richting.left && locatie.getWest() == null) {
+            secondTile = locatie.getWestBuur();
+            thirdTile = secondTile.getWestBuur();
             locatie.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (secondTile.getWest() == null) {
+                secondTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+                if (thirdTile.getWest() == null) {
+                    thirdTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+                }
+            }
         } else if (getRichting() == Richting.down && locatie.getSouth() == null) {
+            secondTile = locatie.getSouthBuur();
+            thirdTile = secondTile.getSouthBuur();
             locatie.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (secondTile.getSouth() == null) {
+                secondTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                if (thirdTile.getSouth() == null) {
+                    thirdTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                }
+            }
         } else if (getRichting() == Richting.up && locatie.getNorth() == null) {
+            secondTile = locatie.getNorthBuur();
+            thirdTile = secondTile.getNorthBuur();
             locatie.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (secondTile.getNorth() == null) {
+                secondTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                if (thirdTile.getNorth() == null) {
+                    thirdTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                }
+            }
+            
+            
         }
 
     }
@@ -286,25 +324,24 @@ public class Speler {
     public void setScore(int score) {
         this.score = score;
     }
-    
-    public Speler maakKopie(Speler orginele){
-        Speler kopie=new Speler();
-        
-        kopie.setBazooka((Bazooka)orginele.getBazooka().maakKopie(orginele.getBazooka()));
-        kopie.setPistool((Pistool)orginele.getPistool().maakKopie(orginele.getPistool()));
+
+    public Speler maakKopie(Speler orginele) {
+        Speler kopie = new Speler();
+
+        kopie.setBazooka((Bazooka) orginele.getBazooka().maakKopie(orginele.getBazooka()));
+        kopie.setPistool((Pistool) orginele.getPistool().maakKopie(orginele.getPistool()));
         kopie.setLocatie(orginele.getLocatie().maakKopie(orginele.getLocatie()));
-        kopie.setMount((Mount)orginele.getMount().maakKopie(orginele.getMount()));
+        kopie.setMount((Mount) orginele.getMount().maakKopie(orginele.getMount()));
         kopie.setRichting(orginele.getRichting());
         kopie.setStappen(orginele.getStappen());
         kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
         kopie.setScore(orginele.getScore());
-        if(orginele.getWapen() instanceof Bazooka){
+        if (orginele.getWapen() instanceof Bazooka) {
             kopie.setWapen(kopie.getBazooka());
-        }
-        else if (orginele.getWapen() instanceof Pistool){
-             kopie.setWapen(kopie.getPistool());
+        } else if (orginele.getWapen() instanceof Pistool) {
+            kopie.setWapen(kopie.getPistool());
         }
         return kopie;
-        
+
     }
 }
