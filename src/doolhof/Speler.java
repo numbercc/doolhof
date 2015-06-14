@@ -33,6 +33,7 @@ public class Speler {
         bazooka.setSpeler(this);
         pistool = new Pistool();
         pistool.setSpeler(this);
+        
     }
 
     public Tegel getLocatie() {
@@ -95,6 +96,7 @@ public class Speler {
         }
         g2.setStroke(new BasicStroke(1));
         g.setColor(Color.LIGHT_GRAY);
+        locatie.setTegelKleur(Color.LIGHT_GRAY);
     }
 
     public void schieten(KeyEvent key) {
@@ -124,9 +126,8 @@ public class Speler {
 
     public void moveUp() {
         int som;
-        setRichting(Richting.up);
-        showVision();
-        if (locatie.getNorth() == null) {
+
+        if (getRichting() == Richting.up && locatie.getNorth() == null) {
             if (locatie.getNorthBuur().getPersoon() == null) {
                 locatie.setSpeler(null);
                 locatie.getNorthBuur().setSpeler(this);
@@ -145,14 +146,15 @@ public class Speler {
                 locatie.getNorthBuur().getPersoon().wordGeraakt(this);
             }
         }
+        setRichting(Richting.up);
+        showVision();
 
     }
 
     public void moveLeft() {
         int som;
-        setRichting(Richting.left);
-        showVision();
-        if (locatie.getWest() == null) {
+
+        if (getRichting() == Richting.left && locatie.getWest() == null) {
             if (locatie.getWestBuur().getPersoon() == null) {
                 locatie.setSpeler(null);
                 locatie.getWestBuur().setSpeler(this);
@@ -170,14 +172,14 @@ public class Speler {
                 locatie.getWestBuur().getPersoon().wordGeraakt(this);
             }
         }
-
+        setRichting(Richting.left);
+        showVision();
     }
 
     public void moveDown() {
         int som;
-        setRichting(Richting.down);
-        showVision();
-        if (locatie.getSouth() == null) {
+
+        if (getRichting() == Richting.down && locatie.getSouth() == null) {
             if (locatie.getSouthBuur().getPersoon() == null) {
                 locatie.setSpeler(null);
                 locatie.getSouthBuur().setSpeler(this);
@@ -196,14 +198,14 @@ public class Speler {
                 locatie.getSouthBuur().getPersoon().wordGeraakt(this);
             }
         }
-
+        setRichting(Richting.down);
+        showVision();
     }
 
     public void moveRight() {
         int som;
-        setRichting(Richting.right);
-        showVision();
-        if (locatie.getEast() == null) {
+
+        if (getRichting() == Richting.right && locatie.getEast() == null) {
             if (locatie.getEastBuur().getPersoon() == null) {
 
                 locatie.setSpeler(null);
@@ -223,56 +225,60 @@ public class Speler {
                 locatie.getEastBuur().getPersoon().wordGeraakt(this);
             }
         }
-
+        setRichting(Richting.right);
+        showVision();
     }
 
     public void showVision() {
 
         Tegel secondTile = null;
         Tegel thirdTile = null;
+        
 
-        if (getRichting() == Richting.right && locatie.getEast() == null) {
+        if (locatie.getEast() == null) {
             secondTile = locatie.getEastBuur();
             thirdTile = secondTile.getEastBuur();
             locatie.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
-            if (secondTile.getEast() == null) {
+            if (getRichting() == Richting.right && secondTile.getEast() == null) {
                 secondTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
                 if (thirdTile.getEast() == null) {
                     thirdTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
                 }
             }
-        } else if (getRichting() == Richting.left && locatie.getWest() == null) {
+        }
+        if (locatie.getWest() == null) {
             secondTile = locatie.getWestBuur();
             thirdTile = secondTile.getWestBuur();
             locatie.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
-            if (secondTile.getWest() == null) {
+            if (getRichting() == Richting.left && secondTile.getWest() == null) {
                 secondTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
                 if (thirdTile.getWest() == null) {
                     thirdTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
                 }
             }
-        } else if (getRichting() == Richting.down && locatie.getSouth() == null) {
+        }
+        if (locatie.getSouth() == null) {
             secondTile = locatie.getSouthBuur();
             thirdTile = secondTile.getSouthBuur();
             locatie.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
-            if (secondTile.getSouth() == null) {
+            if (getRichting() == Richting.down && secondTile.getSouth() == null) {
                 secondTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
                 if (thirdTile.getSouth() == null) {
                     thirdTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
                 }
             }
-        } else if (getRichting() == Richting.up && locatie.getNorth() == null) {
+        }
+        if (locatie.getNorth() == null) {
             secondTile = locatie.getNorthBuur();
             thirdTile = secondTile.getNorthBuur();
             locatie.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
-            if (secondTile.getNorth() == null) {
+            if (getRichting() == Richting.up && secondTile.getNorth() == null) {
                 secondTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
                 if (thirdTile.getNorth() == null) {
                     thirdTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
                 }
             }
-            
-            
+
         }
 
     }

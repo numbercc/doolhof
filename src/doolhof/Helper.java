@@ -25,7 +25,12 @@ public class Helper extends Persoon {
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
-        g.setColor(Color.ORANGE);
+        if(locatie.getTegelKleur() == Color.BLACK) {
+            g.setColor(Color.BLACK);
+        }
+        else {
+            g.setColor(Color.ORANGE);
+        }
         g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
         g.setColor(Color.BLACK);
     }
