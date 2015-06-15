@@ -33,7 +33,7 @@ public class Speler {
         bazooka.setSpeler(this);
         pistool = new Pistool();
         pistool.setSpeler(this);
-        
+
     }
 
     public Tegel getLocatie() {
@@ -233,7 +233,7 @@ public class Speler {
 
         Tegel secondTile = null;
         Tegel thirdTile = null;
-        
+
 
         if (locatie.getEast() == null) {
             secondTile = locatie.getEastBuur();
@@ -336,11 +336,14 @@ public class Speler {
 
         kopie.setBazooka((Bazooka) orginele.getBazooka().maakKopie(orginele.getBazooka()));
         kopie.setPistool((Pistool) orginele.getPistool().maakKopie(orginele.getPistool()));
-        kopie.setLocatie(orginele.getLocatie().maakKopie(orginele.getLocatie()));
-        kopie.setMount((Mount) orginele.getMount().maakKopie(orginele.getMount()));
+        if (orginele.getMount() != null) {
+            kopie.setMount((Mount) orginele.getMount().maakKopie(orginele.getMount()));
+        }
         kopie.setRichting(orginele.getRichting());
         kopie.setStappen(orginele.getStappen());
-        kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
+        if (orginele.getUpgrade() != null) {
+            kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
+        }
         kopie.setScore(orginele.getScore());
         if (orginele.getWapen() instanceof Bazooka) {
             kopie.setWapen(kopie.getBazooka());

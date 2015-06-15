@@ -317,12 +317,21 @@ public class Tegel {
     public int getRoomName() {
         return roomName++;
     }// end of getRoomName()
-    public Tegel maakKopie(Tegel orginele){
-        Tegel kopie=new Tegel(orginele.getX(), orginele.getY());
+
+    public Tegel maakKopie(Tegel orginele) {
+        Tegel kopie = new Tegel(orginele.getX(), orginele.getY());
+        kopie.setTegelKleur(orginele.getTegelKleur());
         kopie.setDijkstra(orginele.isDijkstra());
         kopie.setKamerGrote(orginele.kamerGrote);
-        kopie.setPersoon(orginele.getPersoon().maakKopie(orginele.getPersoon()));
-        kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
-        return kopie;     
+        if (orginele.getPersoon() != null) {
+            kopie.setPersoon(orginele.getPersoon().maakKopie(orginele.getPersoon()));
+        }
+        if (orginele.getUpgrade() != null) {
+            kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
+        }
+        if (orginele.getSpeler() != null) {
+            kopie.setSpeler(orginele.getSpeler().maakKopie(orginele.getSpeler()));
+        }
+        return kopie;
     }
 }

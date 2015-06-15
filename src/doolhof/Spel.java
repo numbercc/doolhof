@@ -32,6 +32,7 @@ public class Spel {
     private static JFrame frame;
     private static Speler speler;
     private static JLabel level;
+    private static JButton reset;
     private static int levelInt;
     private static KeyListener lissener;
     private static Doolhof copy;
@@ -41,7 +42,7 @@ public class Spel {
         // use JFrame to put the created panel on
         frame = new JFrame();
         Spel spel = new Spel();
-        JButton reset = new JButton("reset level");
+        reset = new JButton("reset level");
         reset.addActionListener(new ActionListener() {
 
             @Override
@@ -81,10 +82,10 @@ public class Spel {
         frame.add(spelerStat, BorderLayout.PAGE_END);
         speler = new Speler();
         spel.maakLevel();
-        lissener = new PressListener(spel.comp, speler);
+        lissener = new PressListener(comp, speler);
         frame.addKeyListener(lissener);
         reset.addKeyListener(lissener);
-        spel.comp.addKeyListener(lissener);
+        comp.addKeyListener(lissener);
         frame.add(reset, BorderLayout.NORTH);
         frame.pack();
         frame.setVisible(true);
@@ -116,11 +117,18 @@ public class Spel {
     }
 
     private static void resetLevel() {
+        
         frame.remove(comp);
         comp = copy;
+        speler=copy.getSpeler();
+        lissener = new PressListener(comp, speler);
+        frame.addKeyListener(lissener);
+        reset.addKeyListener(lissener);
+        comp.addKeyListener(lissener);
         frame.add(comp, BorderLayout.CENTER);
         frame.validate();
         frame.repaint();
+        updateScore();
     }
 
     public void removeDoolhof() {
@@ -131,12 +139,8 @@ public class Spel {
         comp = null;
         comp = new Doolhof(speler);
         Doolhof doolhof = (Doolhof) comp;
-        try {
-            copy = (Doolhof) doolhof.clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(Spel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        frame.add(comp, BorderLayout.CENTER);
+        copy=doolhof.maakKopie();
+      frame.add(comp, BorderLayout.CENTER);
         frame.validate();
         frame.repaint();
         levelInt++;

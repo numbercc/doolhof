@@ -67,6 +67,7 @@ public class Mount extends Upgrade {
     public Upgrade maakKopie(Upgrade upgrade) {
         Mount orginele=(Mount)upgrade;
         Mount kopie=new Mount((int)orginele.getWaarde(),orginele.getStapWaarde());
+        kopie.setLocatie(orginele.getLocatie());
         return kopie;
     }
 
