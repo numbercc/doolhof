@@ -41,8 +41,8 @@ public class Spel {
         // use JFrame to put the created panel on
         frame = new JFrame();
         Spel spel = new Spel();
-        JButton reset=new JButton("reset level");
-       reset.addActionListener(new ActionListener() {
+        JButton reset = new JButton("reset level");
+        reset.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,7 +67,6 @@ public class Spel {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
         spelerStat.add(textLevel);
         spelerStat.add(level);
         spelerStat.add(textAmmoBazooka);
@@ -86,7 +85,7 @@ public class Spel {
         frame.addKeyListener(lissener);
         reset.addKeyListener(lissener);
         spel.comp.addKeyListener(lissener);
-        frame.add(reset,BorderLayout.NORTH);
+        frame.add(reset, BorderLayout.NORTH);
         frame.pack();
         frame.setVisible(true);
     }// end of ammoPistool
@@ -110,13 +109,13 @@ public class Spel {
             String waardeString = String.valueOf(speler.getMount().getStapWaarde());
             mountWaardeLabel.setVisible(true);
             mountWaardeLabel.setText(waardeString);
-        }
-        else if(speler.getMount() == null) {
+        } else if (speler.getMount() == null) {
             mountLabel.setText("Geen Mount");
             mountWaardeLabel.setVisible(false);
         }
     }
-    private static void resetLevel(){
+
+    private static void resetLevel() {
         frame.remove(comp);
         comp = copy;
         frame.add(comp, BorderLayout.CENTER);
@@ -131,9 +130,9 @@ public class Spel {
     public void maakLevel() {
         comp = null;
         comp = new Doolhof(speler);
-        Doolhof doolhof= (Doolhof) comp;
+        Doolhof doolhof = (Doolhof) comp;
         try {
-            copy=(Doolhof)doolhof.clone();
+            copy = (Doolhof) doolhof.clone();
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(Spel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,12 +145,16 @@ public class Spel {
             frame.remove(comp);
             winScherm();
             frame.removeKeyListener(lissener);
-            
+
         } else {
             String levelS = String.valueOf(levelInt);
             level.setText(levelS);
         }
 
+    }
+
+    public static int getLevelInt() {
+        return levelInt;
     }
 
     public static void setAmmoBazooka(JLabel AmmoBazooka) {
@@ -165,16 +168,16 @@ public class Spel {
     public static void setStappen(JLabel stappen) {
         Spel.stappen = stappen;
     }
-    
+
     public void winScherm() {
         JPanel winScherm = new JPanel();
         JLabel win = new JLabel("U heeft gewonnen!");
         JLabel textStappen = new JLabel("Final Score: ");
-        
+
         winScherm.add(win);
         winScherm.add(textStappen);
         winScherm.add(stappen);
-        
+
         frame.add(winScherm, BorderLayout.CENTER);
     }
 

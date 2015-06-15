@@ -13,7 +13,7 @@ import java.awt.Graphics;
  */
 public abstract class Persoon {
     
-    private Tegel locatie;
+    protected Tegel locatie;
 
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
 

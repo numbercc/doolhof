@@ -26,10 +26,12 @@ public class Doolhof extends JComponent implements Cloneable {
     private int num;// we will have to increment a few times so lets just use num as an incrementor
     private int[] set;
     private int randommuur;
+    private int level;
     private Speler speler;
 
     public Doolhof(Speler speler) {
         this.speler = speler;
+        this.level = level;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();

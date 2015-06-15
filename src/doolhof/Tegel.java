@@ -33,12 +33,22 @@ public class Tegel {
     private Upgrade upgrade;
     private Color tegelKleur = Color.BLACK;
 
+    public Graphics getG() {
+        return g;
+    }
+
+    public Color getTegelKleur() {
+        return tegelKleur;
+    }
+
     public void setG(Graphics g) {
         this.g = g;
     }
 
     public void teken() {
         Graphics2D g2 = (Graphics2D) g;
+
+
         g2.setColor(tegelKleur);
         g2.fillRect(x, y, kamerGrote, kamerGrote);
         g2.setColor(Color.BLACK);

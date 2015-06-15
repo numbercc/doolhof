@@ -30,7 +30,6 @@ public class Valsspeler extends Persoon {
         int oudeLocatieY = speler.getLocatie().getPositieY();
         Tegel huidige = speler.getLocatie();
 
-
         int nieuweLocatieX = oudeLocatieX - waarde;
         int nieuweLocatieY = oudeLocatieY - waarde;
 
@@ -49,16 +48,20 @@ public class Valsspeler extends Persoon {
         if (huidige != speler.getLocatie()) {
             super.verwijderpersoon();
         }
-            
-        
 
     }
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
-        g.setColor(Color.RED);
-            g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+        if(locatie.getTegelKleur() == Color.BLACK) {
             g.setColor(Color.BLACK);
+        }
+        else {
+            g.setColor(Color.RED);
+        }
+               
+        g.fillOval(x + kamerGrote / 4, y + kamerGrote / 4, kamerGrote / 2, kamerGrote / 2);
+        g.setColor(Color.BLACK);
     }
 
     @Override

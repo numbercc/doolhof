@@ -13,7 +13,7 @@ import java.awt.Graphics;
  */
 public abstract class Upgrade {
     
-    private Tegel locatie;
+    protected Tegel locatie;
     
     public abstract void wordOpgepakt(Speler speler);
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
