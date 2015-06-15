@@ -39,7 +39,7 @@ public class Doolhof extends JComponent implements Cloneable {
     @Override
     public Object clone()
             throws CloneNotSupportedException {
-        return (Doolhof)super.clone();
+        return (Doolhof) super.clone();
     }
 
     private void maakRandomDoolhof() {
@@ -241,8 +241,41 @@ public class Doolhof extends JComponent implements Cloneable {
         }
         return lijst;
     }
-    public Doolhof maakKopie(){
-        Doolhof kopie=new Doolhof(speler.maakKopie(speler));
+
+    public Speler getSpeler() {
+        return speler;
+    }
+
+    public Doolhof maakKopie() {
+        Doolhof kopie = new Doolhof(speler.maakKopie(speler));
+        Tegel[][] kopieTegels = new Tegel[breedte][hoogte];
+        for (int i = 0; i < tegels.length; i++) {
+            for (int j = 0; j < tegels.length; j++) {
+                kopieTegels[i][j] = tegels[i][j].maakKopie(tegels[i][j]);
+                kopieTegels[i][j].setNorth(tegels[i][j].getNorth().maakKopie(tegels[i][j].getNorth()));
+                kopieTegels[i][j].setWest(tegels[i][j].getWest().maakKopie(tegels[i][j].getWest()));
+                if (i > 0) {
+                    kopieTegels[i][j].setWestBuur(kopieTegels[i - 1][j]);
+                    kopieTegels[i - 1][j].setEastBuur(kopieTegels[i][j]);
+                    kopieTegels[i][j].setEast(kopieTegels[i][j].getWest());
+                }
+                if (j > 0) {
+                    kopieTegels[i][j].setNorthBuur(kopieTegels[i][j - 1]);
+                    kopieTegels[i][j - 1].setSouthBuur(kopieTegels[i][j]);
+                    kopieTegels[i][j].setSouth(kopieTegels[i][j].getNorth());
+                }
+                if (tegels[i][j].getSpeler()!=null){
+                    kopieTegels[i][j].setSpeler(kopie.getSpeler());
+                }
+                if (tegels[i][j].getPersoon()!=null){
+                    kopieTegels[i][j].setPersoon(tegels[i][j].getPersoon().maakKopie(tegels[i][j].getPersoon()));
+                }
+                if (tegels[i][j].getUpgrade()!=null){
+                    kopieTegels[i][j].setUpgrade(tegels[i][j].getUpgrade().maakKopie(tegels[i][j].getUpgrade()));
+                }
+            }
+
+        }
         return kopie;
     }
 }// END OF CLASS 
