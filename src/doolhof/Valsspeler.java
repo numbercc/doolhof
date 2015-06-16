@@ -17,43 +17,36 @@ public class Valsspeler extends Persoon {
 
     private int waarde;
 
-    public Valsspeler(Tegel[][] tegel, int waarde) {
-        this.tegel = tegel;
+    public Valsspeler( int waarde) {
         this.waarde = waarde;
     }
     private Tegel[][] tegel;
     private Speler speler;
-
-    public void zetSpelerTerug(Speler speler, Valsspeler vsp) {
-
-        int oudeLocatieX = speler.getLocatie().getPositieX();
-        int oudeLocatieY = speler.getLocatie().getPositieY();
-        Tegel huidige = speler.getLocatie();
-
-        int nieuweLocatieX = oudeLocatieX - waarde;
-        int nieuweLocatieY = oudeLocatieY - waarde;
-
-        if (nieuweLocatieX < 0) {
-            nieuweLocatieX = 0;
-        }
-
-        if (nieuweLocatieY < 0) {
-            nieuweLocatieY = 0;
-        }
-
-        speler.setLocatie(tegel[nieuweLocatieX][nieuweLocatieY]);
-        speler.getLocatie().setSpeler(speler);
-        speler.getLocatie().teken();
-        huidige.setSpeler(null);
-        if (huidige != speler.getLocatie()) {
-            super.verwijderpersoon();
-        }
-
-    }
+   private void breedteTerug(int aantalPlekken,Speler speler){
+       if(speler.getLocatie().getWestBuur()!=null&& aantalPlekken>0){
+           Tegel temp=speler.getLocatie();
+           speler.setLocatie(speler.getLocatie().getWestBuur());
+           speler.getLocatie().setSpeler(speler);
+           aantalPlekken--;
+           temp.setSpeler(null);
+           breedteTerug(aantalPlekken, speler);
+       }
+   }
+   private void hoogteTerug(int aantalPlekken,Speler speler){
+       if(speler.getLocatie().getNorthBuur()!=null&& aantalPlekken>0){
+           Tegel temp=speler.getLocatie();
+           speler.setLocatie(speler.getLocatie().getNorthBuur());
+           speler.getLocatie().setSpeler(speler);
+           aantalPlekken--;
+           
+           temp.setSpeler(null);
+           hoogteTerug(aantalPlekken, speler);
+       }
+   }
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
-        if(locatie.getTegelKleur() == Color.BLACK) {
+        if(super.getLocatie().getTegelKleur() == Color.BLACK) {
             g.setColor(Color.BLACK);
         }
         else {
@@ -66,14 +59,15 @@ public class Valsspeler extends Persoon {
 
     @Override
     public void wordGeraakt(Speler speler) {
-        zetSpelerTerug(speler, this);
+        breedteTerug(waarde, speler);
+        hoogteTerug(waarde, speler);
+        super.verwijderpersoon();
     }
 
     @Override
     public Persoon maakKopie(Persoon persoon) {
         Valsspeler orginele = (Valsspeler) persoon;
-        Valsspeler kopie = new Valsspeler(null, orginele.waarde);
-        kopie.setLocatie(orginele.getLocatie());
+        Valsspeler kopie = new Valsspeler(orginele.waarde);
         return kopie;
     }
 }

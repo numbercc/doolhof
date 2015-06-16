@@ -13,8 +13,8 @@ import java.awt.Graphics;
  */
 public abstract class Persoon {
     
-    protected Tegel locatie;
-
+    private Tegel locatie;
+    private Tegel[][] doolhof;
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
 
     public abstract void wordGeraakt(Speler speler);
@@ -22,6 +22,14 @@ public abstract class Persoon {
 
     public void verwijderpersoon() {
         locatie.setPersoon(null);
+    }
+
+    public Tegel[][] getDoolhof() {
+        return doolhof;
+    }
+
+    public void setDoolhof(Tegel[][] doolhof) {
+        this.doolhof = doolhof;
     }
 
     public Tegel getLocatie() {

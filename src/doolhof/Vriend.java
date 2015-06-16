@@ -22,7 +22,7 @@ public class Vriend extends Persoon{
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
-        if(locatie.getTegelKleur() == Color.BLACK) {
+        if(super.getLocatie().getTegelKleur() == Color.BLACK) {
             g.setColor(Color.BLACK);
         }
         else {

@@ -36,6 +36,7 @@ public class Spel {
     private static int levelInt;
     private static KeyListener lissener;
     private static Doolhof copy;
+
     public static void main(String[] args) {
         // we will use the scanner for userInput
 
@@ -43,6 +44,7 @@ public class Spel {
         frame = new JFrame();
         Spel spel = new Spel();
         reset = new JButton("reset level");
+        reset.setFocusable(false);
         reset.addActionListener(new ActionListener() {
 
             @Override
@@ -94,10 +96,7 @@ public class Spel {
     public static void updateScore() {
         ammoBazooka.setText("" + speler.getBazooka().getBullet());
         pistoolAmmo.setText("" + speler.getPistool().getBullet());
-        double stap = speler.getStappen();
-        int stapInt = (int) stap;
-        String stapString = String.valueOf(stapInt);
-        stappen.setText("" + stapString);
+        stappen.setText("" + (int) speler.getStappen());
         if (speler.getWapen() instanceof Bazooka) {
             ammoBazooka.setText(speler.getBazooka().getBullet() + " selected");
         } else if (speler.getWapen() instanceof Pistool) {
@@ -117,14 +116,20 @@ public class Spel {
     }
 
     private static void resetLevel() {
-        
+
         frame.remove(comp);
-        comp = copy;
-        speler=copy.getSpeler();
+        Doolhof doolhof=copy.maakKopie();
+        comp = doolhof;
+
+        speler = doolhof.getSpeler();
+        frame.removeKeyListener(lissener);
+        reset.removeKeyListener(lissener);
+        comp.removeKeyListener(lissener);
         lissener = new PressListener(comp, speler);
         frame.addKeyListener(lissener);
         reset.addKeyListener(lissener);
         comp.addKeyListener(lissener);
+        comp.grabFocus();
         frame.add(comp, BorderLayout.CENTER);
         frame.validate();
         frame.repaint();
@@ -136,14 +141,15 @@ public class Spel {
     }
 
     public void maakLevel() {
+        levelInt++;
         comp = null;
-        comp = new Doolhof(speler);
+        comp = new Doolhof(speler,levelInt);
         Doolhof doolhof = (Doolhof) comp;
-        copy=doolhof.maakKopie();
-      frame.add(comp, BorderLayout.CENTER);
+        copy = doolhof.maakKopie();
+        frame.add(comp, BorderLayout.CENTER);
         frame.validate();
         frame.repaint();
-        levelInt++;
+        
 
         if (levelInt >= 4) {
             frame.remove(comp);

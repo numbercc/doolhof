@@ -15,17 +15,23 @@ import java.util.*;
  */
 public class Helper extends Persoon {
 
-    private Tegel eind;
-    private Tegel[][] doolhof;
+    private Vriend eind;
 
-    public Helper(Tegel[][] tegel, Tegel vriendLocatie) {
-        this.doolhof = tegel;
+    public Helper( Vriend vriendLocatie) {
         eind = vriendLocatie;
+    }
+
+    public Vriend getEind() {
+        return eind;
+    }
+
+    public void setEind(Vriend eind) {
+        this.eind = eind;
     }
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {
-        if(locatie.getTegelKleur() == Color.BLACK) {
+        if(super.getLocatie().getTegelKleur() == Color.BLACK) {
             g.setColor(Color.BLACK);
         }
         else {
@@ -42,6 +48,7 @@ public class Helper extends Persoon {
     }
 
     public void kortsteRoute() {
+        Tegel[][] doolhof=super.getDoolhof();
         ArrayList<Tegel> route;
         Map<Tegel, Integer> afstand = new HashMap<>();
         Map<Tegel, Tegel> vorige = new HashMap<>();
@@ -67,7 +74,7 @@ public class Helper extends Persoon {
                 }
 
             }
-            if (u == eind) {
+            if (u == eind.getLocatie()) {
                 break;
             }
             nietBezocht.remove(u);
@@ -80,11 +87,11 @@ public class Helper extends Persoon {
             }
 
         }
-        if (vorige.get(eind) == null) {
+        if (vorige.get(eind.getLocatie()) == null) {
             return;
         }
         route = new ArrayList<>();
-        Tegel huidige = eind;
+        Tegel huidige = eind.getLocatie();
         while (huidige != null) {
             route.add(huidige);
             huidige = vorige.get(huidige);
@@ -103,7 +110,7 @@ public class Helper extends Persoon {
     @Override
     public Persoon maakKopie(Persoon persoon) {
         Helper orginele = (Helper) persoon;
-        Helper kopie = new Helper(null, null);
+        Helper kopie = new Helper( null);
         kopie.setLocatie(orginele.getLocatie());
         return kopie;
     }

@@ -25,7 +25,7 @@ public class Speler {
     private Pistool pistool;
     private Richting richting;
     private Mount mount;
-    private Upgrade upgrade;
+    //private Upgrade upgrade;
 
     public Speler() {
         richting = Richting.left;
@@ -61,6 +61,7 @@ public class Speler {
     }
 
     public void move(KeyEvent ke) {
+
         if (ke.getKeyCode() == KeyEvent.VK_W) {
             moveUp();
 
@@ -75,7 +76,7 @@ public class Speler {
         } else if (ke.getKeyCode() == KeyEvent.VK_D) {
 
             moveRight();
-            ;
+
         } //Hieronder Valsspeler collision
     }
 
@@ -238,49 +239,71 @@ public class Speler {
         if (locatie.getEast() == null) {
             secondTile = locatie.getEastBuur();
             thirdTile = secondTile.getEastBuur();
-            locatie.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (locatie.getEastBuur().getTegelKleur() != Color.YELLOW) {
+                locatie.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+            }
             if (getRichting() == Richting.right && secondTile.getEast() == null) {
-                secondTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
-                if (thirdTile.getEast() == null) {
+                if (secondTile.getEastBuur().getTegelKleur() != Color.YELLOW) {
+                    secondTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
+                }
+                if (thirdTile.getEast() == null && thirdTile.getEastBuur().getTegelKleur() != Color.YELLOW) {
                     thirdTile.getEastBuur().setTegelKleur(Color.LIGHT_GRAY);
                 }
             }
         }
+
         if (locatie.getWest() == null) {
             secondTile = locatie.getWestBuur();
             thirdTile = secondTile.getWestBuur();
-            locatie.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (locatie.getWestBuur().getTegelKleur() != Color.YELLOW) {
+                locatie.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+            }
             if (getRichting() == Richting.left && secondTile.getWest() == null) {
-                secondTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
-                if (thirdTile.getWest() == null) {
+                if (secondTile.getWestBuur().getTegelKleur() != Color.YELLOW) {
+                    secondTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+                }
+                if (thirdTile.getWest() == null && thirdTile.getWestBuur().getTegelKleur() != Color.YELLOW) {
                     thirdTile.getWestBuur().setTegelKleur(Color.LIGHT_GRAY);
+
                 }
             }
         }
+
         if (locatie.getSouth() == null) {
             secondTile = locatie.getSouthBuur();
             thirdTile = secondTile.getSouthBuur();
-            locatie.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (locatie.getSouthBuur().getTegelKleur() != Color.YELLOW) {
+                locatie.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+            }
             if (getRichting() == Richting.down && secondTile.getSouth() == null) {
-                secondTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
-                if (thirdTile.getSouth() == null) {
-                    thirdTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                if (secondTile.getSouthBuur().getTegelKleur() != Color.YELLOW) {
+                    if (secondTile.getSouthBuur().getTegelKleur() != Color.YELLOW) {
+                        secondTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                    }
+                    if (thirdTile.getSouth() == null && thirdTile.getSouthBuur().getTegelKleur() != Color.YELLOW) {
+                        thirdTile.getSouthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                    }
                 }
             }
-        }
-        if (locatie.getNorth() == null) {
-            secondTile = locatie.getNorthBuur();
-            thirdTile = secondTile.getNorthBuur();
-            locatie.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
-            if (getRichting() == Richting.up && secondTile.getNorth() == null) {
-                secondTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
-                if (thirdTile.getNorth() == null) {
-                    thirdTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+            if (locatie.getNorth() == null) {
+                secondTile = locatie.getNorthBuur();
+                thirdTile = secondTile.getNorthBuur();
+                if (locatie.getNorthBuur().getTegelKleur() != Color.YELLOW) {
+                    locatie.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
                 }
+                if (getRichting() == Richting.up && secondTile.getNorth() == null) {
+                    if (secondTile.getNorthBuur().getTegelKleur() != Color.YELLOW) {
+
+                        secondTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                    }
+                    if (thirdTile.getNorth() == null && thirdTile.getNorthBuur().getTegelKleur() != Color.YELLOW) {
+                        thirdTile.getNorthBuur().setTegelKleur(Color.LIGHT_GRAY);
+                    }
+                }
+
             }
 
         }
-
     }
 
     public double getStappen() {
@@ -315,14 +338,6 @@ public class Speler {
         this.stappen = s;
     }
 
-    public Upgrade getUpgrade() {
-        return upgrade;
-    }
-
-    public void setUpgrade(Upgrade up) {
-        this.upgrade = up;
-    }
-
     public int getScore() {
         return score;
     }
@@ -341,9 +356,6 @@ public class Speler {
         }
         kopie.setRichting(orginele.getRichting());
         kopie.setStappen(orginele.getStappen());
-        if (orginele.getUpgrade() != null) {
-            kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
-        }
         kopie.setScore(orginele.getScore());
         if (orginele.getWapen() instanceof Bazooka) {
             kopie.setWapen(kopie.getBazooka());

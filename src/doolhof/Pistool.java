@@ -14,7 +14,7 @@ import java.awt.Graphics;
 public class Pistool extends Wapen {
 
     private Richting richting;
-    private Tegel locatie;
+    private Tegel locatie;/// aanpassen!!!!!
 
     public Pistool() {
 
@@ -29,7 +29,7 @@ public class Pistool extends Wapen {
         }
     }
 
-    public void pistoolSchieten(Tegel locatie) {
+    private void pistoolSchieten(Tegel locatie) {
         if(richting==Richting.up){
             if(locatie.getPersoon()==null&&locatie.getNorth()==null){
                 pistoolSchieten(locatie.getNorthBuur());
@@ -38,16 +38,16 @@ public class Pistool extends Wapen {
                 locatie.setPersoon(null);
             }
         }
-        else if(richting==Richting.left&&locatie.getWest()==null){
-            if(locatie.getPersoon()==null){
+        else if(richting==Richting.left){
+            if(locatie.getPersoon()==null&&locatie.getWest()==null){
                 pistoolSchieten(locatie.getWestBuur());
             }
             else{
                 locatie.setPersoon(null);
             }
         }
-        else if(richting==Richting.right&&locatie.getEast()==null){
-            if(locatie.getPersoon()==null){
+        else if(richting==Richting.right){
+            if(locatie.getPersoon()==null &&locatie.getEast()==null){
                 pistoolSchieten(locatie.getEastBuur());
             }
             else{

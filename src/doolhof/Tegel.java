@@ -19,19 +19,18 @@ public class Tegel {
 
     private Muur north, east, south, west; // the Muur class will be created next
     private int x, y;
-    private int positieX, positieY;
+   private int positieX, positieY;// zijn zelfde??
     private List<Tegel> buren; // adjacency list using linked list
     private int roomName; // for this the room will be a number
     private int kamerGrote;
     private Speler speler;
     private Persoon persoon;
     private Tegel northBuur, eastBuur, southBuur, westBuur;
-    private boolean dijkstra = false;
     private Raket raket;
     private JComponent comp;
     private Graphics g;
     private Upgrade upgrade;
-    private Color tegelKleur = Color.BLACK;
+    private Color tegelKleur = Color.GRAY;
 
     public Graphics getG() {
         return g;
@@ -64,8 +63,10 @@ public class Tegel {
                     y + kamerGrote);
         }// end of south if
         if (getEast() != null) {
+
             g2.drawLine(x + kamerGrote, y, x + kamerGrote,
                     y + kamerGrote);
+            
         }// end of east if
         if (getRaket() != null) {
             getRaket().teken(kamerGrote, x, y, g);
@@ -126,9 +127,6 @@ public class Tegel {
         return buren;
     }
 
-    public boolean isDijkstra() {
-        return dijkstra;
-    }
 
     public Raket getRaket() {
         return raket;
@@ -145,11 +143,6 @@ public class Tegel {
     public Upgrade getUpgrade() {
         return upgrade;
     }
-
-    public void setDijkstra(boolean dijkstra) {
-        this.dijkstra = dijkstra;
-    }
-
     public Tegel getEastBuur() {
         return eastBuur;
     }
@@ -321,7 +314,6 @@ public class Tegel {
     public Tegel maakKopie(Tegel orginele) {
         Tegel kopie = new Tegel(orginele.getX(), orginele.getY());
         kopie.setTegelKleur(orginele.getTegelKleur());
-        kopie.setDijkstra(orginele.isDijkstra());
         kopie.setKamerGrote(orginele.kamerGrote);
         if (orginele.getPersoon() != null) {
             kopie.setPersoon(orginele.getPersoon().maakKopie(orginele.getPersoon()));
@@ -331,6 +323,7 @@ public class Tegel {
         }
         if (orginele.getSpeler() != null) {
             kopie.setSpeler(orginele.getSpeler().maakKopie(orginele.getSpeler()));
+          
         }
         return kopie;
     }
