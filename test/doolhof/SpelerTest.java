@@ -121,7 +121,7 @@ public class SpelerTest {
         System.out.println("test Move against a valsspeler");
         Tegel[][] tegels = maakTestOmgeving();
         Speler speler = new Speler();
-        Valsspeler vsp = new Valsspeler(tegels, 2);
+        Valsspeler vsp = new Valsspeler( 2);
         tegels[2][2].setSpeler(speler);
         tegels[2][3].setPersoon(vsp);
         if(speler.getLocatie() != vsp.getLocatie()) {

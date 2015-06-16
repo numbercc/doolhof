@@ -32,11 +32,12 @@ public class Doolhof extends JComponent {
 
     public Doolhof(Speler speler,int lvl) {
         this.speler = speler;
+        this.lvl=lvl;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
         setPreferredSize(new Dimension(500, 500));
-        this.lvl=lvl;
+        
     }
 
     private void maakRandomDoolhof() {

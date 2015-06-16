@@ -100,7 +100,6 @@ public class Helper extends Persoon {
 
 
     }
-
     public void routeKleuren(ArrayList<Tegel> route) {
         for (Tegel tegel : route) {
             tegel.setTegelKleur(Color.yellow);
