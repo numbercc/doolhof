@@ -25,25 +25,22 @@ import javax.swing.JPanel;
  */
 public class Spel {
 
-    private static JComponent comp;
-    private static JLabel ammoBazooka;
-    private static JLabel pistoolAmmo;
-    private static JLabel mountLabel;
-    private static JLabel mountWaardeLabel;
-    private static JLabel stappen;
-    private static JFrame frame;
-    private static Speler speler;
-    private static JLabel level;
-    private static JButton reset;
-    private static int levelInt;
-    private static KeyListener lissener;
-    private static Doolhof copy;
-    private static JPanel hoofdmenu;
+    private  JComponent comp;
+    private  JLabel ammoBazooka;
+    private  JLabel pistoolAmmo;
+    private  JLabel mountLabel;
+    private  JLabel mountWaardeLabel;
+    private  JLabel stappen;
+    private  JFrame frame;
+    private  Speler speler;
+    private  JLabel level;
+    private  JButton reset;
+    private  int levelInt;
+    private  KeyListener lissener;
+    private  Doolhof copy;
+    private  JPanel hoofdmenu;
 
-    public static void main(String[] args) {
-        // we will use the scanner for userInput
-
-        // use JFrame to put the created panel on
+    public Spel() {
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(500, 650));
@@ -67,9 +64,11 @@ public class Spel {
         frame.add(hoofdmenu, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
-    }// end of ammoPistool
+    }
 
-    public static void updateScore() {
+    
+
+    public void updateScore() {
         ammoBazooka.setText("" + speler.getBazooka().getBullet());
         pistoolAmmo.setText("" + speler.getPistool().getBullet());
         stappen.setText("" + (int) speler.getStappen());
@@ -91,8 +90,7 @@ public class Spel {
         }
     }
 
-    private static void beginspel() {
-        Spel spel = new Spel();
+    private void beginspel() {
         reset = new JButton("reset level");
         reset.setFocusable(false);
         reset.addActionListener(new ActionListener() {
@@ -128,8 +126,8 @@ public class Spel {
         spelerStat.setFocusable(false);
         frame.add(spelerStat, BorderLayout.PAGE_END);
         speler = new Speler();
-        spel.maakLevel();
-        lissener = new PressListener(comp, speler);
+        maakLevel();
+        lissener = new PressListener(comp, speler,this);
         frame.addKeyListener(lissener);
         comp.addKeyListener(lissener);
         frame.add(reset, BorderLayout.NORTH);
@@ -139,7 +137,7 @@ public class Spel {
 
     }
 
-    private static void resetLevel() {
+    private void resetLevel() {
 
         frame.remove(comp);
         Doolhof doolhof = copy.maakKopie();
@@ -149,7 +147,7 @@ public class Spel {
         frame.removeKeyListener(lissener);
         reset.removeKeyListener(lissener);
         comp.removeKeyListener(lissener);
-        lissener = new PressListener(comp, speler);
+        lissener = new PressListener(comp, speler,this);
         frame.addKeyListener(lissener);
         reset.addKeyListener(lissener);
         comp.addKeyListener(lissener);
@@ -159,15 +157,14 @@ public class Spel {
         frame.repaint();
         updateScore();
     }
-
-    public void removeDoolhof() {
+    public void removeComp(){
         frame.remove(comp);
     }
-
     public void maakLevel() {
+
         levelInt++;
         comp = null;
-        comp = new Doolhof(speler, levelInt);
+        comp = new Doolhof(speler, levelInt,this);
         Doolhof doolhof = (Doolhof) comp;
         copy = doolhof.maakKopie();
         frame.add(comp, BorderLayout.CENTER);
@@ -187,20 +184,20 @@ public class Spel {
 
     }
 
-    public static int getLevelInt() {
+    public int getLevelInt() {
         return levelInt;
     }
 
-    public static void setAmmoBazooka(JLabel AmmoBazooka) {
-        Spel.ammoBazooka = AmmoBazooka;
+    public void setAmmoBazooka(JLabel AmmoBazooka) {
+        this.ammoBazooka = AmmoBazooka;
     }
 
-    public static void setPistoolAmmo(JLabel pistoolAmmo) {
-        Spel.pistoolAmmo = pistoolAmmo;
+    public void setPistoolAmmo(JLabel pistoolAmmo) {
+        this.pistoolAmmo = pistoolAmmo;
     }
 
-    public static void setStappen(JLabel stappen) {
-        Spel.stappen = stappen;
+    public void setStappen(JLabel stappen) {
+        this.stappen = stappen;
     }
 
     public void winScherm() {
@@ -214,4 +211,8 @@ public class Spel {
 
         frame.add(winScherm, BorderLayout.CENTER);
     }
+    public static void main(String[] args) {
+        Spel spel=new Spel();
+        
+    }// end of ammoPistool
 }

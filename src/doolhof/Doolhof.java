@@ -30,10 +30,12 @@ public class Doolhof extends JComponent {
     private int randommuur;
     private Speler speler;
     private int lvl;
+    private Spel spel;
 
-    public Doolhof(Speler speler, int lvl) {
+    public Doolhof(Speler speler, int lvl,Spel spel) {
         this.speler = speler;
         this.lvl = lvl;
+        this.spel=spel;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
@@ -119,9 +121,9 @@ public class Doolhof extends JComponent {
                 m.setLocatie(tegels[x][y]);
             }
         }
-        Vriend vriend = new Vriend();
-        tegels[19][19].setPersoon(vriend);
-        vriend.setLocatie(tegels[19][19]);
+        Vriend vriend = new Vriend(spel);
+        tegels[2][2].setPersoon(vriend);
+        vriend.setLocatie(tegels[2][2]);
         Helper helper;
         if (lvl > 1) {
             helper = new Helper(vriend, true);
@@ -265,8 +267,8 @@ public class Doolhof extends JComponent {
     }
 
     public Doolhof maakKopie() {
-        Doolhof kopie = new Doolhof((Speler) speler.maakKopie(), lvl);
-        Vriend vriend = new Vriend();
+        Doolhof kopie = new Doolhof((Speler) speler.maakKopie(), lvl,spel);
+        Vriend vriend = new Vriend(spel);
         ArrayList<Helper> lijstHelper = new ArrayList<>();
         ArrayList<Valsspeler> lijstValsspeler = new ArrayList<>();
         Tegel[][] kopieTegels = new Tegel[breedte][hoogte];

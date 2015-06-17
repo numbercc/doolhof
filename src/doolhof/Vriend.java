@@ -12,6 +12,10 @@ import java.awt.Graphics;
  * @author Raymond
  */
 public class Vriend extends Persoon{
+    private Spel spel;
+    public Vriend(Spel spel) {
+        this.spel=spel;
+    }
     
     
   
@@ -34,15 +38,14 @@ public class Vriend extends Persoon{
 
     @Override
     public void wordGeraakt(Speler speler) {
-        Spel spel=new Spel();
-        spel.removeDoolhof();
+        spel.removeComp();
         spel.maakLevel();
     }
 
     @Override
     public Object maakKopie( ) {
 
-        Vriend kopie = new Vriend();
+        Vriend kopie = new Vriend(spel);
         return kopie;
     }
 }

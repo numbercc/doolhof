@@ -122,7 +122,6 @@ public class Speler implements MaakKopie{
     private void PickUpUpgrade() {
         locatie.getUpgrade().wordOpgepakt(this);
         locatie.setUpgrade(null);
-        Spel.updateScore();
     }
 
     public void moveUp() {
@@ -305,6 +304,7 @@ public class Speler implements MaakKopie{
 
         }
     }
+    
 
     public double getStappen() {
         return stappen;
