@@ -38,6 +38,7 @@ public class Vriend extends Persoon{
 
     @Override
     public void wordGeraakt(Speler speler) {
+        super.verwijderpersoon();
         spel.removeComp();
         spel.maakLevel();
     }

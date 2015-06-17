@@ -46,8 +46,7 @@ public class SpelerTest {
         if (verwachte != speler.getLocatie()) {
             fail("test speler omhoog niet gelukt");
         }
-        if(speler.getLocatie()==tegels[5][5])
-        {
+        if (speler.getLocatie() == tegels[5][5]) {
             fail("speler is nog op de huidige plek");
         }
     }
@@ -65,11 +64,11 @@ public class SpelerTest {
         if (verwachte != speler.getLocatie()) {
             fail("test speler naar links niet gelukt");
         }
-        if(speler.getLocatie()==tegels[5][5])
-        {
+        if (speler.getLocatie() == tegels[5][5]) {
             fail("speler is nog op de huidige plek");
         }
     }
+
     @Test
     public void testMoveRightt() {
         System.out.println("test Move right");
@@ -83,11 +82,11 @@ public class SpelerTest {
         if (verwachte != speler.getLocatie()) {
             fail("test speler naar links niet gelukt");
         }
-        if(speler.getLocatie()==tegels[5][5])
-        {
+        if (speler.getLocatie() == tegels[5][5]) {
             fail("speler is nog op de huidige plek");
         }
     }
+
     @Test
     public void testMoveDown() {
         System.out.println("test Move Down");
@@ -101,11 +100,11 @@ public class SpelerTest {
         if (verwachte != speler.getLocatie()) {
             fail("test speler naar links niet gelukt");
         }
-        if(speler.getLocatie()==tegels[5][5])
-        {
+        if (speler.getLocatie() == tegels[5][5]) {
             fail("speler is nog op de huidige plek");
         }
     }
+
     @Test
     public void testMoveUpMuur() {
         System.out.println("test Move Up against wall");
@@ -121,58 +120,102 @@ public class SpelerTest {
             fail("test speler loopt door muur");
         }
     }
+
     @Test
     public void algoritmeTest2() {
         // hierin word de formele fysieke algoritme getest van testgeval 1
         // speler raakt eerst geen persoon en daarna vriend.
         System.out.println("algoritmetest2");
-        Spel spel=new Spel();
-        
+        Spel spel = new Spel();
+
         Tegel[][] tegels = maakTestOmgeving();
         Speler speler = new Speler();
         spel.setSpeler(speler);
         spel.beginspel();
-        Vriend vriend= new Vriend(spel);
-        tegels[5][3].setPersoon(vriend);
+
+        tegels[5][3].setPersoon(new Vriend(spel));
+        tegels[5][3].getPersoon().setLocatie(tegels[5][3]);
         tegels[5][5].setSpeler(speler);
         speler.setLocatie(tegels[5][5]);
         speler.setRichting(Richting.up);
         speler.moveUp();
-        if(speler.getLocatie()!=tegels[5][4]){
+        if (speler.getLocatie() != tegels[5][4]) {
             fail("speler is niet bewogen");
         }
         speler.moveUp();
-        if(spel.getLevelInt()!=2){
+        if (spel.getLevelInt() != 2) {
             fail("level niet gehaald");
         }
     }
+
     @Test
     public void algoritmeTest1() {
         // hierin word de formele fysieke algoritme getest van testgeval 1
         // speler raakt eerst geen persoon en daarna vriend.
         System.out.println("algoritmetest1");
-        Spel spel=new Spel();
-        
+        Spel spel = new Spel();
+
         Tegel[][] tegels = maakTestOmgeving();
         Speler speler = new Speler();
         spel.setSpeler(speler);
         spel.beginspel();
-        Vriend vriend= new Vriend(spel);
-        tegels[5][3].setPersoon(vriend);
+
+        tegels[5][4].setPersoon(new Vriend(spel));
+        tegels[5][4].getPersoon().setLocatie(tegels[5][4]);
         tegels[5][5].setSpeler(speler);
-        speler.setLocatie(tegels[5][4]);
+        speler.setLocatie(tegels[5][5]);
         speler.setRichting(Richting.up);
         speler.moveUp();
-        if(spel.getLevelInt()!=2){
+        if (tegels[5][4].getPersoon() != null) {
+            fail("vriend bestaat nog");
+        }
+        if (spel.getLevelInt() != 2) {
             fail("level niet gehaald");
         }
     }
-    
-    
-    
+
+    @Test
+    public void algoritmeTest3() {
+        // hierin word de formele fysieke algoritme getest van testgeval 1
+        // speler raakt helper dan valsspeler en daarna als laatst vriend.
+        System.out.println("algoritmetest3");
+        Spel spel = new Spel();
+
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        spel.setSpeler(speler);
+        spel.beginspel();
+        //valsspeler zet speler 1 omhoog 1 naar links
+        Vriend vriend = new Vriend(spel);
+        vriend.setLocatie(tegels[8][10]);
+        tegels[8][10].setPersoon(vriend);
+        tegels[10][11].setPersoon(new Helper(vriend, false));
+       tegels[10][11].getPersoon().setLocatie(tegels[10][11]);
+       tegels[10][11].getPersoon().setDoolhof(tegels);
+       tegels[10][11].setPersoon(new Valsspeler(1, false));
+        tegels[10][11].getPersoon().setLocatie(tegels[10][11]);
+
+        tegels[10][10].setSpeler(speler);
+        speler.setLocatie(tegels[10][10]);
+        speler.setRichting(Richting.down);
+        speler.moveDown();
+        speler.moveDown();
+        speler.moveLeft();
+        speler.moveLeft();
+        if(tegels[9][10].getPersoon()!=null){
+            fail("valsspeler bestaat nog");
+        }
+        if(tegels[10][11].getPersoon()!=null){
+            fail("helper bestaat nog");
+        }
+        if (spel.getLevelInt() != 2) {
+            fail("level niet gehaald");
+        }
+
+    }
 
     private Tegel[][] maakTestOmgeving() {
-        Tegel[][] tegels = new Tegel[10][10];
+        Tegel[][] tegels = new Tegel[20][20];
         for (int i = 0; i < tegels.length; i++) {
             for (int j = 0; j < tegels.length; j++) {
                 tegels[i][j] = new Tegel(i, j);
@@ -183,15 +226,15 @@ public class SpelerTest {
                 if (j == 0) {
                     tegels[i][j].setWest(new Buitenmuur(tegels[i][j]));
                 }
-                if (i ==  tegels.length- 1) {
+                if (i == tegels.length - 1) {
                     tegels[i][j].setSouth(new Buitenmuur(tegels[i][j]));
                 }
-                if (j == tegels.length- 1) {
+                if (j == tegels.length - 1) {
                     tegels[i][j].setEast(new Buitenmuur(tegels[i][j]));
                 }
-                
-                    
-                
+
+
+
                 if (i > 0) {
                     tegels[i][j].setWestBuur(tegels[i - 1][j]);
                     tegels[i - 1][j].setEastBuur(tegels[i][j]);
