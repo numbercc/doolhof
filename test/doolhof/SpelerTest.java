@@ -121,6 +121,36 @@ public class SpelerTest {
             fail("test speler loopt door muur");
         }
     }
+    
+       @Test
+    public void statementCoverageMount() {
+        // Statement Coverage: Mount
+        // Fysiek testgeval 1
+        System.out.println("Statement coverage test 1: Mount");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Mount mount = new Mount(2, 10);
+        speler.setScore(0);
+        tegels[5][5].setSpeler(speler);
+        tegels[5][4].setUpgrade(mount);
+        speler.setLocatie(tegels[5][5]);
+        speler.setRichting(Richting.up);
+        speler.moveUp();
+        double verwachteScore = 1.5;
+        if(speler.getLocatie() != tegels[5][4]) {
+            fail("speler is niet bewogen");
+        }
+        speler.moveUp();
+        if(speler.getMount() == null) {
+            fail("speler heeft geen mount");
+        }
+        
+        if(verwachteScore != speler.getStappen())
+        {
+            fail("speler score niet gelijk aan verwachte score");
+        }
+    }
+    
     @Test
     public void algoritmeTest2() {
         // hierin word de formele fysieke algoritme getest van testgeval 1
@@ -168,6 +198,7 @@ public class SpelerTest {
         }
     }
     
+ 
     
     
 
