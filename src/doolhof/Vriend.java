@@ -40,10 +40,9 @@ public class Vriend extends Persoon{
     }
 
     @Override
-    public Persoon maakKopie(Persoon persoon) {
-        Vriend orginele = (Vriend) persoon;
+    public Object maakKopie( ) {
+
         Vriend kopie = new Vriend();
-        kopie.setLocatie(orginele.getLocatie());
         return kopie;
     }
 }

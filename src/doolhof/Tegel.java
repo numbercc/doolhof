@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.JComponent;
 
-public class Tegel {
+public class Tegel implements MaakKopie {
     // represent four Buitenmuurs
 
     private Muur north, east, south, west; // the Muur class will be created next
@@ -311,18 +311,18 @@ public class Tegel {
         return roomName++;
     }// end of getRoomName()
 
-    public Tegel maakKopie(Tegel orginele) {
-        Tegel kopie = new Tegel(orginele.getX(), orginele.getY());
-        kopie.setTegelKleur(orginele.getTegelKleur());
-        kopie.setKamerGrote(orginele.kamerGrote);
-        if (orginele.getPersoon() != null) {
-            kopie.setPersoon(orginele.getPersoon().maakKopie(orginele.getPersoon()));
+    public Object maakKopie( ) {
+        Tegel kopie = new Tegel(getX(), getY());
+        kopie.setTegelKleur(getTegelKleur());
+        kopie.setKamerGrote(kamerGrote);
+        if (getPersoon() != null) {
+            kopie.setPersoon((Persoon)getPersoon().maakKopie());
         }
-        if (orginele.getUpgrade() != null) {
-            kopie.setUpgrade(orginele.getUpgrade().maakKopie(orginele.getUpgrade()));
+        if (getUpgrade() != null) {
+            kopie.setUpgrade((Upgrade)getUpgrade().maakKopie());
         }
-        if (orginele.getSpeler() != null) {
-            kopie.setSpeler(orginele.getSpeler().maakKopie(orginele.getSpeler()));
+        if (getSpeler() != null) {
+            kopie.setSpeler((Speler)getSpeler().maakKopie());
           
         }
         return kopie;

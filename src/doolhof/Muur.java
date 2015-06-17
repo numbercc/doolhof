@@ -8,12 +8,16 @@ package doolhof;
  *
  * @author Chie-cheung
  */
-public abstract class Muur  {
+public abstract class Muur implements MaakKopie {
+
     private Tegel currentRoom;
-    private int leven=100;
-    
+    private int leven = 100;
+
     public abstract void wordGeraakt(int damage);
-    public abstract Muur maakKopie(Muur muur);
+
+    @Override
+    public abstract Object maakKopie();
+
     public Muur(Tegel currentRoom) {
         this.currentRoom = currentRoom;
     }
@@ -25,7 +29,6 @@ public abstract class Muur  {
     public void setCurrentRoom(Tegel currentRoom) {
         this.currentRoom = currentRoom;
     }
-    
 
     public int getLeven() {
         return leven;
@@ -35,5 +38,4 @@ public abstract class Muur  {
         this.leven = leven;
     }
 
-    
 }

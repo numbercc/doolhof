@@ -20,7 +20,7 @@ public class Buitenmuur extends Muur{
     }
 
     @Override
-    public Muur maakKopie(Muur muur) {
+    public Object maakKopie() {
         return new Buitenmuur(null);
     }
     

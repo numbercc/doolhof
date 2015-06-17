@@ -15,7 +15,7 @@ import javax.swing.JLabel;
  *
  * @author Chie-cheung
  */
-public class Speler {
+public class Speler implements MaakKopie{
 
     private Tegel locatie;
     private int score = 0;
@@ -346,20 +346,20 @@ public class Speler {
         this.score = score;
     }
 
-    public Speler maakKopie(Speler orginele) {
+    public Object maakKopie() {
         Speler kopie = new Speler();
 
-        kopie.setBazooka((Bazooka) orginele.getBazooka().maakKopie(orginele.getBazooka()));
-        kopie.setPistool((Pistool) orginele.getPistool().maakKopie(orginele.getPistool()));
-        if (orginele.getMount() != null) {
-            kopie.setMount((Mount) orginele.getMount().maakKopie(orginele.getMount()));
+        kopie.setBazooka((Bazooka) getBazooka().maakKopie());
+        kopie.setPistool((Pistool) getPistool().maakKopie());
+        if (getMount() != null) {
+            kopie.setMount((Mount) getMount().maakKopie());
         }
-        kopie.setRichting(orginele.getRichting());
-        kopie.setStappen(orginele.getStappen());
-        kopie.setScore(orginele.getScore());
-        if (orginele.getWapen() instanceof Bazooka) {
+        kopie.setRichting(getRichting());
+        kopie.setStappen(getStappen());
+        kopie.setScore(getScore());
+        if (getWapen() instanceof Bazooka) {
             kopie.setWapen(kopie.getBazooka());
-        } else if (orginele.getWapen() instanceof Pistool) {
+        } else if (getWapen() instanceof Pistool) {
             kopie.setWapen(kopie.getPistool());
         }
         return kopie;

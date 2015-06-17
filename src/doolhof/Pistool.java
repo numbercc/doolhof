@@ -88,12 +88,14 @@ public class Pistool extends Wapen {
 
 
     @Override
-    public Upgrade maakKopie(Upgrade upgrade) {
-         Wapen orginele=(Pistool)upgrade;
+    public Object maakKopie() {
         Wapen kopie=new Pistool();
-        kopie.setBullet(orginele.getBullet());
-        kopie.setLocatie(orginele.getLocatie());
+        kopie.setBullet(getBullet());
         return kopie;
     }
+
+
+
+
 
 }

@@ -11,13 +11,14 @@ import java.awt.Graphics;
  *
  * @author Montoo
  */
-public abstract class Upgrade {
+public abstract class Upgrade implements MaakKopie {
     
     private Tegel locatie;
     
     public abstract void wordOpgepakt(Speler speler);
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
-    public abstract Upgrade maakKopie(Upgrade upgrade);
+    @Override
+    public abstract Object maakKopie();
     public Tegel getLocatie() {
         return locatie;
     }

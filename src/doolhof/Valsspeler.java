@@ -65,9 +65,10 @@ public class Valsspeler extends Persoon {
     }
 
     @Override
-    public Persoon maakKopie(Persoon persoon) {
-        Valsspeler orginele = (Valsspeler) persoon;
-        Valsspeler kopie = new Valsspeler(orginele.waarde);
+    public Object maakKopie() {
+        Valsspeler kopie = new Valsspeler(waarde);
         return kopie;
     }
+
+
 }

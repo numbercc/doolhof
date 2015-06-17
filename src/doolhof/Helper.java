@@ -107,10 +107,9 @@ public class Helper extends Persoon {
     }
 
     @Override
-    public Persoon maakKopie(Persoon persoon) {
-        Helper orginele = (Helper) persoon;
+    public Object maakKopie() {
         Helper kopie = new Helper( null);
-        kopie.setLocatie(orginele.getLocatie());
         return kopie;
     }
+
 }

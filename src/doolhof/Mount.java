@@ -64,11 +64,12 @@ public class Mount extends Upgrade {
     }
 
     @Override
-    public Upgrade maakKopie(Upgrade upgrade) {
-        Mount orginele=(Mount)upgrade;
-        Mount kopie=new Mount((int)orginele.getWaarde(),orginele.getStapWaarde());
-        kopie.setLocatie(orginele.getLocatie());
+    public Object maakKopie() {
+        Mount kopie=new Mount((int)getWaarde(),getStapWaarde());
+        kopie.setLocatie(getLocatie());
         return kopie;
     }
+
+
 
 }

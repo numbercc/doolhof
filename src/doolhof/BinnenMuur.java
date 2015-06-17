@@ -26,11 +26,11 @@ public class BinnenMuur extends Muur {
     public Tegel getCurrentRoom() {
         return super.getCurrentRoom();
     }
-    @Override
-    public void wordGeraakt(int damage){
-        super.setLeven(super.getLeven()-damage);
-    }
 
+    @Override
+    public void wordGeraakt(int damage) {
+        super.setLeven(super.getLeven() - damage);
+    }
 
     public Tegel getNextRoom() {
         return nextRoom;
@@ -41,7 +41,7 @@ public class BinnenMuur extends Muur {
     }
 
     @Override
-    public Muur maakKopie(Muur muur) {
+    public Object maakKopie() {
         return new BinnenMuur(null, null);
     }
 

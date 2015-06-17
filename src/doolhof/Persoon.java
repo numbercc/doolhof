@@ -11,14 +11,17 @@ import java.awt.Graphics;
  *
  * @author Montoo
  */
-public abstract class Persoon {
-    
+public abstract class Persoon implements MaakKopie {
+
     private Tegel locatie;
     private Tegel[][] doolhof;
+
+    @Override
+    public abstract Object maakKopie();
+
     public abstract void teken(int kamerGrote, int x, int y, Graphics g);
 
     public abstract void wordGeraakt(Speler speler);
-    public abstract Persoon maakKopie(Persoon persoon);
 
     public void verwijderpersoon() {
         locatie.setPersoon(null);
@@ -35,7 +38,7 @@ public abstract class Persoon {
     public Tegel getLocatie() {
         return locatie;
     }
-    
+
     public void setLocatie(Tegel locatie) {
         this.locatie = locatie;
     }

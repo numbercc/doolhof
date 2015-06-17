@@ -41,11 +41,11 @@ public class Bazooka extends Wapen {
     }
 
     @Override
-    public Upgrade maakKopie(Upgrade upgrade) {
-        Wapen orginele = (Bazooka) upgrade;
+    public Object maakKopie() {
         Wapen kopie = new Bazooka();
-        kopie.setBullet(orginele.getBullet());
-        kopie.setLocatie(orginele.getLocatie());
+        kopie.setBullet(getBullet());
+        kopie.setLocatie(getLocatie());
         return kopie;
     }
+
 }

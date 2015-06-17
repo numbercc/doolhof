@@ -256,18 +256,18 @@ public class Doolhof extends JComponent {
     }
 
     public Doolhof maakKopie() {
-        Doolhof kopie = new Doolhof(speler.maakKopie(speler),lvl);
+        Doolhof kopie = new Doolhof((Speler)speler.maakKopie(),lvl);
         Vriend vriend= new Vriend();
         ArrayList<Helper> lijstHelper=new ArrayList<>();
         Tegel[][] kopieTegels = new Tegel[breedte][hoogte];
         for (int i = 0; i < hoogte; i++) {
             for (int j = 0; j < breedte; j++) {
-                kopieTegels[i][j] = tegels[i][j].maakKopie(tegels[i][j]);
+                kopieTegels[i][j] =(Tegel) tegels[i][j].maakKopie();
                 if (tegels[i][j].getNorth() != null) {
-                    kopieTegels[i][j].setNorth(tegels[i][j].getNorth().maakKopie(tegels[i][j].getNorth()));
+                    kopieTegels[i][j].setNorth((Muur)tegels[i][j].getNorth().maakKopie());
                 }
                 if (tegels[i][j].getWest() != null) {
-                    kopieTegels[i][j].setWest(tegels[i][j].getWest().maakKopie(tegels[i][j].getWest()));
+                    kopieTegels[i][j].setWest((Muur)tegels[i][j].getWest().maakKopie());
                 }
                 
                 if (i == hoogte - 1) {
@@ -294,7 +294,7 @@ public class Doolhof extends JComponent {
                     }
                 }
                 if (tegels[i][j].getPersoon() != null) {
-                    kopieTegels[i][j].setPersoon(tegels[i][j].getPersoon().maakKopie(tegels[i][j].getPersoon()));
+                    kopieTegels[i][j].setPersoon((Persoon)tegels[i][j].getPersoon().maakKopie());
                     kopieTegels[i][j].getPersoon().setLocatie(kopieTegels[i][j]);
                     kopieTegels[i][j].getPersoon().setDoolhof(kopieTegels);
                     
@@ -307,7 +307,7 @@ public class Doolhof extends JComponent {
 
                 }
                 if (tegels[i][j].getUpgrade() != null) {
-                    kopieTegels[i][j].setUpgrade(tegels[i][j].getUpgrade().maakKopie(tegels[i][j].getUpgrade()));
+                    kopieTegels[i][j].setUpgrade((Upgrade)tegels[i][j].getUpgrade().maakKopie());
                 }
                 
             }
