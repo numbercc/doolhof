@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JComponent;
+import javax.swing.Timer;
 
 /**
  *
@@ -30,14 +31,14 @@ public class Doolhof extends JComponent {
     private Speler speler;
     private int lvl;
 
-    public Doolhof(Speler speler,int lvl) {
+    public Doolhof(Speler speler, int lvl) {
         this.speler = speler;
-        this.lvl=lvl;
+        this.lvl = lvl;
         tegels = new Tegel[hoogte][breedte];
         muren = new ArrayList<>((hoogte - 1) * (breedte - 1));
         maakRandomDoolhof();
         setPreferredSize(new Dimension(500, 500));
-        
+
     }
 
     private void maakRandomDoolhof() {
@@ -89,10 +90,13 @@ public class Doolhof extends JComponent {
                 tegels[x][y].setUpgrade(new Bazooka());
             }
             int waarde = r.nextInt(10) + 3;
-
-
-            Valsspeler vsp = new Valsspeler( waarde);
-
+            Valsspeler vsp;
+            if (lvl > 1) {
+                vsp = new Valsspeler(waarde, true);
+            } else {
+                vsp = new Valsspeler(waarde, false);
+            }
+            vsp.setDoolhof(tegels);
             int xR = r.nextInt(breedte - 2);
             int yR = r.nextInt(hoogte - 2);
 
@@ -118,7 +122,12 @@ public class Doolhof extends JComponent {
         Vriend vriend = new Vriend();
         tegels[19][19].setPersoon(vriend);
         vriend.setLocatie(tegels[19][19]);
-        Helper helper = new Helper(vriend);
+        Helper helper;
+        if (lvl > 1) {
+            helper = new Helper(vriend, true);
+        } else {
+            helper = new Helper(vriend, false);
+        }
         helper.setDoolhof(tegels);
         helper.setLocatie(tegels[r.nextInt(15) + 1][r.nextInt(15) + 1]);
         helper.getLocatie().setPersoon(helper);
@@ -137,7 +146,7 @@ public class Doolhof extends JComponent {
             for (int j = 0; j < breedte; j++) {
                 // create north muren
                 tegels[i][j] = new Tegel(i, j);
-                if(lvl==3){
+                if (lvl == 3) {
                     tegels[i][j].setTegelKleur(Color.BLACK);
                 }
                 if (i == 0) {
@@ -187,7 +196,7 @@ public class Doolhof extends JComponent {
 
         for (int i = 0; i <= hoogte - 1; i++) {
             for (int j = 0; j <= breedte - 1; j++) {
-                
+
                 tegels[i][j].setComp(this);
                 tegels[i][j].setX(x);
                 tegels[i][j].setY(y);
@@ -256,20 +265,21 @@ public class Doolhof extends JComponent {
     }
 
     public Doolhof maakKopie() {
-        Doolhof kopie = new Doolhof((Speler)speler.maakKopie(),lvl);
-        Vriend vriend= new Vriend();
-        ArrayList<Helper> lijstHelper=new ArrayList<>();
+        Doolhof kopie = new Doolhof((Speler) speler.maakKopie(), lvl);
+        Vriend vriend = new Vriend();
+        ArrayList<Helper> lijstHelper = new ArrayList<>();
+        ArrayList<Valsspeler> lijstValsspeler = new ArrayList<>();
         Tegel[][] kopieTegels = new Tegel[breedte][hoogte];
         for (int i = 0; i < hoogte; i++) {
             for (int j = 0; j < breedte; j++) {
-                kopieTegels[i][j] =(Tegel) tegels[i][j].maakKopie();
+                kopieTegels[i][j] = (Tegel) tegels[i][j].maakKopie();
                 if (tegels[i][j].getNorth() != null) {
-                    kopieTegels[i][j].setNorth((Muur)tegels[i][j].getNorth().maakKopie());
+                    kopieTegels[i][j].setNorth((Muur) tegels[i][j].getNorth().maakKopie());
                 }
                 if (tegels[i][j].getWest() != null) {
-                    kopieTegels[i][j].setWest((Muur)tegels[i][j].getWest().maakKopie());
+                    kopieTegels[i][j].setWest((Muur) tegels[i][j].getWest().maakKopie());
                 }
-                
+
                 if (i == hoogte - 1) {
                     kopieTegels[i][j].setSouth(new Buitenmuur(tegels[i][j]));
                 }
@@ -277,50 +287,66 @@ public class Doolhof extends JComponent {
                     kopieTegels[i][j].setEast(new Buitenmuur(tegels[i][j]));
                 }
 
-
-
                 if (j > 0) {
-                    kopieTegels[i][j].setWestBuur(kopieTegels[i][j-1]);
-                    kopieTegels[i][j-1].setEastBuur(kopieTegels[i][j]);
+                    kopieTegels[i][j].setWestBuur(kopieTegels[i][j - 1]);
+                    kopieTegels[i][j - 1].setEastBuur(kopieTegels[i][j]);
                     if (kopieTegels[i][j].getWest() != null) {
-                        kopieTegels[i][j-1].setEast(kopieTegels[i][j].getWest());
+                        kopieTegels[i][j - 1].setEast(kopieTegels[i][j].getWest());
                     }
                 }
                 if (i > 0) {
-                    kopieTegels[i][j].setNorthBuur(kopieTegels[i-1][j]);
-                    kopieTegels[i-1][j].setSouthBuur(kopieTegels[i][j]);
+                    kopieTegels[i][j].setNorthBuur(kopieTegels[i - 1][j]);
+                    kopieTegels[i - 1][j].setSouthBuur(kopieTegels[i][j]);
                     if (kopieTegels[i][j].getNorth() != null) {
-                        kopieTegels[i-1][j].setSouth(kopieTegels[i][j].getNorth());
+                        kopieTegels[i - 1][j].setSouth(kopieTegels[i][j].getNorth());
                     }
                 }
                 if (tegels[i][j].getPersoon() != null) {
-                    kopieTegels[i][j].setPersoon((Persoon)tegels[i][j].getPersoon().maakKopie());
+                    kopieTegels[i][j].setPersoon((Persoon) tegels[i][j].getPersoon().maakKopie());
                     kopieTegels[i][j].getPersoon().setLocatie(kopieTegels[i][j]);
                     kopieTegels[i][j].getPersoon().setDoolhof(kopieTegels);
-                    
-                    if(kopieTegels[i][j].getPersoon() instanceof Vriend){
-                        vriend=(Vriend)kopieTegels[i][j].getPersoon();
+
+                    if (kopieTegels[i][j].getPersoon() instanceof Vriend) {
+                        vriend = (Vriend) kopieTegels[i][j].getPersoon();
+
                     }
-                    if(kopieTegels[i][j].getPersoon() instanceof Helper){
-                        lijstHelper.add((Helper)kopieTegels[i][j].getPersoon());
+                    if (kopieTegels[i][j].getPersoon() instanceof Helper) {
+                        lijstHelper.add((Helper) kopieTegels[i][j].getPersoon());
+                        if (tegels[i][j].getPersoon().getTimer() != null) {
+                            kopieTegels[i][j].getPersoon().setTimer(new Timer(0, null));
+                        }
+                    }
+                    if (kopieTegels[i][j].getPersoon() instanceof Valsspeler) {
+                        lijstValsspeler.add((Valsspeler) kopieTegels[i][j].getPersoon());
+                        if (tegels[i][j].getPersoon().getTimer() != null) {
+                            kopieTegels[i][j].getPersoon().setTimer(new Timer(0, null));
+                        }
                     }
 
                 }
                 if (tegels[i][j].getUpgrade() != null) {
-                    kopieTegels[i][j].setUpgrade((Upgrade)tegels[i][j].getUpgrade().maakKopie());
+                    kopieTegels[i][j].setUpgrade((Upgrade) tegels[i][j].getUpgrade().maakKopie());
                 }
-                
+
             }
 
         }
         for (Helper helper : lijstHelper) {
             helper.setEind(vriend);
+            if (helper.getTimer() != null) {
+                helper.zetTimer();
+            }
+        }
+        for (Valsspeler valsspeler : lijstValsspeler) {
+            if (valsspeler.getTimer() != null) {
+                valsspeler.zetTimer();
+            }
         }
         kopie.setTegels(kopieTegels);
         kopie.setSpeler(kopieTegels[0][0].getSpeler());
         kopieTegels[0][0].getSpeler().setLocatie(kopieTegels[0][0]);
         kopie.getSpeler().getPistool().setSpeler(kopie.getSpeler());
         kopie.getSpeler().getBazooka().setSpeler(kopie.getSpeler());
-       return kopie;
+        return kopie;
     }
 }// END OF CLASS 

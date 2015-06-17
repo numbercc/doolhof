@@ -17,8 +17,11 @@ public class Valsspeler extends Persoon {
 
     private int waarde;
 
-    public Valsspeler( int waarde) {
+    public Valsspeler( int waarde,boolean lopen) {
         this.waarde = waarde;
+        if(lopen){
+            super.zetTimer();
+        }
     }
     private Tegel[][] tegel;
     private Speler speler;
@@ -66,7 +69,10 @@ public class Valsspeler extends Persoon {
 
     @Override
     public Object maakKopie() {
-        Valsspeler kopie = new Valsspeler(waarde);
+        Valsspeler kopie = new Valsspeler(waarde, false);
+        if(super.getTimer()!=null){
+            kopie.setTimer(super.getTimer());
+        }
         return kopie;
     }
 

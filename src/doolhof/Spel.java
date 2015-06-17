@@ -5,13 +5,14 @@
 package doolhof;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -46,12 +47,15 @@ public class Spel {
         frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setPreferredSize(new Dimension(500, 650));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
         hoofdmenu = new JPanel();
+         hoofdmenu.setBackground(Color.BLACK);
         hoofdmenu.setFocusable(false);
         JButton start = new JButton("Start");
         JButton help = new JButton("Instructies");
         start.setFocusable(false);
         hoofdmenu.add(start);
+        hoofdmenu.add(new JLabel(new ImageIcon("src\\Images\\help.png")));
         start.addActionListener(new ActionListener() {
 
             @Override
@@ -203,7 +207,7 @@ public class Spel {
         JPanel winScherm = new JPanel();
         JLabel win = new JLabel("U heeft gewonnen!");
         JLabel textStappen = new JLabel("Final Score: ");
-
+        reset.setVisible(false);
         winScherm.add(win);
         winScherm.add(textStappen);
         winScherm.add(stappen);
