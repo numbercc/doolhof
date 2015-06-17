@@ -120,12 +120,12 @@ public class SpelerTest {
             fail("test speler loopt door muur");
         }
     }
-   
-       @Test
-    public void statementCoverageMount() {
+
+    @Test
+    public void statementCoverageMount1() {
         // Statement Coverage: Mount
         // Fysiek testgeval 1
-        System.out.println("Statement coverage test 1: Mount");
+        System.out.println("Statement coverage testgeval 1: Mount");
         Tegel[][] tegels = maakTestOmgeving();
         Speler speler = new Speler();
         Mount mount = new Mount(2, 10);
@@ -136,20 +136,69 @@ public class SpelerTest {
         speler.setRichting(Richting.up);
         speler.moveUp();
         double verwachteScore = 1.5;
-        if(speler.getLocatie() != tegels[5][4]) {
+        int verwachtteStapWaarde = 9;
+        if (speler.getLocatie() != tegels[5][4]) {
             fail("speler is niet bewogen");
         }
         speler.moveUp();
-        if(speler.getMount() == null) {
+        if (speler.getMount() == null) {
             fail("speler heeft geen mount");
         }
-        
-        if(verwachteScore != speler.getStappen())
-        {
+
+        if (verwachteScore != speler.getStappen() && verwachtteStapWaarde == mount.getStapWaarde()) {
+            fail("speler score niet gelijk aan verwachte score");
+        }
+    }
+
+    @Test
+    public void statementCoverageMount2() {
+        // Statement Coverage: Mount
+        // Fysiek testgeval 1
+        System.out.println("Statement coverage testgeval 2: Mount");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Mount mount = new Mount(2, 0);
+        speler.setScore(0);
+        tegels[5][5].setSpeler(speler);
+        speler.setMount(mount);
+        speler.setLocatie(tegels[5][5]);
+        speler.setRichting(Richting.up);
+        speler.moveUp();
+        double verwachteScore = 0.5;
+        if (speler.getLocatie() != tegels[5][4]) {
+            fail("speler is niet bewogen");
+        }
+        if (speler.getMount() != null) {
+            fail("speler heeft een mount nog een mount");
+        }
+        if (verwachteScore != speler.getStappen()) {
             fail("speler score niet gelijk aan verwachte score");
         }
     }
     
+           @Test
+    public void statementCoverageMount3() {
+        // Statement Coverage: Mount
+        // Fysiek testgeval 1
+        System.out.println("Statement coverage testgeval 3: Mount");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Mount mount = new Mount(2, 10);
+        speler.setScore(0);
+        tegels[5][5].setSpeler(speler);
+        tegels[5][4].setUpgrade(mount);
+        speler.setLocatie(tegels[5][5]);
+        speler.setRichting(Richting.up);
+        speler.moveUp();
+        if(speler.getLocatie() != tegels[5][4]) {
+            fail("speler is niet bewogen");
+        }
+        if(speler.getMount() == null) {
+            fail("speler heeft geen mount");
+        }
+    }
+    
+
     @Test
     public void algoritmeTest2() {
         // hierin word de formele fysieke algoritme getest van testgeval 1
@@ -219,9 +268,9 @@ public class SpelerTest {
         vriend.setLocatie(tegels[8][10]);
         tegels[8][10].setPersoon(vriend);
         tegels[10][11].setPersoon(new Helper(vriend, false));
-       tegels[10][11].getPersoon().setLocatie(tegels[10][11]);
-       tegels[10][11].getPersoon().setDoolhof(tegels);
-       tegels[10][11].setPersoon(new Valsspeler(1, false));
+        tegels[10][11].getPersoon().setLocatie(tegels[10][11]);
+        tegels[10][11].getPersoon().setDoolhof(tegels);
+        tegels[10][11].setPersoon(new Valsspeler(1, false));
         tegels[10][11].getPersoon().setLocatie(tegels[10][11]);
 
         tegels[10][10].setSpeler(speler);
@@ -231,10 +280,10 @@ public class SpelerTest {
         speler.moveDown();
         speler.moveLeft();
         speler.moveLeft();
-        if(tegels[9][10].getPersoon()!=null){
+        if (tegels[9][10].getPersoon() != null) {
             fail("valsspeler bestaat nog");
         }
-        if(tegels[10][11].getPersoon()!=null){
+        if (tegels[10][11].getPersoon() != null) {
             fail("helper bestaat nog");
         }
         if (spel.getLevelInt() != 2) {
@@ -242,7 +291,6 @@ public class SpelerTest {
         }
 
     }
-
 
     private Tegel[][] maakTestOmgeving() {
         Tegel[][] tegels = new Tegel[20][20];
@@ -263,8 +311,6 @@ public class SpelerTest {
                     tegels[i][j].setEast(new Buitenmuur(tegels[i][j]));
                 }
 
-
-
                 if (i > 0) {
                     tegels[i][j].setWestBuur(tegels[i - 1][j]);
                     tegels[i - 1][j].setEastBuur(tegels[i][j]);
@@ -274,9 +320,7 @@ public class SpelerTest {
                     tegels[i][j - 1].setSouthBuur(tegels[i][j]);
                 }
 
-
             }
-
 
         }
         return tegels;

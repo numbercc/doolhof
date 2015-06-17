@@ -122,8 +122,8 @@ public class Doolhof extends JComponent {
             }
         }
         Vriend vriend = new Vriend(spel);
-        tegels[2][2].setPersoon(vriend);
-        vriend.setLocatie(tegels[2][2]);
+        tegels[19][19].setPersoon(vriend);
+        vriend.setLocatie(tegels[19][19]);
         Helper helper;
         if (lvl > 1) {
             helper = new Helper(vriend, true);
