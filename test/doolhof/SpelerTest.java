@@ -123,17 +123,27 @@ public class SpelerTest {
     }
     @Test
     public void algoritmeTest1() {
-        System.out.println("algoritmetest");
+        // hierin word de formele fysieke algoritme getest van testgeval 1
+        // speler raakt eerst geen persoon en daarna vriend.
+        System.out.println("algoritmetest1");
+        Spel spel=new Spel();
+        
         Tegel[][] tegels = maakTestOmgeving();
         Speler speler = new Speler();
-        Vriend vriend= new Vriend();
-        tegels[5][4].setPersoon(vriend);
+        spel.setSpeler(speler);
+        spel.beginspel();
+        Vriend vriend= new Vriend(spel);
+        tegels[5][3].setPersoon(vriend);
         tegels[5][5].setSpeler(speler);
         speler.setLocatie(tegels[5][5]);
         speler.setRichting(Richting.up);
         speler.moveUp();
-        if(vriend!=null){
-            fail("vriend bestaat nog");
+        if(speler.getLocatie()!=tegels[5][4]){
+            fail("speler is niet bewogen");
+        }
+        speler.moveUp();
+        if(spel.getLevelInt()!=2){
+            fail("level niet gehaald");
         }
     }
     

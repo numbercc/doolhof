@@ -90,7 +90,7 @@ public class Spel {
         }
     }
 
-    private void beginspel() {
+    public void beginspel() {
         reset = new JButton("reset level");
         reset.setFocusable(false);
         reset.addActionListener(new ActionListener() {
@@ -158,7 +158,12 @@ public class Spel {
         updateScore();
     }
     public void removeComp(){
-        frame.remove(comp);
+        if(comp!=null){
+        frame.remove(comp);}
+    }
+
+    public void setSpeler(Speler speler) {
+        this.speler = speler;
     }
     public void maakLevel() {
 
