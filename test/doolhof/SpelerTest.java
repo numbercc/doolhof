@@ -5,6 +5,7 @@
 package doolhof;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -135,18 +136,11 @@ public class SpelerTest {
         speler.setLocatie(tegels[5][5]);
         speler.setRichting(Richting.up);
         speler.moveUp();
-        double verwachteScore = 1.5;
-        int verwachtteStapWaarde = 9;
         if (speler.getLocatie() != tegels[5][4]) {
             fail("speler is niet bewogen");
         }
-        speler.moveUp();
         if (speler.getMount() == null) {
             fail("speler heeft geen mount");
-        }
-
-        if (verwachteScore != speler.getStappen() && verwachtteStapWaarde == mount.getStapWaarde()) {
-            fail("speler score niet gelijk aan verwachte score");
         }
     }
 
@@ -290,6 +284,134 @@ public class SpelerTest {
             fail("level niet gehaald");
         }
 
+    }
+
+    
+    @Test
+    public void beslissingsTabellenTest3() {
+        System.out.println("Beslissingstabellen testgeval 3: Pistool schieten");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+
+        tegels[5][5].setSpeler(speler);
+
+        tegels[5][5].setNorth(new BinnenMuur(null, null));
+        speler.setLocatie(tegels[5][5]);
+        speler.setPistool(new Pistool());
+        speler.getPistool().setBullet(0);
+        speler.getPistool().setSpeler(speler);
+        speler.setRichting(Richting.up);
+        speler.setWapen(speler.getPistool());
+        if(speler.getWapen().getBullet() != 0) {
+            fail("speler heeft ammo");
+        }
+            speler.getWapen().schieten();
+        if(tegels[5][4].getPersoon() != null) {
+            fail("Persoon is aanwezig");
+        }
+        
+        
+    }
+    @Test
+    public void beslissingsTabellenTest4() {
+        System.out.println("Beslissingstabellen testgeval 4: Pistool schieten");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Valsspeler vsp = new Valsspeler(2, false);
+        tegels[5][5].setSpeler(speler);
+        tegels[5][4].setPersoon(vsp);
+        tegels[5][5].setNorth(new BinnenMuur(null, null));
+        speler.setLocatie(tegels[5][5]);
+        speler.setPistool(new Pistool());
+        speler.getPistool().setBullet(0);
+        speler.getPistool().setSpeler(speler);
+        speler.setRichting(Richting.up);
+        speler.setWapen(speler.getPistool());
+        if(speler.getWapen().getBullet() != 0) {
+            fail("speler heeft geen ammo");
+        }
+            speler.getWapen().schieten();
+        if(tegels[5][4].getPersoon() == null) {
+            fail("Persoon is geraakt");
+        }
+        
+        
+    }
+    @Test
+    public void beslissingsTabellenTest6() {
+        System.out.println("Beslissingstabellen testgeval 6: Pistool schieten");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Valsspeler vsp = new Valsspeler(2, false);
+        tegels[5][5].setSpeler(speler);
+        tegels[5][4].setPersoon(vsp);
+
+        speler.setLocatie(tegels[5][5]);
+        speler.setPistool(new Pistool());
+        speler.getPistool().setBullet(1);
+        speler.getPistool().setSpeler(speler);
+        speler.setRichting(Richting.up);
+        speler.setWapen(speler.getPistool());
+        if(speler.getWapen().getBullet() == 0) {
+            fail("speler heeft geen ammo");
+        }
+            speler.getWapen().schieten();
+        if(tegels[5][4].getPersoon() != null) {
+            fail("Persoon is niet geraakt");
+        }
+        
+        
+    }
+        @Test
+    public void beslissingsTabellenTest7() {
+        System.out.println("Beslissingstabellen testgeval 7: Pistool schieten");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+
+        tegels[5][5].setSpeler(speler);
+
+        tegels[5][5].setNorth(new BinnenMuur(null, null));
+        speler.setLocatie(tegels[5][5]);
+        speler.setPistool(new Pistool());
+        speler.getPistool().setBullet(1);
+        speler.getPistool().setSpeler(speler);
+        speler.setRichting(Richting.up);
+        speler.setWapen(speler.getPistool());
+        if(speler.getWapen().getBullet() == 0) {
+            fail("speler heeft geen ammo");
+        }
+            speler.getWapen().schieten();
+        if(tegels[5][4].getPersoon() != null) {
+            fail("Er is een persoon");
+        }
+        
+        
+        }
+        
+    @Test
+    public void beslissingsTabellenTest8() {
+        System.out.println("Beslissingstabellen testgeval 8: Pistool schieten");
+        Tegel[][] tegels = maakTestOmgeving();
+        Speler speler = new Speler();
+        Valsspeler vsp = new Valsspeler(2, false);
+        tegels[5][5].setSpeler(speler);
+        tegels[5][4].setPersoon(vsp);
+        tegels[5][5].setNorth(new BinnenMuur(null, null));
+        speler.setLocatie(tegels[5][5]);
+        speler.setPistool(new Pistool());
+        speler.getPistool().setBullet(1);
+        speler.getPistool().setSpeler(speler);
+        speler.setRichting(Richting.up);
+        speler.setWapen(speler.getPistool());
+        if(speler.getWapen().getBullet() == 0) {
+            fail("speler heeft geen ammo");
+        }
+            speler.getWapen().schieten();
+        if(tegels[5][4].getPersoon() == null) {
+            fail("Persoon is geraakt");
+        }
+        
+        
     }
 
     private Tegel[][] maakTestOmgeving() {
