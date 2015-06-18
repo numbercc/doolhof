@@ -21,7 +21,7 @@ public class Helper extends Persoon {
 
     public Helper( Vriend vriendLocatie, boolean lopen) {
         eind = vriendLocatie;
-        
+        // hier wordt beslist om de helper mag lopen
         if(lopen){
             super.zetTimer();
         }
@@ -49,6 +49,7 @@ public class Helper extends Persoon {
 
     @Override
     public void wordGeraakt(Speler speler) {
+        // helper toont kortste route als hij word geraakt
         ArrayList<Tegel> kortsteRoute = super.kortsteRoute(getLocatie(),eind.getLocatie());
         if(kortsteRoute!=null){
             routeKleuren(kortsteRoute);
@@ -57,7 +58,7 @@ public class Helper extends Persoon {
     }
 
     
-    public void routeKleuren(ArrayList<Tegel> route) {
+    private void routeKleuren(ArrayList<Tegel> route) {
         for (Tegel tegel : route) {
             tegel.setTegelKleur(Color.yellow);
         }

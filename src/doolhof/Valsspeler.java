@@ -26,6 +26,7 @@ public class Valsspeler extends Persoon {
     private Tegel[][] tegel;
     private Speler speler;
    private void breedteTerug(int aantalPlekken,Speler speler){
+       // zet de speler in de breedte terug met de waarde aantalplekken
        if(speler.getLocatie().getWestBuur()!=null&& aantalPlekken>0){
            Tegel temp=speler.getLocatie();
            speler.setLocatie(speler.getLocatie().getWestBuur());
@@ -36,6 +37,7 @@ public class Valsspeler extends Persoon {
        }
    }
    private void hoogteTerug(int aantalPlekken,Speler speler){
+       // zet de speler in de hoogte terug met de waarde aantalplekken
        if(speler.getLocatie().getNorthBuur()!=null&& aantalPlekken>0){
            Tegel temp=speler.getLocatie();
            speler.setLocatie(speler.getLocatie().getNorthBuur());

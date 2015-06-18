@@ -15,14 +15,9 @@ public class Vriend extends Persoon{
     private Spel spel;
     public Vriend(Spel spel) {
         this.spel=spel;
-    }
-    
-    
+    }    
   
 
-    public void spelBeeindigen() {
-        
-    }
 
     @Override
     public void teken(int kamerGrote, int x, int y, Graphics g) {

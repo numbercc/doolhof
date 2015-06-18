@@ -30,6 +30,8 @@ public class Pistool extends Wapen {
     }
 
     private void pistoolSchieten(Tegel locatie) {
+        // pistool schiet verwijdert een persoon als hij
+        // een raak anders verdwijnt als hij tegen muur gaat
         if(richting==Richting.up){
             if(locatie.getPersoon()==null&&locatie.getNorth()==null){
                 pistoolSchieten(locatie.getNorthBuur());

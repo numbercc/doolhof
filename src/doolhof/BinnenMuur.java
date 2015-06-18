@@ -29,6 +29,7 @@ public class BinnenMuur extends Muur {
 
     @Override
     public void wordGeraakt(int damage) {
+        // muur word geraakt hier krijgt de muu schade als leven op 0 is dan word de muur verwijdert door zijn super classe.
         super.setLeven(super.getLeven() - damage);
     }
 

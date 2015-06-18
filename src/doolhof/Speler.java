@@ -101,6 +101,7 @@ public class Speler implements MaakKopie{
     }
 
     public void schieten(KeyEvent key) {
+        // wapen is de geselecteerde wapen. met spatie word er dus geschoten
         if (key.getKeyCode() == KeyEvent.VK_SPACE) {
             if (getWapen() != null) {
                 getWapen().schieten();
@@ -109,6 +110,8 @@ public class Speler implements MaakKopie{
     }
 
     public void switchWaepon(KeyEvent key) {
+        // met e word er van wapen gewisselt. 
+        //als er nog geen is geselecteerd word de bazooka geselecteerd.
         if (key.getKeyCode() == KeyEvent.VK_E) {
             if (getWapen() != bazooka) {
                 setWapen(bazooka);
@@ -117,7 +120,6 @@ public class Speler implements MaakKopie{
             }
         }
     }
-    //Aanpassingen 3-6-2015 17:32   wapen --> upgrade
 
     private void PickUpUpgrade() {
         locatie.getUpgrade().wordOpgepakt(this);
@@ -152,6 +154,7 @@ public class Speler implements MaakKopie{
     }
 
     public void moveLeft() {
+       
         int som;
 
         if (getRichting() == Richting.left && locatie.getWest() == null) {

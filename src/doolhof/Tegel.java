@@ -273,6 +273,7 @@ public class Tegel implements MaakKopie {
     }
 
     public int afstandNaar(Tegel tegel) {
+        // afstand tussen tegels met gebruik van wiskunde
         return (int) Math.sqrt(Math.pow(tegel.getX() - getX(), 2) + Math.pow(tegel.getY() - getY(), 2));
     }
 

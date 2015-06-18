@@ -18,6 +18,7 @@ public class Bazooka extends Wapen {
 
     @Override
     public void schieten() {
+        // het maken van een raket en dat op de tegel plaatsen
         if (super.getBullet() > 0) {
             super.minderKogels();
             Raket raket = new Raket(super.getSpeler().getLocatie());
@@ -34,8 +35,10 @@ public class Bazooka extends Wapen {
 
     @Override
     public void wordOpgepakt(Speler speler) {
+        // oppakken van een bazooka
         speler.getBazooka().setBullet(speler.getBazooka().getBullet() + 1);
         if (speler.getWapen() == null) {
+            // als speler nog niks heeft in zijn hand dan word dit in zijn hand gezet. Dit wordt dan de huidige geselecteerde wapen.
             speler.setWapen(speler.getBazooka());
         }
     }

@@ -31,6 +31,7 @@ public class PressListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {
+        // check of er een actie moet worden uitgevoerd
         speler.move(ke);
         speler.schieten(ke);
         speler.switchWaepon(ke);

@@ -16,6 +16,7 @@ public class Buitenmuur extends Muur{
 
     @Override
     public void wordGeraakt(int damage) {
+        // hier word er geen damage veroorzaakt omdat buitenmuur niet verwoestbaar is
         super.setLeven(super.getLeven()-0);
     }
 

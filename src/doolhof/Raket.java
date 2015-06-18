@@ -56,6 +56,9 @@ public class Raket {
     }
 
     public void vlieg() {
+        // raket wordt graphisch weergegeven het heeft een leven.
+        // en voortgang per tegel. als voortgang 100 is gaat hij naar volgende tegel.
+        // de voortgang is nodig voor de teken positie van de raket op de tegel
         if (vluchtLeven > 0) {
             if (tegelVoortgang < 90) {
                 tegelVoortgang = tegelVoortgang + 10;
@@ -80,6 +83,7 @@ public class Raket {
     }
 
     private void volgendeLocatie() {
+        // raket verplaatsen naar de volgende locatie
         if (richting == richting.down) {
             if (locatie.getSouth() == null) {
                 veranderLocatie(locatie.getSouthBuur());

@@ -17,15 +17,14 @@ import javax.swing.Timer;
  * @author Chie-cheung
  */
 public class Doolhof extends JComponent {
-    // the maze can be seen as a matrix of squares so well use a multidimensional array of the room 
-    // class
+    // Een doohof met muren als attribuut het genereert automatisch een doolhof en benoemt de buren
 
-    private Tegel[][] tegels;// the maze can be seen as a matrix of squares so well use
-    private ArrayList<Muur> muren; // List of muren
-    private Random rand;// We are going to have to randomize the tegels chosen to unionize
-    private final int hoogte = 20;// users desired height of matrix 
-    private final int breedte = 20;// users desired breedte of matrix
-    private int num;// we will have to increment a few times so lets just use num as an incrementor
+    private Tegel[][] tegels;// de matrix van de tegels. soort van de plattegrond
+    private ArrayList<Muur> muren; // lijst met muren die wordt gebruikt om muren te verwijderen
+    private Random rand;// rondom getallen maken
+    private final int hoogte = 20;// de hoogte van het doolhof
+    private final int breedte = 20;// breedte van het doolhof
+    private int num;// een getal om te verhogen
     private int[] set;
     private int randommuur;
     private Speler speler;
@@ -44,21 +43,26 @@ public class Doolhof extends JComponent {
     }
 
     private void maakRandomDoolhof() {
-        maakKamer();// see next method
-
+        //maakkamer() maakt eerst doolhof met kleine kamers waar alle muren nog bestaan
+        // random worden er dan muren verwijdert en checken we of wel elk tegel is verbonden met een andere
+        maakKamer();
+        
         initSet(breedte * hoogte);
-        rand = new Random(); // here is the random room generator
+        rand = new Random(); // random genereren
         num = breedte * hoogte;
 
         while (num > 1) {
             // when we pick a random muur we want to avoid the borders getting eliminated
+            // we kiezen een random muur maar willen verkomen dat de buitenmuur niet worden verwijdert
+            
             randommuur = rand.nextInt(muren.size());
             BinnenMuur temp = (BinnenMuur) muren.get(randommuur);
-            // we will pick two tegels randomly 
+            // we pakken 2 random tegels
             int roomA = temp.getCurrentRoom().getY() + temp.getCurrentRoom().getX() * breedte;
             int roomB = temp.getNextRoom().getY() + temp.getNextRoom().getX() * breedte;
 
             // check roomA and roomB to see if they are already members 
+            // kijk of roomA en roomB al buren zijn
             if (find(roomA) != find(roomB)) {
                 muren.remove(randommuur);
                 unionRooms(find(roomA), find(roomB));
@@ -74,12 +78,13 @@ public class Doolhof extends JComponent {
                     tegel2.deleteMuur(muur);
                 }
                 num--;
-            }// end of if
-        }// end of while
+            }
+        }
         tegels[0][0].setSpeler(speler);
         speler.setLocatie(tegels[0][0]);
 
         Random r = new Random();
+        // toevoegen van objecten
         for (int i = 0; i < 3; i++) {
             int x = r.nextInt(18) + 1;
             int y = r.nextInt(18) + 1;
@@ -135,20 +140,16 @@ public class Doolhof extends JComponent {
         helper.getLocatie().setPersoon(helper);
 
     }
-    // name the room to display
     private int roomNumber = 0;
 
-    /**
-     * Sets the grid of tegels to be initially boxes This is self explanitory,
-     * we are only creating an reverse L for all The tegels and there is an L
-     * for the border
-     */
+
     private void maakKamer() {
+        //het maakt een doolhof waar elk vak gesloten is dus elke muur bestaat.
         for (int i = 0; i < hoogte; i++) {
             for (int j = 0; j < breedte; j++) {
-                // create north muren
                 tegels[i][j] = new Tegel(i, j);
                 if (lvl == 3) {
+                    // maak fog of war als het lvl 3 is
                     tegels[i][j].setTegelKleur(Color.BLACK);
                 }
                 if (i == 0) {
@@ -175,20 +176,20 @@ public class Doolhof extends JComponent {
                 if (j == breedte - 1) {
                     tegels[i][j].setEast(new Buitenmuur(tegels[i][j]));
                 }
-                tegels[i][j].setRoomName(roomNumber++);// we will name the tegels
+                tegels[i][j].setRoomName(roomNumber++);// voor eenvoudige debuggen
             }
         }
-        // initalize entrance and exit
-        // this is just saying the roomName for top left is 0 
+
         tegels[0][0].setRoomName(0);
-        // this is just saying the roomName for bottom right is the last element in the mxn room matrix
         tegels[hoogte - 1][breedte - 1].setRoomName(hoogte * breedte);
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        int x_cord; // x-axis rep
-        int y_cord;// y-axis rep
+        // tekenen van elk tegel word hier gedaan
+        // positie begint bij 50 en dan elk tegel is kamergrote
+        int x_cord;
+        int y_cord;
         int kamerGrote = 20;
         x_cord = 50;
         y_cord = 50;
@@ -221,17 +222,18 @@ public class Doolhof extends JComponent {
         } else {
             return set[r] = find(set[r]);
         }
-    }// end of find
+    }
 
     private void initSet(int elem) {
         set = new int[elem];
-        // initialize every element in the set
+        // set allemaal init
         for (int i = 0; i < set.length; i++) {
             set[i] = -1;
         }
     }
 
     private void unionRooms(int roomA, int roomB) {
+        // hier word gekeken of het buren zijn en zetten we in set[] als buren
         if (set[roomB] < set[roomA]) {
             set[roomA] = roomB;
         } else {
@@ -267,6 +269,7 @@ public class Doolhof extends JComponent {
     }
 
     public Doolhof maakKopie() {
+        // kopieren van de doolhof
         Doolhof kopie = new Doolhof((Speler) speler.maakKopie(), lvl,spel);
         Vriend vriend = new Vriend(spel);
         ArrayList<Helper> lijstHelper = new ArrayList<>();
@@ -288,8 +291,9 @@ public class Doolhof extends JComponent {
                 if (j == breedte - 1) {
                     kopieTegels[i][j].setEast(new Buitenmuur(tegels[i][j]));
                 }
-
+                 // muren aan elkaar refereren
                 if (j > 0) {
+                   
                     kopieTegels[i][j].setWestBuur(kopieTegels[i][j - 1]);
                     kopieTegels[i][j - 1].setEastBuur(kopieTegels[i][j]);
                     if (kopieTegels[i][j].getWest() != null) {
@@ -303,6 +307,7 @@ public class Doolhof extends JComponent {
                         kopieTegels[i - 1][j].setSouth(kopieTegels[i][j].getNorth());
                     }
                 }
+                // personen kopieren van elk tegel somige personen hebben speciaal attributen nodig
                 if (tegels[i][j].getPersoon() != null) {
                     kopieTegels[i][j].setPersoon((Persoon) tegels[i][j].getPersoon().maakKopie());
                     kopieTegels[i][j].getPersoon().setLocatie(kopieTegels[i][j]);
@@ -333,6 +338,7 @@ public class Doolhof extends JComponent {
             }
 
         }
+        // lopende personen hebben timers nodig die kan je niet zomaar kopieren
         for (Helper helper : lijstHelper) {
             helper.setEind(vriend);
             if (helper.getTimer() != null) {

@@ -33,13 +33,14 @@ public abstract class Persoon implements MaakKopie {
     public abstract void wordGeraakt(Speler speler);
 
     public void zetDoel() {
+        // persoon gaat ergens naar toe lopen hier wordt beslist waar er is voor gekozten dat hij niet in de eerste stukje mag lopen dus de matrix van 0 tot 5
         int x = (int) (Math.random() * 14 + 5);
         int y = (int) (Math.random() * 14 + 5);
         route = kortsteRoute(locatie, doolhof[x][y]);
     }
 
     public void beweeg() {
-        try {
+        // hier wordt er gechecked of hij wel mag lopen hij mag niet tegen andere personen lopen 
             if (route != null) {
                 if (route.size() > 0) {
                     if (route.get(0).getSpeler() != null) {
@@ -58,13 +59,10 @@ public abstract class Persoon implements MaakKopie {
                 }
             }
             zetDoel();
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("uugh");
-        }
     }
 
     public void verwijderpersoon() {
+        //persoon verwijdert en timer moet worden gestopt als het is gebruikt
         locatie.setPersoon(null);
         if (timer != null) {
             timer.stop();
@@ -88,6 +86,7 @@ public abstract class Persoon implements MaakKopie {
     }
 
     public ArrayList<Tegel> kortsteRoute(Tegel huidige, Tegel doel) {
+        // kortste route bepalen doormiddel van dijkstra 
         Tegel[][] doolhof = getDoolhof();
         ArrayList<Tegel> route;
         Map<Tegel, Integer> afstand = new HashMap<>();
@@ -96,6 +95,8 @@ public abstract class Persoon implements MaakKopie {
         Tegel locatie = getLocatie();
         afstand.put(locatie, 0);
         vorige.put(locatie, null);
+        // elke afstand word het maximale als init.
+        // en berbinding met vorige word ook init met als niks
         for (int i = 0; i < doolhof.length; i++) {
             for (int j = 0; j < doolhof.length; j++) {
                 Tegel v = doolhof[i][j];
@@ -106,6 +107,9 @@ public abstract class Persoon implements MaakKopie {
                 nietBezocht.add(v);
             }
         }
+        // hierin word elke tegel verbonden met de korste route naar de beginpunt
+        // beginpunt is locatie helper.  met de vorige map pak je steeds de tegel 
+        //die bij hoort tot je bij de begin locatie ben
         while (nietBezocht.size() > 0) {
             Tegel u = null;
             for (Tegel tegel : nietBezocht) {
@@ -117,7 +121,12 @@ public abstract class Persoon implements MaakKopie {
             if (u == doel) {
                 break;
             }
+            // verwijder bezochte tegels
             nietBezocht.remove(u);
+            // als tegels kunnen meedere wegen hebben. 
+            // om de korste weg te kiezen word er naar de afstand gekeken.
+            // hier word de graphische werkelijke afstand gebruik
+            // om een afstand aan te geven
             for (Tegel tegel : u.getloopbaarBuren()) {
                 int alt = afstand.get(u) + u.afstandNaar(tegel);
                 if (alt < afstand.get(tegel)) {
@@ -127,19 +136,25 @@ public abstract class Persoon implements MaakKopie {
             }
 
         }
+        // je heb je doel(vriend) gevonden. 
+        // het is niet nodig om verder te gaan.
         if (vorige.get(doel) == null) {
             return null;
         }
         route = new ArrayList<>();
         huidige = doel;
+        // alles netjes van doel tot huidige locatie in een array gezet
         while (huidige != null) {
             route.add(huidige);
             huidige = vorige.get(huidige);
         }
+        // als je het kijk in het array is alles van doel tot huidige locatie.
+        // we willen graag dat je van huidige locatie naar je doel gaat.
+        // dus draaien we het om.
         Collections.reverse(route);
+        // huidige locatie hebben we niet nodig
         route.remove(0);
         return route;
-
     }
 
     public Timer getTimer() {
@@ -159,8 +174,8 @@ public abstract class Persoon implements MaakKopie {
     }
 
     public void zetTimer() {
-        timer = new Timer(250, new ActionListener() {
-
+        timer = new Timer(400, new ActionListener() {
+            // hier word timer gezet als het nodig is
             @Override
             public void actionPerformed(ActionEvent ae) {
                 beweeg();
